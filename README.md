@@ -3,61 +3,61 @@
 This repository contains a work-in-progress mathematical study of pattern
 formation, regeneration, and positional memory in *Hydra*.
 
-The manuscript revisits Gierer--Meinhardt-type activator--inhibitor models and
-asks which biological phenomena follow from the classical pattern-forming
-mechanism itself, and which require an additional source-density field.
+The manuscript revisits Gierer--Meinhardt-type activator--inhibitor systems and
+asks which qualitative mechanisms are already present in the classical
+two-equation model and which require an additional source-density field.
 
-## Overview
+## Current mathematical focus
 
-Activator--inhibitor models can generate localized peaks and reproduce a basic
-threshold response to a wound-like perturbation. This already provides a
-minimal mathematical description of head regeneration.
+The model audit distinguishes three two-equation regimes:
 
-Source density plays a different role. Rather than being necessary for pattern
-formation itself, it can encode positional information retained by tissue and
-help describe grafting and polarization experiments. The manuscript also
-examines the limitations of dynamic source density and proposes a separate,
-hysteretic head-identity variable as a mechanism for stable morphological
-commitment.
+- without production terms, the system has a unique positive homogeneous
+  steady state and no resting state.
+- basal inhibitor production introduces a stable zero state and can produce
+  two additional positive steady states.
+- activator and inhibitor production leads to a cubic steady-state equation
+  and a transition between one and three nonnegative homogeneous states.
 
-The central questions are:
+For these regimes, the manuscript develops explicit existence conditions,
+linear stability criteria, and possible diffusion-driven instability. In the
+three-state activator-production regime, the middle state is unstable and the
+two outer states satisfy an ordering relation that constrains their possible
+stability configurations.
 
-- Is source density necessary for regeneration or classical pattern formation?
-- What positional information is missing from a two-variable
-  activator--inhibitor model?
-- Can a dynamic source-density field anchor a head at an arbitrary position?
-- How can transient activator peaks be distinguished from established head
-  identity?
+The later sections examine whether source density is needed for regeneration,
+how it may encode positional memory, and how a separate hysteretic
+head-identity variable could distinguish transient activator peaks from stable
+morphological commitment.
 
-## Conceptual structure
+## Main questions
 
-The models distinguish between four roles:
-
-- \(u\): a fast, local head-activating signal;
-- \(v\): a longer-range inhibitor;
-- \(\rho\): a slowly evolving positional or source-density field;
-- \(h\): a local head-identity variable with hysteresis.
-
-This separation makes it possible to study pattern generation, positional
-memory, and morphological commitment as related but distinct mechanisms.
+- Which regeneration mechanisms already occur in a two-variable
+  activator--inhibitor system?
+- When does inhibitor production create a stable resting state and permit
+  bistability?
+- How does activator production change the number and stability of homogeneous
+  steady states?
+- What positional information is missing from the two-equation model?
+- Can source density encode positional memory without determining pattern
+  formation itself?
 
 ## Repository structure
 
 ```text
 .
-├── main.tex
-├── packages.tex
-├── sections/
-│   ├── 00_abstract.tex
-│   ├── 01_introduction.tex
-│   ├── 02_gm_model_audit.tex
-│   ├── 03_regeneration_and_pattern_formation.tex
-│   ├── 04_source_density_and_positional_memory.tex
-│   ├── 05_head_identity_extension.tex
-│   └── 06_discussion.tex
-├── bib/
-│   └── references.bib
-└── figures/
+|-- main.tex
+|-- packages.tex
+|-- sections/
+|   |-- 00_abstract.tex
+|   |-- 01_introduction.tex
+|   |-- 02_gm_model_audit.tex
+|   |-- 03_regeneration_and_pattern_formation.tex
+|   |-- 04_source_density_and_positional_memory.tex
+|   |-- 05_head_identity_extension.tex
+|   `-- 06_discussion.tex
+|-- bib/
+|   `-- references.bib
+`-- figures/
 ```
 
 The current compiled manuscript is available as [`main.pdf`](main.pdf).
@@ -67,7 +67,7 @@ The current compiled manuscript is available as [`main.pdf`](main.pdf).
 A standard LaTeX installation with `latexmk` is sufficient:
 
 ```bash
-latexmk -pdf main.tex
+latexmk -pdf -synctex=1 main.tex
 ```
 
 To remove auxiliary build files:
@@ -76,10 +76,13 @@ To remove auxiliary build files:
 latexmk -c
 ```
 
+Each file in `sections/` declares `main.tex` as its root document, which allows
+editors such as VS Code with LaTeX Workshop to compile and synchronize the
+manuscript correctly while a section file is open.
+
 ## Project status
 
-The manuscript is under active development. The model audit and the core
-regeneration argument are in place, while the sections on positional memory,
-head identity, numerical experiments, figures, and biological references are
-being expanded.
-
+The two-equation model audit now contains numbered propositions, proofs, and
+remarks for the principal production regimes. The sections on regeneration,
+source-density dynamics, positional memory, head identity, numerical
+experiments, figures, and references remain under active development.
