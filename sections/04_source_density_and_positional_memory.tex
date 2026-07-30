@@ -1,0 +1,62 @@
+\section{Source Density and Positional Memory}
+
+% TODO: add references on grafting/polarization experiments, including Kinneret-related experiments
+% TODO: add references on source gradients
+% TODO: define prescribed rho profiles
+% TODO: define dynamic rho equation
+% TODO: add simulations for grafted tissue configurations
+
+\begin{itemize}
+    \item Motivation from grafting/polarization experiments:
+    \begin{itemize}
+        \item Tissue fragments taken from different body regions can behave differently after being grafted.
+        \item The outcome depends on how fragments are combined.
+        \item This suggests positional memory.
+    \end{itemize}
+    \item Problem for classical Gierer--Meinhardt models:
+    \begin{itemize}
+        \item Away from the head, activator concentration may be very small.
+        \item Classical Gierer--Meinhardt variables may not encode whether a fragment comes from the upper or lower body column.
+        \item The model lacks a mechanism to remember tissue origin.
+    \end{itemize}
+    \item Source density/source gradient as positional information:
+    \begin{itemize}
+        \item \(\rho\) can encode distance from the head or positional identity.
+        \item It is higher near the head and lower away from the head.
+        \item It may act as a localizer for future head formation.
+    \end{itemize}
+    \item First modelling option: prescribed source density \(\rho(x)\).
+    \begin{itemize}
+        \item \(\rho(x)\) is fixed in time.
+        \item It represents externally imposed positional information.
+        \item Simulate grafted profiles by combining different pieces of \(\rho(x)\).
+        \item Wounds are introduced near grafting points.
+        \item Peaks can emerge near maxima or discontinuities/transition regions of \(\rho\).
+        \item Head positions need not coincide with Turing-selected points.
+    \end{itemize}
+    \item Second modelling option: dynamic source density \(\rho(t,x)\).
+    \begin{itemize}
+        \item Initial condition \(\rho(0,x)\) encodes the grafted tissue configuration.
+        \item \(\rho\) evolves slowly.
+        \item \(\rho\) must react slower than activator-inhibitor dynamics to preserve memory.
+        \item \(\rho\) must diffuse:
+        \begin{itemize}
+            \item not too fast, otherwise it becomes nearly constant;
+            \item not too slow, otherwise it remains too localized near peaks;
+            \item an intermediate diffusion rate can encode approximate distance from heads.
+        \end{itemize}
+    \end{itemize}
+    \item Expected numerical behavior:
+    \begin{itemize}
+        \item initially similar to prescribed \(\rho(x)\);
+        \item peaks form near source-density maxima;
+        \item peaks can remain there for long times;
+        \item this creates metastable positional memory;
+        \item over longer times, peaks may drift toward Turing-selected patterns.
+    \end{itemize}
+    \item Main conclusion:
+    \begin{itemize}
+        \item Source density helps encode positional memory.
+        \item However, dynamic source density alone may generate metastable transients rather than genuine stable stationary heads at arbitrary positions.
+    \end{itemize}
+\end{itemize}

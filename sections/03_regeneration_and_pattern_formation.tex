@@ -1,0 +1,80 @@
+\section{Regeneration and Pattern Formation}
+\label{sec:regeneration-pattern-formation}
+
+% TODO: add biological references for wound-induced regeneration.
+% TODO: add references for observed activator/Wnt peaks.
+% TODO: add numerical figures for the scenarios described below.
+% TODO: specify the final domain, boundary conditions, and numerical protocol.
+
+We now ask what can already be explained by the two-equation reference model
+\eqref{eq:gm-inhibitor-production}, before introducing source density. This is
+the minimal test that the model should pass: if basic regeneration and peak
+formation already follow from the activator-inhibitor mechanism, then source
+density should not be credited with explaining these phenomena. Its role must be
+looked for elsewhere.
+
+In the biological interpretation, the activator \(u\) represents a local
+head-forming signal. A regenerated head is therefore represented, at this level
+of description, by the emergence of a localized activator peak. The reference
+model has exactly the phase-space structure needed for a threshold response: the
+zero state is stable, a lower positive state acts as a threshold, and an upper
+positive state is the branch from which spatial patterns can form. This makes it
+possible to distinguish weak perturbations, which decay, from sufficiently
+strong wound-like perturbations, which trigger regeneration.
+
+If the system is initialized close to the diffusion-unstable homogeneous state,
+then small spatial perturbations grow and a pattern is formed. This is the
+standard pattern-formation regime. It shows that the model can create localized
+activator peaks, but it does not yet represent a regeneration experiment,
+because the system is already placed near a pattern-forming state.
+
+A regeneration experiment is better represented by starting near the resting
+state. If the head is removed but no additional wound signal is introduced, the
+perturbation is too weak to cross the threshold. The solution then returns to the
+zero steady state, and no new head is formed. This is a useful feature rather
+than a failure: it means that the model does not regenerate automatically from
+every small disturbance.
+
+Regeneration appears when the removal experiment is accompanied by a sufficiently
+strong localized perturbation. Such a perturbation represents a wound signal. If
+it pushes the solution past the unstable threshold branch, an activator peak can
+grow and persist. In this sense, the two-equation model already captures the
+basic logic of wound-induced head formation: injury is not merely a change in
+geometry, but a local activation event strong enough to move the tissue out of
+the basin of attraction of the resting state.
+
+The same mechanism can also produce two-head configurations on sufficiently
+large domains. A second localized peak can be initiated by introducing a wound in
+the middle of the tissue or near one of the ends. However, the final position of
+the new peak is not arbitrary. The model selects preferred patterning positions,
+for example at a boundary, near the middle, or close to one third of the tissue,
+depending on the domain size and on the unstable spatial modes available to the
+system. A wound imposed away from these preferred locations may create a
+transient peak at the wound site, but this peak can later drift toward a
+model-selected position.
+
+This behaviour is especially visible when the domain size is varied. On a small
+domain, simulations often converge to a single boundary peak. If this one-peak
+solution is continued while the domain is gradually increased, it can remain
+stable even on much larger domains. By contrast, if a large domain is initialized
+near the zero state and a strong boundary perturbation is introduced, the system
+again tends to form a localized boundary peak. But if the same large domain is
+initialized close to the diffusion-unstable homogeneous state, a small
+perturbation typically does not select a single head. Instead, the solution
+converges to a multi-peak pattern.
+
+Thus the observed number and position of peaks are not determined only by the
+parameters of the equations. They also depend on the domain size, the initial
+condition, and the path by which the pattern is generated. A one-head pattern
+obtained by continuation from a small domain is not the same numerical experiment
+as a pattern selected from small random perturbations of a homogeneous
+pattern-forming state.
+
+The conclusion is that source density is not needed for these basic regeneration
+phenomena. The two-equation Gierer--Meinhardt model already accounts for decay
+of weak perturbations, wound-induced head formation, one- and two-peak patterns,
+and the selection of preferred peak locations. What it does not provide is an
+autonomous mechanism for positional memory: the model can create peaks, but it
+does not remember where a tissue fragment came from, nor does it guarantee that a
+head remains anchored at an arbitrary graft-induced position. This is the point
+at which source density becomes relevant.

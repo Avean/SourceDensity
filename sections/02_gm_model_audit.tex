@@ -1,0 +1,619 @@
+\section{Audit of Gierer--Meinhardt-Type Models}
+\label{sec:gm-model-audit}
+
+% TODO: add references on classical Gierer-Meinhardt models.
+% TODO: add references on Hydra activator-inhibitor models.
+% TODO: check notation against the source-density section once the final model family is fixed.
+
+This section records the model variants that will be compared in the paper. The
+point is not to rederive the general theory of diffusion-driven instability, but
+to identify which qualitative properties are already present in the underlying
+Gierer--Meinhardt equations and which properties are introduced by source
+density.
+
+\subsection{Two-Equation Activator--Inhibitor Models}
+\label{subsec:two-equation-ai-models}
+
+We start from the broad two-equation Gierer--Meinhardt activator-inhibitor
+family
+\begin{modelEquation}[eq:general-dimensional-gm]
+    \frac{\partial u}{\partial t}
+    &=
+    D_u\Delta u
+    +
+    \frac{a u^2+q_u}{v}
+    -\mu_u u
+    +p_u,
+    \\
+    \frac{\partial v}{\partial t}
+    &=
+    D_v\Delta v
+    +b u^2
+    -\mu_v v
+    +p_v.
+\end{modelEquation}
+Here \(u\) denotes the activator, \(v\) denotes the inhibitor, and homogeneous
+Neumann boundary conditions are imposed. The terms \(p_v\), \(p_u\), and \(q_u\)
+play different formal roles:
+\begin{itemize}
+    \item \(p_v\) is basal inhibitor production;
+    \item \(p_u\) is additive activator production;
+    \item \(q_u\) is activator production inside the inhibitor-regulated term.
+\end{itemize}
+The qualitative behaviour of the model depends strongly on which of these terms
+are present.
+
+\paragraph{Basal inhibitor production as a denominator shift.}
+The term \(p_v\) is equivalent to adding a positive constant to the inhibitor
+denominator. Indeed, writing the original inhibitor variable as \(V\) and setting
+\begin{modelEquation}
+    V
+    &=
+    v+K,
+    \\
+    K
+    &:=
+    \frac{p_v}{\mu_v},
+\end{modelEquation}
+the system can be written equivalently as
+\begin{modelEquation}
+    \frac{\partial u}{\partial t}
+    &=
+    D_u\Delta u
+    +
+    \frac{a u^2+q_u}{K+v}
+    -\mu_u u
+    +p_u,
+    \\
+    \frac{\partial v}{\partial t}
+    &=
+    D_v\Delta v
+    +b u^2
+    -\mu_v v.
+\end{modelEquation}
+In this shifted variable, \(v=0\) corresponds to the basal inhibitor level
+\(V=K\).
+
+\subsubsection{\texorpdfstring{No production terms: \(p_v=p_u=q_u=0\)}{No production terms}}
+
+If all production terms are absent, the model is
+\begin{modelEquation}
+    \partial_t u
+    &=
+    D_u\Delta u
+    +
+    \frac{a u^2}{v}
+    -\mu_u u,
+    \\
+    \partial_t v
+    &=
+    D_v\Delta v
+    +b u^2
+    -\mu_v v.
+\end{modelEquation}
+The origin is not a regular resting state because the first equation is singular
+at \(v=0\). The homogeneous steady-state equations give
+\begin{modelEquation}
+    v
+    &=
+    \frac{b}{\mu_v}u^2,
+    \\
+    0
+    &=
+    \frac{a u^2}{v}-\mu_u u,
+\end{modelEquation}
+and hence the unique positive homogeneous steady state
+\begin{modelEquation}[eq:no-production-positive-state]
+    \bar u
+    &=
+    \frac{a\mu_v}{b\mu_u},
+    \\
+    \bar v
+    &=
+    \frac{a^2\mu_v}{b\mu_u^2}.
+\end{modelEquation}
+At this state,
+\begin{modelEquation}
+    J(\bar u,\bar v)
+    &=
+    \begin{pmatrix}
+        \mu_u
+        &
+        \displaystyle -\frac{a\bar u^2}{\bar v^2}
+        \\
+        2b\bar u
+        &
+        -\mu_v
+    \end{pmatrix}.
+\end{modelEquation}
+Thus the kinetic trace is \(\mu_u-\mu_v\), and the kinetic determinant is
+\(\mu_u\mu_v>0\). For the usual parameter regime \(\mu_u<\mu_v\), the positive
+state is stable for the spatially homogeneous kinetics. Since the activator
+self-feedback entry is positive, this branch is the standard pattern-forming
+branch when the inhibitor diffuses sufficiently faster than the activator.
+
+The important modelling point is that this version does not contain a stable
+no-head/resting state. The model is built around a positive pattern-forming
+state, so patterns are expected for broad classes of initial conditions. In
+simulations this variant can also generate very large peaks or spike-like
+profiles because inhibition is unsaturated.
+
+\subsubsection{\texorpdfstring{Inhibitor production only: \(p_v>0\), \(p_u=q_u=0\)}{Inhibitor production only}}
+
+Adding basal inhibitor production removes the singularity. By the change of
+variables above, the system takes the saturated form
+\begin{modelEquation}[eq:gm-inhibitor-production]
+    \frac{\partial u}{\partial t}
+    &=
+    D_u\Delta u
+    +
+    \frac{a u^2}{K+v}
+    -\mu_u u,
+    \\
+    \frac{\partial v}{\partial t}
+    &=
+    D_v\Delta v
+    +b u^2
+    -\mu_v v.
+\end{modelEquation}
+This will be the reference two-equation model in the later subsections. After
+rescaling one may set \(K=1\), but we keep \(K\) visible because it records the
+effect of inhibitor production.
+
+The zero state \((0,0)\) is now a regular homogeneous steady state. Its Jacobian
+is
+\begin{modelEquation}
+    J(0,0)
+    &=
+    \begin{pmatrix}
+        -\mu_u & 0\\
+        0 & -\mu_v
+    \end{pmatrix},
+\end{modelEquation}
+so the zero state is stable, with or without diffusion.
+
+For \(u>0\), the steady-state equations give
+\begin{modelEquation}
+    v
+    &=
+    \frac{b}{\mu_v}u^2,
+    \\
+    \frac{a u}{K+v}
+    &=
+    \mu_u.
+\end{modelEquation}
+Equivalently,
+\begin{modelEquation}[eq:inhibitor-production-positive-polynomial]
+    \frac{\mu_u b}{\mu_v}u^2-au+\mu_u K
+    &=
+    0.
+\end{modelEquation}
+Thus two positive homogeneous steady states exist if and only if
+\begin{modelEquation}[eq:inhibitor-production-two-positive-condition]
+    a^2
+    &>
+    \frac{4b\mu_u^2K}{\mu_v}.
+\end{modelEquation}
+They are
+\begin{modelEquation}[eq:inhibitor-production-positive-states]
+    u_\pm
+    &=
+    \frac{\mu_v}{2b\mu_u}
+    \left(
+        a
+        \pm
+        \sqrt{
+            a^2-\frac{4b\mu_u^2K}{\mu_v}
+        }
+    \right),
+    \\
+    v_\pm
+    &=
+    \frac{b}{\mu_v}u_\pm^2.
+\end{modelEquation}
+
+At a positive steady state,
+\begin{modelEquation}
+    J(u_\pm,v_\pm)
+    &=
+    \begin{pmatrix}
+        \mu_u
+        &
+        \displaystyle -\frac{\mu_u^2}{a}
+        \\
+        2bu_\pm
+        &
+        -\mu_v
+    \end{pmatrix}.
+\end{modelEquation}
+The determinant is
+\begin{modelEquation}
+    \det J(u_\pm,v_\pm)
+    &=
+    \mu_u
+    \left(
+        \frac{2b\mu_u}{a}u_\pm-\mu_v
+    \right).
+\end{modelEquation}
+The lower branch \(u_-\) has negative determinant and is therefore unstable. The
+upper branch \(u_+\) has positive determinant; it is stable for the homogeneous
+kinetics when \(\mu_u<\mu_v\). Since the activator self-feedback entry is
+positive, this upper branch is the candidate Turing-unstable branch when the
+inhibitor diffuses sufficiently fast.
+
+This is the first variant that naturally supports a threshold-regeneration
+interpretation:
+\begin{itemize}
+    \item small perturbations of the zero state decay;
+    \item the lower positive state acts as a threshold;
+    \item sufficiently strong localized perturbations can reach the upper
+    pattern-forming branch.
+\end{itemize}
+In contrast to the unsaturated model, the denominator \(K+v\) also regularizes
+the inhibition and helps keep solutions bounded.
+
+\subsubsection{\texorpdfstring{Activator and inhibitor production: \(p_v>0\), \(p_u\geq0\), \(q_u\geq0\)}{Activator and inhibitor production}}
+
+With inhibitor production already encoded by \(K>0\), the two-equation model with
+activator production is
+\begin{modelEquation}[eq:gm-activator-and-inhibitor-production]
+    \frac{\partial u}{\partial t}
+    &=
+    D_u\Delta u
+    +
+    \frac{a u^2+q_u}{K+v}
+    -\mu_u u
+    +p_u,
+    \\
+    \frac{\partial v}{\partial t}
+    &=
+    D_v\Delta v
+    +b u^2
+    -\mu_v v.
+\end{modelEquation}
+If \(p_u>0\) or \(q_u>0\), then \((0,0)\) is no longer a steady state. The
+homogeneous steady states satisfy
+\begin{modelEquation}
+    v
+    &=
+    \frac{b}{\mu_v}u^2
+\end{modelEquation}
+and
+\begin{modelEquation}[eq:two-equation-production-polynomial]
+    0
+    &=
+    -\frac{\mu_u b}{\mu_v}u^3
+    +
+    \left(
+        a+\frac{p_u b}{\mu_v}
+    \right)u^2
+    -\mu_u K u
+    +
+    (q_u+Kp_u).
+\end{modelEquation}
+Thus the number of positive steady states depends on the production strength.
+
+For small \(p_u\) and \(q_u\), the phase portrait is a perturbation of
+\eqref{eq:gm-inhibitor-production}: the zero state is replaced by a small
+positive resting state, and one still expects a threshold branch and an upper
+pattern-forming branch. For sufficiently large activator production, the lower
+resting branch and the threshold branch may disappear in a saddle-node
+bifurcation. Then the only remaining homogeneous state is the positive
+pattern-forming branch, and the system tends to form patterns without requiring a
+wound-like perturbation.
+
+The two activator production terms are not identical algebraically: \(q_u\)
+enters the numerator, while \(p_u\) is added outside the inhibitor-regulated
+term. However, near small \(u\) they both increase the effective activator
+production. This explains why their effects can look similar in simulations even
+though the steady-state polynomial is changed in different coefficients.
+
+\subsection{Reference Two-Equation Model for Regeneration}
+\label{subsec:reference-two-equation-model}
+
+The reference two-equation model for the regeneration discussion is therefore
+\eqref{eq:gm-inhibitor-production}, the inhibitor-production model without
+activator production. It has:
+\begin{itemize}
+    \item a stable zero/no-head state;
+    \item two positive steady states when
+    \(a^2>4b\mu_u^2K/\mu_v\);
+    \item a lower positive branch that is unstable;
+    \item an upper positive branch that is kinetically stable when
+    \(\mu_u<\mu_v\) and can become unstable in the presence of diffusion.
+\end{itemize}
+This model already contains the basic threshold logic needed for wound-induced
+regeneration. Source density is therefore not needed for the existence of a
+stable resting state or a threshold to activation.
+
+\subsection{Three-Equation Model with Source Density}
+\label{subsec:three-equation-source-density-model}
+
+We now add a source-density variable \(s\). In the shifted inhibitor variable,
+the source-density model with both activator production mechanisms is
+\begin{modelEquation}[eq:sd-general-production-model]
+    \frac{\partial u}{\partial t}
+    &=
+    D_u\Delta u
+    +
+    s\frac{a u^2+q_u}{K+v}
+    -\mu_u u
+    +p_u,
+    \\
+    \frac{\partial v}{\partial t}
+    &=
+    D_v\Delta v
+    +b s u^2
+    -\mu_v v,
+    \\
+    \tau\frac{\partial s}{\partial t}
+    &=
+    D_s\Delta s
+    +u
+    -s.
+\end{modelEquation}
+Here \(K>0\) again represents basal inhibitor production. The term \(q_u\) is
+source-dependent because it is multiplied by \(s\), whereas \(p_u\) is an
+external activator production term.
+
+\subsubsection{\texorpdfstring{No activator production: \(p_u=q_u=0\)}{No activator production}}
+
+When \(p_u=q_u=0\), the model is
+\begin{modelEquation}[eq:sd-no-activator-production]
+    \partial_t u
+    &=
+    D_u\Delta u
+    +
+    s\frac{a u^2}{K+v}
+    -\mu_u u,
+    \\
+    \partial_t v
+    &=
+    D_v\Delta v
+    +b s u^2
+    -\mu_v v,
+    \\
+    \tau\partial_t s
+    &=
+    D_s\Delta s
+    +u
+    -s.
+\end{modelEquation}
+The zero state \((0,0,0)\) is a homogeneous steady state. The reaction Jacobian
+at zero is triangular up to the \(u\)-to-\(s\) coupling:
+\begin{modelEquation}
+    J(0,0,0)
+    &=
+    \begin{pmatrix}
+        -\mu_u & 0 & 0\\
+        0 & -\mu_v & 0\\
+        1/\tau & 0 & -1/\tau
+    \end{pmatrix},
+\end{modelEquation}
+so the zero state is stable.
+
+For a positive homogeneous steady state, the third equation gives \(s=u\), and
+the second equation gives
+\begin{modelEquation}
+    v
+    &=
+    \frac{b}{\mu_v}u^3.
+\end{modelEquation}
+The first equation then yields
+\begin{modelEquation}[eq:sd-no-production-positive-polynomial]
+    \frac{\mu_u b}{\mu_v}u^3
+    -au^2
+    +\mu_u K
+    &=
+    0.
+\end{modelEquation}
+Thus source density changes the positive steady-state equation from the
+quadratic equation \eqref{eq:inhibitor-production-positive-polynomial} to a
+cubic equation. Two positive steady states exist when the minimum of the cubic is
+negative, equivalently
+\begin{modelEquation}[eq:sd-no-production-two-positive-condition]
+    \mu_u K
+    &<
+    \frac{4a^3\mu_v^2}{27\mu_u^2b^2}.
+\end{modelEquation}
+
+At a positive steady state, the reaction Jacobian in the variable order
+\((u,v,s)\) is
+\begin{modelEquation}[eq:sd-positive-jacobian]
+    J(u,v,s)
+    &=
+    \begin{pmatrix}
+        \mu_u
+        &
+        \displaystyle -\frac{\mu_u^2}{a u}
+        &
+        \mu_u
+        \\
+        2bu^2
+        &
+        -\mu_v
+        &
+        bu^2
+        \\
+        1/\tau
+        &
+        0
+        &
+        -1/\tau
+    \end{pmatrix},
+    \\
+    s
+    &=
+    u,
+    \qquad
+    v
+    =
+    \frac{b}{\mu_v}u^3.
+\end{modelEquation}
+The characteristic polynomial has the form
+\begin{modelEquation}
+    \chi(\lambda)
+    &=
+    \lambda^3+\alpha_1\lambda^2+\alpha_2\lambda+\alpha_3,
+\end{modelEquation}
+where
+\begin{modelEquation}
+    \alpha_1
+    &=
+    \mu_v+\frac{1}{\tau}-\mu_u,
+    \\
+    \alpha_2
+    &=
+    \frac{\mu_v-2\mu_u}{\tau}
+    -\mu_u\mu_v
+    +
+    \frac{2b\mu_u^2}{a}u,
+    \\
+    \alpha_3
+    &=
+    \frac{\mu_u}{\tau}
+    \left(
+        \frac{3b\mu_u}{a}u-2\mu_v
+    \right).
+\end{modelEquation}
+The lower positive branch lies below the critical value
+\begin{modelEquation}
+    u_c
+    &=
+    \frac{2a\mu_v}{3b\mu_u},
+\end{modelEquation}
+so \(\alpha_3<0\) and that branch is unstable. The upper positive branch lies
+above \(u_c\), so it is the only candidate for kinetic stability. It is stable
+for the homogeneous kinetics precisely when the Routh--Hurwitz inequalities
+\begin{modelEquation}
+    \alpha_1
+    &>
+    0,
+    \\
+    \alpha_2
+    &>
+    0,
+    \\
+    \alpha_3
+    &>
+    0,
+    \\
+    \alpha_1\alpha_2
+    &>
+    \alpha_3
+\end{modelEquation}
+hold. With suitable time scale and degradation parameters, this upper branch is
+the source-density analogue of the upper pattern-forming branch of the
+two-equation reference model \eqref{eq:gm-inhibitor-production}.
+
+\subsubsection{\texorpdfstring{Source-dependent activator production: \(q_u>0\), \(p_u=0\)}{Source-dependent activator production}}
+
+If \(q_u>0\) but \(p_u=0\), the zero state remains a steady state because the
+extra activator production is multiplied by \(s\). Its \(u,s\) linearization is
+\begin{modelEquation}
+    \begin{pmatrix}
+        -\mu_u & q_u/K\\
+        1/\tau & -1/\tau
+    \end{pmatrix}.
+\end{modelEquation}
+Thus the zero state remains stable when
+\begin{modelEquation}[eq:sd-qu-zero-stability]
+    q_u
+    &<
+    \mu_u K,
+\end{modelEquation}
+and loses stability when \(q_u\) is too large.
+
+For positive homogeneous states, \(s=u\), \(v=b u^3/\mu_v\), and
+\begin{modelEquation}[eq:sd-qu-positive-polynomial]
+    \frac{\mu_u b}{\mu_v}u^3-au^2+\mu_u K-q_u
+    &=
+    0.
+\end{modelEquation}
+Small \(q_u\) lowers the activation threshold but can preserve the resting
+state. Large \(q_u\) destroys the threshold-regeneration interpretation because
+the zero state is no longer stable.
+
+\subsubsection{\texorpdfstring{External activator production: \(p_u>0\)}{External activator production}}
+
+If \(p_u>0\), then \((0,0,0)\) is no longer a steady state. Positive homogeneous
+states satisfy \(s=u\), \(v=b u^3/\mu_v\), and
+\begin{modelEquation}[eq:sd-pu-positive-equation]
+    0
+    &=
+    u(a u^2+q_u)
+    +
+    \left(
+        p_u-\mu_u u
+    \right)
+    \left(
+        K+\frac{b}{\mu_v}u^3
+    \right).
+\end{modelEquation}
+This is generally a quartic equation in \(u\). For small \(p_u\), the behaviour
+is expected to remain close to the threshold case: the zero state is replaced by
+a small positive resting state, and large perturbations may reach the upper
+pattern-forming branch. For sufficiently large \(p_u\), the lower resting branch
+and the threshold branch may disappear, leaving only a positive pattern-forming
+state. In that regime the model produces patterns without requiring a wound-like
+trigger.
+
+\subsection{Summary of the Audit}
+\label{subsec:model-audit-summary}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Qualitative audit of the model variants used in this paper.}
+    \label{tab:model-audit-summary}
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{llllp{0.38\textwidth}}
+            \toprule
+            Model & Resting state & Positive branches & Unstable branch & Interpretation \\
+            \midrule
+            Two equations, no production
+            & No regular zero
+            & One positive branch
+            & None
+            & Pattern-forming model without a no-head state; can produce large spikes. \\
+            Two equations, inhibitor production only
+            & Stable zero
+            & Two positive branches
+            & Lower positive branch
+            & Threshold-regeneration mechanism; upper branch is the pattern-forming candidate. \\
+            Two equations, small activator production
+            & Small positive rest state
+            & Typically three positive states
+            & Middle branch
+            & Threshold behaviour persists approximately. \\
+            Two equations, large activator production
+            & No resting/threshold regime
+            & Typically one positive state
+            & None
+            & Patterning may occur without a wound-like perturbation. \\
+            Source density, no activator production
+            & Stable zero
+            & Two positive branches when \eqref{eq:sd-no-production-two-positive-condition} holds
+            & Lower positive branch
+            & Similar threshold logic, but the steady-state equation and stability conditions change. \\
+            Source density, source-dependent \(q_u\)
+            & Stable zero if \(q_u<\mu_u K\)
+            & Production-dependent
+            & Production-dependent
+            & Small \(q_u\) lowers the threshold; large \(q_u\) can destabilize the resting state. \\
+            Source density, external \(p_u\)
+            & Zero absent
+            & Production-dependent
+            & Production-dependent
+            & Small \(p_u\) gives a small positive rest state; large \(p_u\) removes the threshold regime. \\
+            \bottomrule
+        \end{tabular}%
+    }
+\end{table}
+
+The conclusion of this audit is that the inhibitor-production version of the
+two-equation Gierer--Meinhardt model already gives a stable resting state, a
+threshold to activation, and a pattern-forming upper branch. Source density does
+not need to be introduced to obtain basic regeneration-like threshold dynamics.
+Its role should therefore be tested in the later sections as a mechanism for
+positional memory, grafting response, and long-lived anchoring of head-forming
+regions.

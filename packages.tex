@@ -1,0 +1,39 @@
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\numberwithin{equation}{section}
+
+\newenvironment{modelEquation}[1][]{%
+    \begin{equation}
+    \if\relax\detokenize{#1}\relax\else\label{#1}\fi
+    \begin{aligned}
+}{%
+    \end{aligned}
+    \end{equation}
+}
+
+\setlist[itemize]{leftmargin=*,itemsep=0.25em,topsep=0.25em}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ubar}{\overline{u}}
+\newcommand{\vbar}{\overline{v}}
+\newcommand{\rhobar}{\overline{\rho}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
