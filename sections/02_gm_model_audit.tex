@@ -1,3 +1,4 @@
+% !TeX root = ../main.tex
 \section{Audit of Gierer--Meinhardt-Type Models}
 \label{sec:gm-model-audit}
 
@@ -13,6 +14,10 @@ density.
 
 \subsection{Two-Equation Activator--Inhibitor Models}
 \label{subsec:two-equation-ai-models}
+
+Throughout this section, we assume that
+\(a,b,\mu_u,\mu_v,D_u,D_v>0\), while the production parameters
+\(p_u,p_v,q_u\) are nonnegative.
 
 We start from the broad two-equation Gierer--Meinhardt activator-inhibitor
 family
@@ -49,8 +54,8 @@ denominator. Indeed, writing the original inhibitor variable as \(V\) and settin
 \begin{modelEquation}
     V
     &=
-    v+K,
-    \\
+    v+K
+    \quad \text{with} \quad
     K
     &:=
     \frac{p_v}{\mu_v},
@@ -77,7 +82,7 @@ In this shifted variable, \(v=0\) corresponds to the basal inhibitor level
 \subsubsection{\texorpdfstring{No production terms: \(p_v=p_u=q_u=0\)}{No production terms}}
 
 If all production terms are absent, the model is
-\begin{modelEquation}
+\begin{modelEquation}[eq:gm-no-production]
     \partial_t u
     &=
     D_u\Delta u
@@ -91,52 +96,106 @@ If all production terms are absent, the model is
     +b u^2
     -\mu_v v.
 \end{modelEquation}
-The origin is not a regular resting state because the first equation is singular
-at \(v=0\). The homogeneous steady-state equations give
-\begin{modelEquation}
-    v
-    &=
-    \frac{b}{\mu_v}u^2,
-    \\
-    0
-    &=
-    \frac{a u^2}{v}-\mu_u u,
-\end{modelEquation}
-and hence the unique positive homogeneous steady state
+
+\begin{proposition}
+\label{prop:no-production-unique-homogeneous-state}
+The system \eqref{eq:gm-no-production} has exactly one positive spatially
+homogeneous steady state, given by
 \begin{modelEquation}[eq:no-production-positive-state]
-    \bar u
+    \ubar
     &=
     \frac{a\mu_v}{b\mu_u},
-    \\
-    \bar v
+    \qquad
+    \vbar
     &=
     \frac{a^2\mu_v}{b\mu_u^2}.
 \end{modelEquation}
-At this state,
+This steady state is unstable if \(\mu_u>\mu_v\). If \(\mu_u<\mu_v\), it may be
+stable or exhibit a Turing instability if \(D_u\) is sufficiently small
+relative to \(D_v\).
+\end{proposition}
+
+\begin{proof}
+Let \((\ubar,\vbar)\) be a spatially homogeneous steady state. The diffusion terms
+vanish, and the second equation in \eqref{eq:gm-no-production} gives
 \begin{modelEquation}
-    J(\bar u,\bar v)
+    \vbar
+    &=
+    \frac{b}{\mu_v}\ubar^2.
+\end{modelEquation}
+If \(\ubar=0\), then \(\vbar=0\), but \((0,0)\) is not a steady state because
+the term \(a\ubar^2/\vbar\) is undefined there. Hence \(\ubar\neq 0\) and
+\(\vbar>0\). The first steady-state equation can therefore be divided by
+\(\ubar\), yielding
+\begin{modelEquation}
+    \frac{a\ubar}{\vbar}
+    &=
+    \mu_u.
+\end{modelEquation}
+Since \(\vbar>0\), this identity also implies that \(\ubar>0\).
+Substitution of \(\vbar=b\ubar^2/\mu_v\) gives
+\begin{modelEquation}
+    \ubar
+    &=
+    \frac{a\mu_v}{b\mu_u}.
+\end{modelEquation}
+The corresponding value of \(\vbar\) is
+\[
+    \vbar
+    =
+    \frac{b}{\mu_v}
+    \left(
+        \frac{a\mu_v}{b\mu_u}
+    \right)^2
+    =
+    \frac{a^2\mu_v}{b\mu_u^2}.
+\]
+The Jacobian at this steady state is
+\begin{modelEquation}
+    J(\ubar,\vbar)
     &=
     \begin{pmatrix}
         \mu_u
         &
-        \displaystyle -\frac{a\bar u^2}{\bar v^2}
+        \displaystyle -\frac{\mu_u^2}{a}
         \\
-        2b\bar u
+        \displaystyle \frac{2a\mu_v}{\mu_u}
         &
         -\mu_v
-    \end{pmatrix}.
+    \end{pmatrix},
 \end{modelEquation}
-Thus the kinetic trace is \(\mu_u-\mu_v\), and the kinetic determinant is
-\(\mu_u\mu_v>0\). For the usual parameter regime \(\mu_u<\mu_v\), the positive
-state is stable for the spatially homogeneous kinetics. Since the activator
-self-feedback entry is positive, this branch is the standard pattern-forming
-branch when the inhibitor diffuses sufficiently faster than the activator.
+and hence
+\begin{modelEquation}
+    \operatorname{tr}J(\ubar,\vbar)
+    &=
+    \mu_u-\mu_v,
+    \qquad
+    \det J(\ubar,\vbar)
+    =
+    \mu_u\mu_v
+    >
+    0.
+\end{modelEquation}
+Since \(\det J(\ubar,\vbar)>0\), the sign of
+\(\operatorname{tr}J(\ubar,\vbar)\) gives the stated stability properties.
 
-The important modelling point is that this version does not contain a stable
-no-head/resting state. The model is built around a positive pattern-forming
-state, so patterns are expected for broad classes of initial conditions. In
-simulations this variant can also generate very large peaks or spike-like
-profiles because inhibition is unsaturated.
+Moreover, the activator self-interaction satisfies
+\[
+    \partial_u f(\ubar,\vbar)
+    =
+    \mu_u
+    >
+    0.
+\]
+Therefore, by the criterion in \textup{[XXX]}, a Turing instability may occur
+when \(D_u\) is sufficiently small relative to \(D_v\).
+\end{proof}
+
+\begin{remark}
+Model \eqref{eq:gm-no-production} has no resting state and therefore no
+bistability between resting and pattern-forming states. For fixed parameters,
+it either generates spatial patterns or does not generate patterns at all.
+\end{remark}
 
 \subsubsection{\texorpdfstring{Inhibitor production only: \(p_v>0\), \(p_u=q_u=0\)}{Inhibitor production only}}
 
@@ -160,102 +219,124 @@ This will be the reference two-equation model in the later subsections. After
 rescaling one may set \(K=1\), but we keep \(K\) visible because it records the
 effect of inhibitor production.
 
-The zero state \((0,0)\) is now a regular homogeneous steady state. Its Jacobian
-is
+\begin{proposition}
+\label{prop:inhibitor-production-steady-states}
+Under the condition
+\(a^2>4b\mu_u^2K/\mu_v\), the system
+\eqref{eq:gm-inhibitor-production} has three spatially homogeneous steady
+states with the following stability properties:
+\begin{center}
+    \begin{tabular}{@{}>{\centering\arraybackslash}m{0.18\textwidth}
+                        @{\qquad}m{0.62\textwidth}@{}}
+        \((0,0)\) & asymptotically stable, \\[0.35em]
+        \((\ubar_-,\vbar_-)\) & unstable, \\[0.35em]
+        \((\ubar_+,\vbar_+)\) &
+        if \(\mu_u>\mu_v\), then unstable,\par\vspace{0.2em}
+        if \(\mu_u<\mu_v\), then either stable or Turing unstable.
+    \end{tabular}
+\end{center}
+
+If \(a^2<4b\mu_u^2K/\mu_v\), then \((0,0)\) is the unique spatially
+homogeneous steady state and is asymptotically stable.
+\end{proposition}
+
+\begin{proof}
+At the zero state, the Jacobian is
 \begin{modelEquation}
     J(0,0)
     &=
     \begin{pmatrix}
         -\mu_u & 0\\
         0 & -\mu_v
-    \end{pmatrix},
+    \end{pmatrix}.
 \end{modelEquation}
-so the zero state is stable, with or without diffusion.
+Its eigenvalues are negative, and diffusion shifts them further to the left.
+Thus the zero state is asymptotically stable.
 
-For \(u>0\), the steady-state equations give
+Let \((\ubar,\vbar)\) be a positive spatially homogeneous steady state. The
+steady-state equations give
 \begin{modelEquation}
-    v
+    \vbar
     &=
-    \frac{b}{\mu_v}u^2,
-    \\
-    \frac{a u}{K+v}
-    &=
+    \frac{b}{\mu_v}\ubar^2,
+    \qquad
+    \frac{a\ubar}{K+\vbar}
+    =
     \mu_u.
 \end{modelEquation}
-Equivalently,
+Substitution of \(\vbar=b\ubar^2/\mu_v\) yields
 \begin{modelEquation}[eq:inhibitor-production-positive-polynomial]
-    \frac{\mu_u b}{\mu_v}u^2-au+\mu_u K
+    \frac{\mu_u b}{\mu_v}\ubar^2-a\ubar+\mu_u K
     &=
     0.
 \end{modelEquation}
-Thus two positive homogeneous steady states exist if and only if
-\begin{modelEquation}[eq:inhibitor-production-two-positive-condition]
-    a^2
-    &>
-    \frac{4b\mu_u^2K}{\mu_v}.
-\end{modelEquation}
-They are
-\begin{modelEquation}[eq:inhibitor-production-positive-states]
-    u_\pm
-    &=
-    \frac{\mu_v}{2b\mu_u}
-    \left(
-        a
-        \pm
-        \sqrt{
-            a^2-\frac{4b\mu_u^2K}{\mu_v}
-        }
-    \right),
-    \\
-    v_\pm
-    &=
-    \frac{b}{\mu_v}u_\pm^2.
-\end{modelEquation}
+This quadratic equation has two distinct positive roots precisely when its
+discriminant is positive, that is, when
+\(a^2>4b\mu_u^2K/\mu_v\). Denote these roots by
+\(\ubar_-<\ubar_+\) and set
+\(\vbar_\pm=b\ubar_\pm^2/\mu_v\). If the inequality is reversed, the
+quadratic has no real roots, and hence the zero state is the only spatially
+homogeneous steady state.
 
-At a positive steady state,
+The Jacobian at either positive steady state is
 \begin{modelEquation}
-    J(u_\pm,v_\pm)
+    J(\ubar_\pm,\vbar_\pm)
     &=
     \begin{pmatrix}
         \mu_u
         &
         \displaystyle -\frac{\mu_u^2}{a}
         \\
-        2bu_\pm
+        2b\ubar_\pm
         &
         -\mu_v
     \end{pmatrix}.
 \end{modelEquation}
-The determinant is
+Its trace and determinant are
 \begin{modelEquation}
-    \det J(u_\pm,v_\pm)
+    \operatorname{tr}J(\ubar_\pm,\vbar_\pm)
+    &=
+    \mu_u-\mu_v,
+    \qquad
+    \det J(\ubar_\pm,\vbar_\pm)
     &=
     \mu_u
     \left(
-        \frac{2b\mu_u}{a}u_\pm-\mu_v
+        \frac{2b\mu_u}{a}\ubar_\pm-\mu_v
     \right).
 \end{modelEquation}
-The lower branch \(u_-\) has negative determinant and is therefore unstable. The
-upper branch \(u_+\) has positive determinant; it is stable for the homogeneous
-kinetics when \(\mu_u<\mu_v\). Since the activator self-feedback entry is
-positive, this upper branch is the candidate Turing-unstable branch when the
-inhibitor diffuses sufficiently fast.
+If \(P\) denotes the polynomial on the left-hand side of
+\eqref{eq:inhibitor-production-positive-polynomial}, then
+\[
+    \det J(\ubar_\pm,\vbar_\pm)
+    =
+    \frac{\mu_u\mu_v}{a}P'(\ubar_\pm).
+\]
+By strict convexity of \(P\),
+\(P'(\ubar_-)<0<P'(\ubar_+)\). Hence the lower state is unstable, while the
+sign of the trace gives the stated stability properties of the upper state.
+Moreover,
+\[
+    \partial_u f(\ubar_+,\vbar_+)
+    =
+    \mu_u
+    >
+    0.
+\]
+Therefore, by the criterion in \textup{[XXX]}, the upper state may exhibit a
+Turing instability when \(D_u\) is sufficiently small relative to \(D_v\).
+\end{proof}
 
-This is the first variant that naturally supports a threshold-regeneration
-interpretation:
-\begin{itemize}
-    \item small perturbations of the zero state decay;
-    \item the lower positive state acts as a threshold;
-    \item sufficiently strong localized perturbations can reach the upper
-    pattern-forming branch.
-\end{itemize}
-In contrast to the unsaturated model, the denominator \(K+v\) also regularizes
-the inhibition and helps keep solutions bounded.
+\begin{remark}
+Model \eqref{eq:gm-inhibitor-production} has a stable zero state, which may
+serve as a resting state and makes bistability with the upper positive state
+possible.
+\end{remark}
 
-\subsubsection{\texorpdfstring{Activator and inhibitor production: \(p_v>0\), \(p_u\geq0\), \(q_u\geq0\)}{Activator and inhibitor production}}
+\subsubsection{\texorpdfstring{Activator and inhibitor production: \(p_v>0\), \(p_u,q_u\geqslant0\)}{Activator and inhibitor production}}
 
-With inhibitor production already encoded by \(K>0\), the two-equation model with
-activator production is
+With inhibitor production already encoded by \(K>0\), the two-equation model
+with activator production is
 \begin{modelEquation}[eq:gm-activator-and-inhibitor-production]
     \frac{\partial u}{\partial t}
     &=
@@ -271,42 +352,220 @@ activator production is
     +b u^2
     -\mu_v v.
 \end{modelEquation}
-If \(p_u>0\) or \(q_u>0\), then \((0,0)\) is no longer a steady state. The
-homogeneous steady states satisfy
+This model interpolates between the two preceding cases. For sufficiently weak
+activator production, the three-state structure may persist. As production
+increases, two states may vanish, leaving a single positive spatially
+homogeneous steady state.
+
+Set
+\begin{modelEquation}[eq:activator-production-cubic-coefficients]
+    A
+    &:=
+    \frac{\mu_u b}{\mu_v},
+    \qquad
+    B
+    :=
+    a+\frac{p_u b}{\mu_v},
+    \qquad
+    C
+    :=
+    \mu_u K,
+    \qquad
+    D
+    :=
+    q_u+Kp_u,
+\end{modelEquation}
+and let
+\begin{modelEquation}[eq:activator-production-discriminant]
+    \Delta
+    &:=
+    B^2C^2-4AC^3-4B^3D-27A^2D^2+18ABCD
+\end{modelEquation}
+be the discriminant of \(P(z)=Az^3-Bz^2+Cz-D\).
+
+For any simple spatially homogeneous steady state
+\((\ubar_i,\vbar_i)\), define
 \begin{modelEquation}
-    v
-    &=
-    \frac{b}{\mu_v}u^2
+    S_i
+    &:=
+    \partial_u f(\ubar_i,\vbar_i)
+    =
+    \frac{2a\ubar_i}{K+\vbar_i}-\mu_u.
 \end{modelEquation}
-and
-\begin{modelEquation}[eq:two-equation-production-polynomial]
-    0
+
+\begin{proposition}
+\label{prop:activator-production-steady-states}
+Under the condition \(\Delta>0\), the system
+\eqref{eq:gm-activator-and-inhibitor-production} has three distinct
+nonnegative spatially homogeneous steady states, ordered by
+\(\ubar_1<\ubar_2<\ubar_3\), with the following properties:
+\begin{center}
+    \begin{tabular}{@{}>{\centering\arraybackslash}m{0.18\textwidth}
+                        @{\qquad}m{0.62\textwidth}@{}}
+        \((\ubar_1,\vbar_1)\) &
+        if \(S_1\leqslant0\), then stable,\par\vspace{0.2em}
+        if \(0<S_1<\mu_v\), then either stable or Turing unstable,\par\vspace{0.2em}
+        if \(S_1>\mu_v\), then unstable,
+        \\[2.0em]
+        \((\ubar_2,\vbar_2)\) & unstable, \\[0.5em]
+        \((\ubar_3,\vbar_3)\) &
+        if \(S_3\leqslant0\), then stable,\par\vspace{0.2em}
+        if \(0<S_3<\mu_v\), then either stable or Turing unstable,\par\vspace{0.2em}
+        if \(S_3>\mu_v\), then unstable.
+    \end{tabular}
+\end{center}
+Moreover, the inequality \(S_1<S_3\) holds, showing that the upper state is
+less stable with respect to the reaction dynamics.
+
+If \(\Delta<0\), the system has exactly one nonnegative spatially homogeneous
+steady state. It is stable if \(S_1\leqslant0\), may be
+stable or Turing unstable if \(0<S_1<\mu_v\), and is unstable if
+\(S_1>\mu_v\).
+\end{proposition}
+
+\begin{proof}
+At a spatially homogeneous steady state,
+\begin{modelEquation}
+    \vbar
     &=
-    -\frac{\mu_u b}{\mu_v}u^3
-    +
-    \left(
-        a+\frac{p_u b}{\mu_v}
-    \right)u^2
-    -\mu_u K u
-    +
-    (q_u+Kp_u).
+    \frac{b}{\mu_v}\ubar^2,
+    \qquad
+    P(\ubar)
+    =
+    A\ubar^3-B\ubar^2+C\ubar-D
+    =
+    0.
 \end{modelEquation}
-Thus the number of positive steady states depends on the production strength.
+Since \(D\geqslant0\), one has \(P(0)\leqslant0\) and \(P(z)\to\infty\) as
+\(z\to\infty\). Moreover, \(P(z)<0\) for every \(z<0\). Hence all real roots
+of \(P\) are nonnegative, and the standard discriminant criterion gives the
+stated alternatives for \(\Delta\). If \(D>0\), then all real roots are
+positive.
 
-For small \(p_u\) and \(q_u\), the phase portrait is a perturbation of
-\eqref{eq:gm-inhibitor-production}: the zero state is replaced by a small
-positive resting state, and one still expects a threshold branch and an upper
-pattern-forming branch. For sufficiently large activator production, the lower
-resting branch and the threshold branch may disappear in a saddle-node
-bifurcation. Then the only remaining homogeneous state is the positive
-pattern-forming branch, and the system tends to form patterns without requiring a
-wound-like perturbation.
+The Jacobian at \((\ubar_i,\vbar_i)\) is
+\begin{modelEquation}
+    J(\ubar_i,\vbar_i)
+    &=
+    \begin{pmatrix}
+        \displaystyle
+        \frac{2a\ubar_i}{K+\vbar_i}-\mu_u
+        &
+        \displaystyle
+        -\frac{a\ubar_i^2+q_u}{(K+\vbar_i)^2}
+        \\
+        2b\ubar_i
+        &
+        -\mu_v
+    \end{pmatrix}.
+\end{modelEquation}
+Writing \(h(u)=f(u,bu^2/\mu_v)\), one has
+\[
+    h(u)
+    =
+    -\frac{P(u)}{K+bu^2/\mu_v}.
+\]
+It follows that
+\begin{modelEquation}
+    \operatorname{tr}J(\ubar_i,\vbar_i)
+    &=
+    S_i-\mu_v,
+    \qquad
+    \det J(\ubar_i,\vbar_i)
+    =
+    \frac{\mu_v}{K+\vbar_i}P'(\ubar_i).
+\end{modelEquation}
+For three simple roots,
+\[
+    P'(\ubar_1)>0,
+    \qquad
+    P'(\ubar_2)<0,
+    \qquad
+    P'(\ubar_3)>0.
+\]
+Thus the middle state is unstable, whereas the determinant is positive at
+both outer states. When \(\Delta<0\), the unique real root is simple and
+satisfies \(P'(\ubar_1)>0\), so the determinant is also positive at the
+unique steady state.
 
-The two activator production terms are not identical algebraically: \(q_u\)
-enters the numerator, while \(p_u\) is added outside the inhibitor-regulated
-term. However, near small \(u\) they both increase the effective activator
-production. This explains why their effects can look similar in simulations even
-though the steady-state polynomial is changed in different coefficients.
+When \(\Delta>0\), Vieta's relations give
+\[
+    \ubar_1\ubar_2+\ubar_1\ubar_3+\ubar_2\ubar_3
+    =
+    \frac{C}{A}
+    =
+    \frac{K\mu_v}{b}.
+\]
+Thus \(\ubar_1\ubar_3<K\mu_v/b\), and a direct calculation yields
+\[
+    S_3-S_1
+    =
+    \frac{
+        2a(\ubar_3-\ubar_1)
+        \left(K-\frac{b}{\mu_v}\ubar_1\ubar_3\right)
+    }{
+        \left(K+\frac{b}{\mu_v}\ubar_1^2\right)
+        \left(K+\frac{b}{\mu_v}\ubar_3^2\right)
+    }
+    >
+    0.
+\]
+
+Since \(\operatorname{tr}J(\ubar_i,\vbar_i)=S_i-\mu_v\), an outer or unique
+state is unstable if \(S_i>\mu_v\), while its reaction Jacobian is stable if
+\(S_i<\mu_v\).
+
+For a Laplacian eigenvalue \(\lambda\geqslant0\),
+\begin{modelEquation}
+    \operatorname{tr}
+    \bigl(
+        J(\ubar_i,\vbar_i)
+        -\lambda\operatorname{diag}(D_u,D_v)
+    \bigr)
+    &=
+    S_i-\mu_v-\lambda(D_u+D_v),
+    \\
+    \det
+    \bigl(
+        J(\ubar_i,\vbar_i)
+        -\lambda\operatorname{diag}(D_u,D_v)
+    \bigr)
+    &=
+    \det J(\ubar_i,\vbar_i)
+    +
+    \lambda(\mu_vD_u-D_vS_i)
+    +
+    \lambda^2D_uD_v.
+\end{modelEquation}
+For an outer or unique state with \(S_i\leqslant0\), both expressions have
+the signs required for stability for every \(\lambda\geqslant0\). If
+\(0<S_i<\mu_v\), the reaction Jacobian is stable, while the criterion in
+\textup{[XXX]} allows a Turing instability when \(D_u\) is sufficiently small
+relative to \(D_v\). This proves all three stability alternatives.
+
+Finally, at any positive steady state, the steady-state identity gives
+\[
+    S_i
+    =
+    \mu_u
+    -\frac{2p_u}{\ubar_i}
+    -\frac{2q_u}{\ubar_i(K+\vbar_i)}
+    \leqslant
+    \mu_u.
+\]
+Thus \(S_i<\mu_v\) whenever \(\mu_u<\mu_v\).
+\end{proof}
+
+\begin{remark}
+For the reaction dynamics, the lower state cannot be unstable while the upper
+state is stable. The opposite configuration, with a stable lower state and an
+unstable upper state, is possible.
+\end{remark}
+
+\begin{remark}
+If \(p_u>0\) or \(q_u>0\), activator production removes the zero steady state.
+In the three-state regime, the lower positive state may instead act as a
+resting state, allowing bistability with the upper positive state.
+\end{remark}
 
 \subsection{Reference Two-Equation Model for Regeneration}
 \label{subsec:reference-two-equation-model}
