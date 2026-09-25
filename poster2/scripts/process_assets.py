@@ -3,6 +3,8 @@
 - livshits_h2f_experiment.png : white background -> transparent (colour-to-alpha)
 - heidelberg_logo.png         : black text/line -> white, for the dark petrol header
 - tursch_cut_tied.png         : white background -> poster paper colour, soft fade at edges
+- steichele2024_control_regeneration.jpg, kadu2012_grafting.jpg
+                              : white gaps / frames -> poster paper colour
 
 Run from the poster2 folder:  python scripts/process_assets.py
 """
@@ -73,6 +75,10 @@ def main() -> None:
 
     cut = np.array(Image.open(ASSETS / "tursch_cut_tied.png").convert("RGBA"))
     Image.fromarray(to_paper(cut)).save(ASSETS / "tursch_cut_tied_paper.png")
+
+    for name in ("steichele2024_control_regeneration", "kadu2012_grafting"):
+        im = np.array(Image.open(ASSETS / f"{name}.jpg").convert("RGBA"))
+        Image.fromarray(to_paper(im, feather=4)).save(ASSETS / f"{name}_paper.png")
 
 
 if __name__ == "__main__":

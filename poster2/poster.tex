@@ -1,3 +1,4 @@
+% !TEX program = xelatex
 % A0 portrait poster -- petrol + copper palette, sections with subsections.
 % Compile with XeLaTeX or LuaLaTeX:  latexmk -xelatex poster_portrait.tex
 \documentclass{article}
@@ -107,6 +108,7 @@
 
 % ================================================================ document
 \begin{document}
+\pagecolor{Paper}
 \begin{tikzpicture}[remember picture,overlay]
   \fill[Paper] (current page.south west) rectangle (current page.north east);
   % header
@@ -137,28 +139,36 @@
 \postersection{1}{Motivation}
 \begin{leftcol}
   \postersub{1.1}{Hydra as a patterning problem}
-  \begin{minipage}[t]{8.0cm}\vspace{0pt}
-    \includegraphics[width=0.86\linewidth]{assets/hydra.png}
+  \begin{minipage}[t]{25.0cm}\vspace{0pt}
+    \centering
+    \includegraphics[height=7.2cm]{assets/steichele2024_control_regeneration_paper.png}\par
+    \vspace{0.08cm}
+    {\tinyfont\color{Mid}Control: a headless fragment regenerates a complete head.\\
+    Steichele, M. \emph{et al.} (2024). \emph{Life Sci. Alliance} 7, e202403054.\par}
   \end{minipage}\hfill
-  \begin{minipage}[t]{29.6cm}\vspace{0pt}
-    A \emph{Hydra} regenerates a single head after amputation and keeps its
-    oral--aboral axis. Head formation is organised by a localised
-    Wnt/$\beta$-catenin signal.
-
-    \smallfont
-    In activator--inhibitor models, the head is represented by a localised
-    peak of the activator~\U, controlled by a long-range inhibitor~\V.
+  \begin{minipage}[t]{11.0cm}\vspace{0pt}
+    \centering
+    \includegraphics[height=7.2cm]{assets/nuninger2026_wnt3_regeneration.jpg}\par
+    \vspace{0.10cm}
+    {\tinyfont\color{Mid}Wnt3 focuses at the future head organiser.\\
+    Nuninger, J. \emph{et al.} (2026). \emph{Nat. Commun.}\par}
   \end{minipage}
 \end{leftcol}
 \begin{rightcol}
-  \postersub{1.2}{Head grafting}
-  {\centering
-    \includegraphics[width=0.83\linewidth]{assets/kadu2012_grafting.jpg}\par
-    \vspace{0.18cm}
-    {\tinyfont\color{Mid}
-    Kadu, V., Ghaskadbi, S.~S. \& Ghaskadbi, S. (2012).
-    Int. J. Mol. Cell. Med. 1(1), 11--20. CC BY 3.0.\par}
-  }
+  % introduction (no subsection header), aligned with the images of 1.1
+  \vspace{2.3cm}
+  {\raggedright \emph{Hydra} regenerates a head after amputation, forms a single head,
+  and remembers the original polarity of its tissue. Each head is built around a head
+  organiser marked by Wnt/$\beta$-catenin signalling: during regeneration, Wnt3 becomes
+  localised at the tip of the future head. Behind this behaviour lie three different
+  phenomena:\par}
+  \begin{itemize}[itemsep=0.2em,topsep=0.4em]
+    \item regeneration,
+    \item pattern selection,
+    \item positional memory.
+  \end{itemize}
+  {\raggedright Activator--inhibitor models already explain regeneration and pattern selection,
+  but positional memory requires an additional variable: source density.\par}
 \end{rightcol}
 
 
@@ -173,7 +183,7 @@
   \partial_t \U &= D_u\Delta \U + \frac{a \U^2+q_u}{\V}-\mu_u \U+p_u,\\
   \partial_t \V &= D_v\Delta \V + b \U^2-\mu_v \V+p_v,
   \end{aligned}
-  \qquad x\in\Omega,\ t\geqslant 0.
+  \qquad x\in[0,L],\ t\geqslant 0
   \]\par}
   \vspace{0.5cm}
   \begin{minipage}[t]{17.6cm}\vspace{0pt}\smallfont\raggedright
@@ -260,19 +270,21 @@
 }
 
 \vspace{0.8cm}
-\postersub{2.5}{Grafts: the model chooses the position}
-\begin{minipage}[c]{15.6cm}
-  \includegraphics[width=\linewidth]{generated/graft_schematic.pdf}
+\postersub{2.5}{Grafts - the model chooses the position}
+\vspace{0.4cm}
+\begin{minipage}[c]{\colw}
+  \centering
+  \includegraphics[width=26.5cm]{assets/kadu2012_grafting_paper.png}\par
+  \vspace{0.1cm}
+  {\tinyfont\color{Mid}Kadu, V., Ghaskadbi, S.~S. \& Ghaskadbi, S. (2012).
+  Int. J. Mol. Cell. Med. 1(1), 11--20. CC BY 3.0.\par}
 \end{minipage}\hfill
-\begin{minipage}[c]{38.0cm}
-  \includegraphics[width=\linewidth]{generated/graft_drift.pdf}
+\begin{minipage}[c]{\colw}
+  \centering
+  \includegraphics[width=38.0cm]{generated/graft_drift.pdf}
 \end{minipage}\par
-\vspace{0.2cm}
-{\smallfont\raggedleft
-A graft creates a second peak, but the peak does not stay at the graft. It drifts
-to $2L/3$, a position selected by the model.\par}
 
-\claim{Source density is not needed to make a head --- but the model, not the wound, decides where the head ends up.}
+% \claim{Source density is not needed to make a head --- but the model, not the wound, decides where the head ends up.}
 
 \vspace{\secgap}
 % ================================================================ 3
@@ -285,18 +297,31 @@ to $2L/3$, a position selected by the model.\par}
   Reversing the orientation of comparable tissue pieces changes the
   distribution of outcomes. Near the resting state, \U\ and \V\ alone do not
   distinguish an upper-body fragment from a lower-body one.
-  \note{Which state variable records the original position and orientation of the grafted tissue?}
 
+  \vspace{0.6cm}
   \postersub{3.2}{Prescribed $\rho(x)$ as tissue competence}
-  \placeholder{4.0cm}{PROFILE PLACEHOLDER\\oriented and anti-oriented piecewise $\rho(x)$}
+  \begin{minipage}[c]{20.8cm}
+    \includegraphics[width=20.77cm]{generated/hydra_rho.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{17.3cm}\fontsize{28}{36}\selectfont
+  \[
+  \begin{aligned}
+  \partial_t \U &= D_u\Delta \U + \R(x)\,\frac{a \U^2}{\V} - \mu_u \U,\\
+  \partial_t \V &= D_v\Delta \V + \R(x)\, b \U^2 - \mu_v \V + p_v.
+  \end{aligned}
+  \]
+  \end{minipage}\par
+  \vspace{0.3cm}
+  {\centering\includegraphics[width=\linewidth]{generated/rho_profiles.pdf}\par}
+  \vspace{0.2cm}
   \smallfont
   A fixed source-density profile encodes tissue origin before the activator
   is present and biases where a wound-triggered peak forms (source-gradient
   idea, Suzuki \& Takagi 2011).
 \end{leftcol}
 \begin{rightcol}
-  \postersub{3.3}{Dynamic source-density model}
-  \eqnfont
+  \postersub{3.3}{Dynamic source density model}
+  \begin{minipage}[c]{20.5cm}\fontsize{28}{36}\selectfont
   \[
   \begin{aligned}
   \partial_t \U &=D_u\Delta \U+\R\,\frac{a \U^2}{\V}-\mu_u \U,\\
@@ -304,55 +329,44 @@ to $2L/3$, a position selected by the model.\par}
   \tau\,\partial_t\R&=D_\rho\Delta\R+\U-\R.
   \end{aligned}
   \]
-  \smallfont
-  \begin{itemize}
+  \end{minipage}\hfill
+  {\color{Rule}\vrule width 1.5pt}\hfill
+  \begin{minipage}[c]{16.8cm}\smallfont\raggedright
+  \begin{itemize}[topsep=0pt]
     \item $\rho(0,x)$ stores the grafted configuration,
     \item $\tau$ sets the lifetime of memory,
     \item $D_\rho$ communicates positional information in space.
   \end{itemize}
-
-  \postersub{3.4}{Dynamic $\rho$ gives metastable memory}
-  \placeholder{7.5cm}{JULIA SIMULATION PLACEHOLDER\\long-lived peak near the graft + peak position $x_{\max}(t)$}
-  \smallfont
-  The inherited $\rho$ profile anchors a peak near the graft on the fast
-  \U--\V\ time scale. As $\rho$ relaxes, the peak drifts toward a position
-  preferred by the activator--inhibitor subsystem.
-
-  \postersub{3.5}{Diffusion sets the spatial reach of memory}
-  \placeholder{4.6cm}{PARAMETER-SWEEP PLACEHOLDER\\memory time versus $D_\rho$ and $\tau$}
+  \end{minipage}\par
+  \vspace{0.0cm}
+  \includegraphics[width=\linewidth]{generated/rho_diffusion.pdf}\par
+  \vspace{0.2cm}
   \smallfont
   $D_\rho$ too small: memory stays sharply localised. Intermediate: a usable
   gradient forms. Too large: spatial information is erased.
+
+  \vspace{0.6cm}
+  \postersub{3.4}{Static vs dynamic source density - metastability of patterns}
+  \includegraphics[width=\linewidth]{generated/rho_static.pdf}\par
+  \vspace{0.2cm}
+  {\smallfont TEXT BETWEEN THE FIGURES (to be written).\par}
+  \vspace{0.2cm}
+  \includegraphics[width=\linewidth]{generated/rho_dynamic.pdf}\par
+  \vspace{0.2cm}
+  \smallfont
+  A fixed $\rho(x)$ keeps both heads at the grafted positions. A dynamic $\rho$
+  holds them there only for a while; as $\rho$ relaxes, the peaks move to the
+  Turing pattern selected by the activator--inhibitor subsystem.
 \end{rightcol}
 
-\claim{Source density can hold positional memory for a long time --- without making the graft-selected peak truly stationary.}
+% \claim{Source density can hold positional memory for a long time --- without making the graft-selected peak truly stationary.}
 
 \vfill
 % ================================================================ 4
 \begin{tcolorbox}[enhanced,colback=PetrolDeep,colframe=PetrolDeep,arc=3mm,
-                  left=1.2cm,right=1.2cm,top=0.6cm,bottom=0.6cm,before skip=0pt]
-\color{white}
-\begin{minipage}[t]{0.52\linewidth}
-  {\fontsize{34}{38}\selectfont\bfseries\color{Copper}Take-home message\par}
-  \vspace{0.25cm}
-  \fontsize{22}{28}\selectfont
-  \begin{enumerate}[leftmargin=1.3em,itemsep=0.35em,topsep=0pt]
-    \item \textbf{$p_v$ is enough} for a rest state, an activation threshold, and patterning.
-    \item \textbf{The model selects head positions}; wounds elsewhere give transient peaks.
-    \item \textbf{$\rho$ adds inherited positional information} for grafted tissue.
-    \item \textbf{Dynamic $\rho$ gives metastability}: long-lived anchoring, then slow reorganisation.
-  \end{enumerate}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.42\linewidth}
-  \vspace{0.3cm}
-  {\fontsize{32}{40}\selectfont\bfseries
-  Source density is not needed to make a head.\\
-  \textcolor{Copper}{It may be needed to remember where a head should form.}\par}
-  \vspace{0.5cm}
-  {\fontsize{19}{24}\selectfont\color{white!80!PetrolDeep}
-  \textbf{\color{white}Outlook.} A non-diffusing head-identity variable $h$
-  with hysteresis could separate transient activator peaks from stable
-  morphological commitment.\par}
-\end{minipage}
+                  left=1.0cm,right=1.0cm,top=0.7cm,bottom=0.7cm,before skip=0pt,
+                  fontupper=\fontsize{30}{36}\selectfont\bfseries\color{white}]
+\centering Source density is not needed to make a head.
+\textcolor{Copper}{It may be needed to remember where a head should form.}
 \end{tcolorbox}
 \end{document}
