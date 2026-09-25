@@ -1,0 +1,2001 @@
+                                                     STABILITY AND BIFURCATION ANALYSIS IN A
+                                                  MECHANOCHEMICAL MODEL OF PATTERN FORMATION
+
+                                                 SZYMON CYGAN1,3        ID , ANNA MARCINIAK-CZOCHRA1,2,∗ ID , FINN MÜNNICH1 ID ,
+
+                                                                                  AND DIETMAR OELZ4          ID
+
+
+
+                                                  Abstract. We analyze the stability and bifurcation structure of steady states in a mechano-
+arXiv:2602.09998v2 [math.AP] 5 Mar 2026
+
+
+
+
+                                                  chemical model of pattern formation in regenerating tissue spheroids. The model cou-
+                                                  ples morphogen dynamics with tissue mechanics via a positive feedback loop: mechanical
+                                                  stretching enhances morphogen production, while morphogen concentration modulates tis-
+                                                  sue elasticity. Global strain conservation implements a nonlocal inhibitory effect, realizing
+                                                  a mechanochemical variant of the local activation–long-range inhibition mechanism. For ex-
+                                                  ponential elasticity–morphogen coupling, the system admits a variational formulation. We
+                                                  prove existence of nonconstant steady states for small diffusion and uniqueness of the homo-
+                                                  geneous state for large diffusion. Linear stability analysis shows that only unimodal patterns
+                                                  are stable, while multimodal solutions are unstable. Bifurcation analysis reveals subcritical
+                                                  and supercritical pitchforks, with fold bifurcations generating bistable regimes. Our results
+                                                  demonstrate that mechanochemical feedback provides a robust mechanism for single-peaked
+                                                  pattern formation without requiring a second diffusible inhibitor.
+
+
+
+
+                                                                                     1. Introduction
+                                             Self-organized pattern formation refers to the spontaneous emergence of spatially hetero-
+                                          geneous states from homogeneous equilibria in spatially extended systems governed by local
+                                          interactions. In biological modeling, such phenomena are commonly described by coupled par-
+                                          tial differential equations combining nonlinear reaction–diffusion dynamics with mechanical
+                                          feedback, leading to symmetry breaking and spatial organization in developing or regenerating
+                                          tissues. Despite extensive modeling efforts, a rigorous mathematical understanding of how
+                                          nonlinear chemical kinetics interacting with mechanical couplings give rise to robust pattern
+                                          selection remains incomplete [15,31]. In particular, nonlocal mechanical constraints introduce
+                                          qualitative changes in stability properties, mode selection, and bifurcation structure, posing
+                                          significant analytical challenges for the theory of pattern formation.
+                                             Since Turing’s seminal proposal that diffusion-driven instabilities can generate spatial pat-
+                                          terns [36], reaction-diffusion models have become a central theoretical framework for bio-
+                                          logical pattern formation [20]. Canonical examples such as the Gierer-Meinhardt model [14]
+                                          formalized the local activation–long-range inhibition (LALI) principle, showing how nonlinear
+                                          interactions between an autocatalytic activator and a spatially extended inhibitory signal can
+
+                                             1
+                                               Institute for Mathematics, Heidelberg University, Germany
+                                          2
+                                            Interdisciplinary Center for Scientific Computing (IWR), Heidelberg University, Germany
+                                          3
+                                            Instytut Matematyczny, Uniwersytet Wroclawski, Poland
+                                          4
+                                            School of Mathematics and Physics, University of Queensland, Australia
+                                          ∗
+                                            Corresponding author; Email: anna.marciniak@iwr.uni-heidelberg.de
+                                          This work was supported by the German Research Foundation (DFG) under Germany’s Excellence Strategy
+                                          (EXC 2181/1 – 390900948, Heidelberg STRUCTURES Excellence Cluster) and through the Collaborative
+                                          Research Center 1324 (SFB 1324, Project B6). Additional funding was provided by the European Research
+                                          Council (ERC) under the Synergy Grant (PEPS, No. 10107178), and by the German Academic Exchange
+                                          Service (DAAD) within the Project-Based Personnel Exchange Programme (PPP, Project No. 57820507).
+                                                                                                1
+2                 S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+give rise to stable patterns. In these classical Turing-type systems [25, 32, 38], pattern forma-
+tion relies on at least two interacting morphogens with sufficiently distinct effective ranges,
+typically realized through differential diffusion. Despite their conceptual success, identifying
+concrete molecular implementations of Turing systems in vivo has remained notoriously diffi-
+cult [23]. In particular, the nature of the long-range inhibitory signal is often unclear, raising
+the possibility that mechanisms beyond simple molecular diffusion may underlie observed pat-
+terns. Motivated by this, kernel-based formulations of pattern formation have been proposed,
+in which spatial interactions are encoded directly through nonlocal activation–inhibition ker-
+nels rather than diffusion operators [10, 19]. Such models can reproduce the full repertoire
+of classical two-dimensional patterns, including spots, stripes, and networks, without explic-
+itly invoking diffusive transport. More generally, it was demonstrated that reaction–diffusion
+systems with arbitrarily many components can be reduced to integro-differential descriptions
+characterized by effective kernels [12], implying that distinct molecular mechanisms may gen-
+erate identical spatial patterns if they share the same interaction structure. While powerful,
+this abstraction also lacks direct biological interpretation, as the cellular or molecular origins
+of the effective kernels are often not directly identifiable.
+   Growing experimental evidence indicates that mechanical forces are integral to biologi-
+cal organization across scales, challenging purely chemical views of pattern formation [35].
+This has motivated mechanochemical frameworks in which tissue mechanics and biochemical
+signaling are dynamically coupled. These questions are often investigated using biologically
+motivated mathematical models, with patterning in the freshwater polyp Hydra providing
+a prominent example [30, 39]. Existing Hydra models range from classical reaction-diffusion
+descriptions of activation–inhibition dynamics [14, 24] to more recent formulations based on
+receptor-mediated interactions coupled to intracellular signaling [27, 42]. However, purely
+biochemical models appear insufficient to account for observed patterning behavior in Hydra.
+Both experimental and theoretical studies indicate that mechanical effects can act as effective
+long-range interactions and generate robust spatial organization [13,17,26]. Mechanochemical
+models naturally give rise to feedback loops between deformation and signaling [41], suggest-
+ing that mechanical coupling can replace the classical diffusible inhibitor and provide an
+alternative realization of the LALI mechanism [5, 13, 40].
+   Several theoretical frameworks have incorporated mechanical effects into pattern forma-
+tion models, ranging from simple mechanochemical feedbacks that generate coupled chem-
+ical–mechanical patterns [6, 26] to more elaborate continuum descriptions, such as biphasic
+poroelastic tissue models, in which mechanically induced flows enable pattern formation even
+for minimal biochemical kinetics [34]. Despite this progress, a systematic mathematical under-
+standing of pattern selection and stability in mechanochemical systems remains incomplete.
+In contrast to classical Turing models, where mode selection and stability are well character-
+ized, the influence of mechanical coupling on pattern multiplicity, robustness, and minimal
+pattern-forming requirements is still poorly understood.
+   In this work, we address these gaps by analyzing the stability and bifurcation structure of
+stationary solutions in a new mechanochemical model of symmetry breaking in Hydra aggre-
+gates, which was recently validated against experimental observations [41]. The model cou-
+ples morphogen dynamics to tissue mechanics via a positive feedback mechanism: mechanical
+stretching enhances morphogen production, while morphogen concentration modulates tis-
+sue elasticity. Together with a global strain conservation constraint, this coupling yields a
+mechanochemical variant of the LALI paradigm that does not require a second diffusible in-
+hibitor. We focus on an exponential elasticity–morphogen coupling, which endows the system
+with a variational structure amenable to rigorous analysis.
+   By deriving a reduced one-dimensional model that preserves the essential mechanochemical
+feedback while simplifying the geometric setting (Section 3, Appendix A), we obtain, for the
+           STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                              3
+
+first time, a framework amenable to rigorous analytical investigation of the dynamics. We
+establish the existence of spatially heterogeneous steady states for sufficiently small diffusion
+coefficients and prove uniqueness of the homogeneous equilibrium for large diffusion, deriving
+explicit bounds on the corresponding critical values by variational methods (Section 4). This
+analysis explains the mechanism of symmetry breaking, demonstrating how patterned states
+bifurcate from the homogeneous configuration. We then investigate the pattern selection prob-
+lem (Section 5) and show that only unimodal stationary patterns are linearly stable, while
+all multimodal solutions are unstable, revealing a fundamental distinction from classical Tur-
+ing systems and curvature-based mechanochemical models [31, 38]. Finally, we identify both
+subcritical and supercritical pitchfork bifurcations and reveal additional fold bifurcations re-
+sponsible for the emergence of bistable regimes (Section 6). Throughout, the theoretical
+results are complemented by numerical simulations, elucidating the interplay between nonlo-
+cality, mechanical feedback, and nonlinear kinetics, and providing a mathematically grounded
+framework for experimental exploration.
+
+Notation. We use the following notation: T is a one dimensional torus of size one, i.e., the
+unit interval [0, 1] in which we identify the endpoints with each another. Here L2 (T) denotes
+the set of square integrable functions on the circle defined via Fourier series
+                                       ∞                  ∞
+                               (                                          )
+                                      X                   X
+                        2                         2πinx             2
+                       L (T) = u =          û(n)e      :    |û(n)| < ∞
+                                      n=−∞                   n=−∞
+
+Similarly we denote Sobolev space
+                                                  ∞
+                             (                                                  )
+                                                  X
+                    W k,2 (T) =    u ∈ L2 (T) :          (1 + n2 )k |û(n)|2 < ∞ .
+                                                  n=−∞
+
+Constants are always denoted by a letter C even if they vary from line to line.
+
+                                         2. Main results
+  We start by formulating main theoretical results of this paper. We focus the mechano-
+chemical pattern formation model describing the concentration of the diffusive signaling
+molecules u := u(x, t), given by
+                                                          eu(x,t)
+(2.1)      ∂t u(x, t) = D ∂xx u(x, t) − u(x, t) + κ R 1             ,    x ∈ [0, 1],    t ∈ [0, ∞),
+                                                        u(y,t) dy
+                                                     0 e
+with the coefficients D > 0 and κ > 0, supplemented with the periodic boundary conditions
+u(0, t) = u(1, t) and ∂x u(0, t) = ∂x u(1, t) for all t ⩾ 0. This model arises from a one-
+dimensional formulation of a hyperelastic material governed by the Saint-Venant–Kirchhoff
+constitutive law. A detailed derivation is provided in Section 3 and Appendix A. Numerical
+simulations of the model (Figure 2.1) demonstrate its capacity to produce stable unimodal
+patterns.
+   Global existence and uniqueness are classical results, established by standard arguments
+(see, e.g., [28]); we recall them here for completeness,
+Proposition 2.1 (Global existence and uniqueness). For any initial datum u0 ∈ W 1,2 (T)
+problem (2.1) admits a unique global in time solution u = u(x, t) satisfying
+
+u ∈ C [0, ∞), W 1,2 (T) ,   u ∈ L2 [0, ∞), L2 (T) ,        u ∈ L2 (0, T ), W 2,2 (T)
+                                                                                  
+                                                                                        for each T > 0 .
+  A complete proof is provided in Appendix for the reader’s convenience.
+4                S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+
+
+
+        Figure 2.1. Numerical simulations of model (2.1). Left panel: Emergence
+        of a uni-modal pattern from a small perturbation of the constant stationary
+        solution U = κ, (example for D = 0.01, κ = 1.5). Middle panel: Nonconstant
+        stationary solutions for fixed diffusion D = 10−3 and varying κ. Right panel:
+        Nonconstant stationary solutions for fixed κ = 3.0 and varying D. We observe
+        that smaller diffusion leads to more concentrated patterns.
+
+   We now characterize stationary solutions u(x, t) = U (x) of (2.1) (see Figure 2.1), which
+satisfy
+                                                         eU
+(2.2)                           0 = D Uxx − U + κ R 1             ,
+                                                           U dy
+                                                     0 e
+supplemented with the periodic boundary conditions U (0) = U (1) and Ux (0) = Ux (1).
+Remark 2.2 (Mass conservation of stationary structures). Integration of (2.1) over T yields
+the mass evolution equation
+                               d 1
+                                 Z              Z 1
+                                     u dx = κ −     u dx ,
+                              dt 0               0
+         R                                                                  R
+implying T u dx → κ as t → ∞. Thus, any stationary solution U (x) satisfies T U (x) dx = κ.
+Theorem 2.3 (Existence of stationary solutions). For each κ > 0 there exist two constants
+Dmin (κ) and Dmax (κ) satisfying
+                                  0 < Dmin (κ) < Dmax (κ),
+such that:
+     • If 0 < D < Dmin , then problem (2.2) admits a nonconstant solution, which is Lya-
+       punov stable with respect to L2 -norm for perturbations in W 1,2 (T).
+     • If D > Dmax , the constant function U ≡ κ is the unique solution to equation (2.2) and
+       globally asymptotically stable with respect to L2 -norm for perturbations in W 1,2 (T).
+   The proof, which employs variational methods, is presented in Section 4. We emphasize
+that the analytically derived bounds Dmin and Dmax are not optimal, as they arise from
+relatively coarse estimates; their refinement by numerical simulations is presented at the end
+of the section.
+   We classify nonconstant stationary solutions according to their spatial periodicity: an m-
+modal solution has m peaks per period. In particular, solutions with m = 1 are called
+unimodal, while those with m = 2, 3, . . . are multimodal. By rescaling x 7→ mx, a unimodal
+solution U of equation (2.2) yields an m-modal solution Ũ (x) = U (mx − ⌊mx⌋) of
+                                    D                   eŨ
+(2.3)                          0=      Ũxx − Ũ + κ   1 Ũ  ,
+                                    m2
+                                                     R
+                                                     0  e dy
+           STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                       5
+
+with effective diffusivity D/m2 .
+  To investigate the stability properties of stationary solutions of (2.1), we consider pertur-
+bations of the form
+                                  u(x, t) = U (x) + eλt φ(x),
+where U is a stationary solution. Substituting this ansatz into (2.1) leads to the following
+nonlocal eigenvalue problem:
+                                            !                   Z 1
+                               eU                       eU
+                Dφxx + κ R 1         − 1 − ν φ = κ R        2     eU φ dy.
+                               eU dy                   1 U       0
+                             0                        0 e dy
+
+We denote by ν an eigenvalue of the nonlocal problem and compare it below with the eigen-
+values λ of the corresponding local problem. The following results describe the linear stability
+of nonconstant stationary solutions.
+Theorem 2.4 (Type of stationary solutions). The stationary solutions are classified as fol-
+lows:
+      • The stable nonconstant solution obtained in Theorem 2.3 is unimodal.
+      • All multimodal solutions (m-modal with m ≥ 2) are linearly and nonlinearly unstable
+        in L2 (T).
+  The proof, based on the gradient flow structure of (2.1) and Sturm–Liouville theory, is
+presented in detail in Section 5.
+Corollary 2.5 (Existence of multimodal solutions). Combining Theorems 2.3 and 2.4 with
+equation (2.3), we obtain:
+     • If D < Dmin /m2 , then an m-modal solution to (2.2) exists.
+     • If D > Dmax /m2 , then no m-modal weak solutions exist.
+   This result highlights a fundamental principle: stable pattern formation in our mechano-
+chemical framework necessarily yields unimodal structures, whereas all multimodal configura-
+tions are intrinsically unstable. This represents a significant departure from classical Turing
+models, in which the number of peaks corresponds to the unstable eigenmodes and can vary
+with domain size [29]. Moreover, pattern selection in our model differs from other mechano-
+chemical frameworks that permit multiple, or even arbitrarily many, peaks, see, e.g., [6,26,31].
+   We complete the analysis by characterizing the emergence of patterned states through bi-
+furcations from the homogeneous steady state. This approach provides insight into emergence
+of patterns, which is the main focus when applying the model to biological systems.
+Theorem 2.6 (Bifurcation structure). For each n ∈ N, define κn := 1 + 4π 2 n2 D. Then the
+following holds:
+    (1) Existence. At each bifurcation point (Φ̄n , κn ), with Φ̄n = κn , there exists a smooth
+        local branch of nonconstant solutions
+                                                           
+                                   Γn (s) = φ̄n (s), κn (s) ,
+       admitting the following asymptotic expansion as s → 0,
+                           √
+           φ̄n (s) = κn + s 2 cos(2πnx) + O(s2 ), κn (s) = κn + Cn s2 + O(s3 ),
+       where Cn = 41 − 16Dn 1            2 2
+                              2 π 2 + 2Dn π .
+
+   (2) Type. The bifurcation at (Φ̄n , κn ) is
+         • subcritical if κn < 23 , equivalently D < 8π12 n2 ,
+         • supercritical if κn > 32 , equivalently D > 8π12 n2 .
+6                 S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+    (3) Stability. The branch Γn (s) is linearly stable near the bifurcation point if and only if
+        n = 1 and κ1 > 32 . All remaining branches are linearly unstable in a neighborhood of
+        the bifurcation point. Moreover, this local branch admits a global continuation in the
+        sense of Rabinowitz and
+    (4) Turning point. If κ1 < 32 , the branch Γ1 (s) undergoes a fold bifurcation at some
+        κf ∈ (0, κ1 ).
+   Theorem 2.6 summarizes the bifurcation analysis carried out in Section 6. It combines local
+bifurcation results obtained via the Crandall–Rabinowitz theorem with a global continuation
+analysis in the sense of Rabinowitz, thereby revealing the presence of fold bifurcations and
+bistable regimes. Together, these results show that the transition from the homogeneous to the
+patterned state is mediated by a symmetry-breaking bifurcation whose direction and stability
+depend critically on the balance between diffusion and reaction strength. In particular, the
+bifurcation undergoes a change of type at a critical parameter threshold, a phenomenon also
+observed in other nonlinear pattern-forming systems [2]. They also provide a mathematical
+mechanism for the emergence of bistability, corresponding to the coexistence of homogeneous
+and patterned steady states. Such bistable behavior has been recently reported in Hydra
+regeneration [37].
+
+
+
+
+        Figure 2.2. Parameter space analysis and bifurcation structure. (Top) Pa-
+        rameter space (D, κ) showing regions of numerical convergence to nonconstant
+        (blue) versus constant (yellow) steady states, with gray areas indicating an-
+        alytically proven results. (Bottom) Bifurcation diagrams demonstrating sub-
+        critical regime with bistability (left, D < 1/(8π 2 )) and supercritical regime
+        with direct pattern formation (right, D > 1/(8π 2 )), where blue and red curves
+        denote stable and unstable branches, respectively.
+   We conclude this section by illustrating our analytical results through numerical computa-
+tions. The analytical bounds Dmin (κ) and Dmax (κ) obtained in Theorem 2.3 are not expected
+           STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                        7
+
+to be sharp, as they arise from relatively coarse estimates. Nevertheless, the numerical results
+presented below demonstrate that these bounds correctly capture the qualitative structure of
+the parameter space. In particular, Figure 2.2 confirms the predicted transition between sub-
+critical and supercritical bifurcation regimes at the critical threshold. Moreover, the numerical
+simulations illustrate the existence of bistable parameter regions arising from fold bifurcations
+and thereby support the overall bifurcation framework developed in the analytical part of this
+work. While Theorem 2.6 provides a complete characterization of bifurcating branches in the
+neighborhood of each bifurcation point, the global continuation of these branches lies beyond
+the reach of the analytical techniques employed here. In the subcritical regime κ < 1.5 the
+theory guarantees only that the primary branch Γ1 (s) possesses at least one turning point.
+Our numerical analysis indicates, however, that this branch exhibits exactly one fold bifur-
+cation in the interval (0, κ1 ), and that the resulting stable branch does not undergo further
+secondary bifurcations.
+These observations complement Theorem 2.3, which ensures existence of a stable nonconstant
+stationary solution. Numerically, we observe precisely one stable nonconstant solution branch,
+unique up to spatial shifts due to periodic boundary conditions, suggesting uniqueness of the
+variational minimizer modulo translations. In the context of the model application, Lyapunov
+stability is sufficient, as it describes symmetry breaking in systems where the position of the
+emerging organizer (given by a peak in morphogen concentration) is not prescribed a priori.
+In addition, all unstable branches emerging from bifurcation points (Φ̄n , κn ) with κn < 1.5
+display an analogous subcritical structure with a single fold bifurcation. Branches associated
+with different modal numbers remain disjoint for all values of κ.
+
+                                  3. Model formulation
+   We reformulate the mechanochemical patterning model for Hydra spheroids introduced
+in [41] in two spatial dimensions in which the spheroid is described as a closed curve. Starting
+from the model derivation and formulation in 3D using index notation, one can specialise the
+notation in 2D as it was done in the supplementary material of [41]. Alternatively, we derive
+the model directly, using the same modelling arguments but without using index notation, in
+the Appendix A.
+   Ultimately, we derive a reduced spatially one-dimensional formulation of the original model
+in [41] that retains the essential coupling between mechanics and chemistry while simplifying
+the geometric structure. In this setting, the Hydra spheroid is represented as an elastic
+
+
+
+                                                    S
+                       S0
+                                                                       s(t , x)
+                                     x
+                              0                            0
+                                    L                                 l
+                                   2π                                2π
+
+
+
+
+       Figure 3.1. Schematic representation of the elastic deformation framework
+       for the Hydra spheroid model. Left: Circular reference configuration S0
+       parametrized by arc-length x ∈ [0, L]. Right: Deformed circular configura-
+       tion S in which material points have arc-length position s(x) ∈ [0, ℓ].
+8                S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+closed curve, providing a minimal framework to analyze the core mechanochemical feedback
+mechanisms, see Figure 3.1.
+   The stress-free reference configuration, denoted by S0 , is assumed to be a circle of fixed
+circumference L > 0. It is parametrised by x ∈ [0, L] which denotes the arc-length associated
+to a given point in S0 . We prescribe a fixed enclosed area A0 > Area(S0 ) and consider
+deformations of the reference shape which enclose the area A0 . In Appendix A we show that,
+as a consequence of stress balance and the Law of Laplace, the deformed spheroid is always
+a circle of the given circumference ℓ > L and that no other shapes are possible.
+   The scalar function s(x) : [0, L] 7→ [0, l], s′ > 0, represents the arc-length position in
+the deformed spheroid S of the material point with arc-length position x in S0 . As the
+deformed spheroid is circular, any deformation is by shifting material points tangentially
+within the hydra tissue. The full mechanochemical system written in terms of the morphogen
+concentration u = u(t, x) and the strain ε(t, x) reads
+                           ∂t u = κ ε − αu + D ∂xx u,
+                         
+                                                      x ∈ [0, L], t ≥ 0,
+                         
+                         
+                          0 = ∂ E(u) ε,
+                         
+                                   x
+(3.1)                               Z L
+                         
+                         l − L =                     t ≥ 0.
+                         
+                                       ε dx,
+                                    0
+
+This system of equations combines stress balance where E(u) > 0 is the elastic modulus
+given by a monotonically decreasing function of u. This models increased tissue elasticity
+(reduced stiffness) in response to higher expression of morphogen. This implies that solutions
+are characterised by larger strain where the morphogen concentration is high.
+   This ”mechanical” equation is coupled to a ”chemical” reaction diffusion equation for the
+morphogen concentration. Here, D denotes diffusivity, α is the spontaneous disassociation rate
+and κ > 0 is a given parameter associated to the expression of morphogen in response to tissue
+strain ε. Up-regulation of morphogen concentration in response to tissue strain complements
+increased strain where morphogen is over-expressed according to the mechanical part of the
+model. Together, these two components form a positive local feedback loop.
+   Note that following infinitesimal stress theory, we write the strain as ε = s′ − 1 which
+motivates the third equation in (3.1) and expresses conservation of total strain, effectively
+introducing mechanical long-range inhibition, which acts alongside the positive feedback be-
+tween local strain and morphogen concentration. This combination implements the classical
+local activation - long-range inhibition (LALI) mechanism.
+From the momentum balance equation in (3.1), the stress depends only on time t, that is,
+                                    σ(t) := E(u(t, ξ)) ε(t, ξ).
+
+In particular, the strain can be expressed as
+                                                       σ(t)
+                                         ε(t, ξ) =              .
+                                                     E(u(t, ξ))
+Integrating the strain over the whole domain and using the total strain constraint gives
+                                Z L                   Z L
+                                                             1
+                        l−L=        ε(t, ξ) dξ = σ(t)                dξ.
+                                 0                     0  E(u(t, ξ))
+Solving for the stress, we obtain
+                                                      l−L
+                                        σ(t) = R L                  ,
+                                                      1
+                                                 0 E(u(t,ξ)) dξ
+           STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                      9
+
+and the corresponding strain reads
+                                     σ(t)                 l−L
+                       ε(t, x) =              =            RL                           .
+                                   E(u(t, x))   E(u(t, x))                  1
+                                                                       0 E(u(t,y)) dy
+
+Using the closed-form expression for the strain, the morphogen equation in (3.1) can be written
+as
+                                           κ(l − L)
+(3.2)               ∂t u(t, x) =             RL              − αu + D ∂xx u .
+                                                    1
+                                   E(u(t, x)) 0 E(u(t,y)) dy
+
+For the remainder of the manuscript, we assume that the elastic modulus depends exponen-
+tially on the morphogen concentration,
+
+                                      E(u) = e−βu ,               β > 0.
+
+This choice allows (3.2) to be endowed with a variational structure and ensures that the
+linearization of the spatial operator is self-adjoint.
+We next nondimensionalize (3.2) by introducing the scaling
+
+                             t 7→ t0 t,             ξ 7→ x0 x,       u 7→ u0 u,
+
+which leads to
+                       u0          (l − L)eβu0 u              u0
+                          ut = κ R L/x             − αu0 u + D 2 uxx .
+                       t0       x0      0 βu0 u
+                                         e      dx            x0
+                                          0
+
+Choosing
+                                              1             1
+                                    u0 =        ,    t0 =     ,    x0 = L,
+                                              β             α
+and defining the dimensionless constants
+                                    β(l − L)                       D
+                                κ            7→ κ,                    7→ D,
+                                      αL                          αL2
+we obtain the final nondimensionalized system
+                                                                     eu
+                                    ut = D uxx − u + κ R 1                  ,
+                                                                      u
+                                                                   0 e dy
+
+for x ∈ [0, 1], supplemented with periodic boundary conditions
+
+                      u(0, t) = u(1, t),             ∂x u(0, t) = ∂x u(1, t),     t ≥ 0.
+
+
+                                    4. Stationary solutions
+4.1. Variational formulation. Equation (2.1) can be interpreted as a gradient flow of the
+free energy functional with respect to L2 -norm (see e.g. [1]), with
+
+                     D 1                     1 1
+                          Z                    Z                       Z 1            
+                                        2                    2                u(x,t)
+(4.1)      J u(·, t) =         ux (x, t) dx +       u(x, t) dx − κ log      e        dx .
+                        2 0                   2 0                        0
+10                  S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+The first and second variations of J are given by
+                                   Z 1                    Z 1                      R 1 u(x,t)
+                                                                                       e       ψ dx
+                                                                u(x, t) ψ dx − κ R0 1
+                           
+                DJ u(·, t) ψ = D       ux (x, t) ψx dx +                                            ,
+                                                                                          u(x,t)
+                                     0                      0                         0 e        dx
+                                   Z 1               Z 1
+           D2 J u(·, t) (ψ, ξ) = D
+                       
+                                       ψx ξx dx +        ψ ξ dx
+(4.2)                                0                0
+                                                                                                
+                                       R 1 u(x,t)             R 1 u(x,t)      R 1 u(x,t)
+                                      e          ψ ξ dx         e       ψ dx 0 e          ξ dx 
+                                 − κ  0R 1               − 0                        2          .
+                                            e u(x,t) dx                R 1 u(x,t)
+                                          0                               e     0 dx
+
+The focus of this section is to analyze solutions to equation (2.2) through the critical points
+of the functional J : W 1,2 (T) → R, defined by formula (4.1). A direct analysis of this
+functional can be challenging due to the difficulty in establishing the existence of nonconstant
+minimizers. To overcome these difficulties, we decompose the function φ ∈ W 1,2 (T) using the
+orthonormal eigenbasis of the Laplace operator with periodic boundary conditions.
+Proposition 4.1. There exist {fk }∞                            2
+                                  k=0 an orthonormal basis of L (T) and an orthogonal basis
+     1,2                                ∞
+of W (T) and a set of eigenvalues {µk }k=0 ⊆ [0, ∞), such that (fk , µk ) is the eigenpair of
+the operator ∆
+                                             ∆fk = −µk fk ,
+with periodic boundary conditions.
+Remark 4.2. For T = [0, 1] with periodic boundary conditions, the eigenpairs of the Laplacian
+are given by
+                      [ √                         [ √
+           {fk }∞
+                k=0 = 1         2 sin(2kπx) : k ∈ N       2 cos(2kπx) : k ∈ N+ ,
+            {µk }∞        2 2
+                 k=0 = {4π k : k ∈ N}
+                                                                                                √
+These eigenfunctions are uniformly bounded in L∞ -norm, with ∥fk ∥∞ =                               2 for k ≥ 1 and
+∥f0 ∥∞ = 1.
+Using the eigenfunction decomposition of the Laplacian, we derive an equivalent system of
+                                                               stationary solution. Expressing
+algebraic equations satisfied by the Fourier coefficients of a P
+the solution U (x) to equation (2.2) in the eigenbasis as U = ∞                         2
+                                                                  k=0 Rk fk , with R ∈ ℓ (N), we
+obtain
+                                ∞                  ∞                        P∞
+                                X                  X                eR0 +      k=1 Rk fk
+(4.3)                 0 = −D          Rk µk fk −         Rk fk + κ R 1         P∞           .
+                                                                        R0 +    k=1 Rk fk
+                                k=0                k=0              0 e
+
+We multiply equation (4.3) by fj and integrate over domain T. Then, dividing both the
+numerator and denominator by eR0 and utilizing the orthonormality of the eigenbasis {fj }∞
+                                                                                         j=0 ,
+we obtain the following system of equations:
+                                         R 1 P∞ R f
+                                             e k=1 k k fj
+                   0 = −Rj (Dµj + 1) + κ R0 1 P∞          , for j ∈ N
+                                                k=1 Rk fk
+                                            0 e
+
+which we rewrite in the form
+                                       R 1 P∞ R f
+                                  κ        e k=1 k k fj
+(4.4)                     Rj =          R0 1 P∞ R f ,                    for   j ∈ N.
+                               1 + Dµj
+                                          0 e
+                                              k=1 k k
+           STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                                  11
+
+Remark 4.3. The right-hand
+                      P    side of equation (4.4) is bounded
+                                                     P       and converges to 0 as j → ∞.
+Indeed, we have ∥ exp( Rk fk )fj ∥L1 √⩽ ∥fj ∥L ∥ exp( Rk fk )∥L1 . Since the eigenfunctions
+                                              ∞
+
+are uniformly bounded with ∥fj ∥∞ = 2 it follows that
+                                           √
+                                             2κ j→∞
+                                 |Rj | ⩽          −−−→ 0.
+                                         1 + Dµj
+To facilitate the analysis of nonconstant solutions to problem (2.2), we introduce a dis-
+crete counterpart of the functional J given by formula (4.1), which offers a more convenient
+framework for establishing the existence of nonconstant solutions. We express the function
+φ(x) ∈ W 1,2 (T) in the eigenbasis, then it holds
+                                     ∞                         Z 1 P
+                                        Rk2
+                                                                                 
+                      1 2           X                                ∞
+                                                                         Rk µk
+(4.5)        J (φ) = R0 − κR0 +             (1 + Dµk ) − κ log     e k=1       dx ,
+                      2                  2                       0
+                                       k=1
+                P∞                        2
+where φ(x) =      k=0 Rk fk (x) with R ∈ ωµ and
+                                                                      ∞
+                  (                                                                               )
+                                                                      X
+          ωµ2 =                                2
+                    R = (R0 , R1 , . . .) ∈ ℓ (N0 ) : ∥R∥ωµ2 :=             Rk2 (1 + Dµk ) < ∞        .
+                                                                      k=0
+
+The second derivative of J given by equation (4.2) and expressed in the eigenbasis, takes the
+form
+(4.6)           Jf0 f0 (φ) = 1      and        Jf0 fi (φ) = Jfi f0 (φ) = 0       for   i ∈ N+ ,
+together with
+                                       Z 1                      Z 1              2
+           Jfi fi (φ) = 1 + Dµi − κ           fi2 (x)p(x) + κ  fi (x)p(x) ,
+                                          0                       0
+(4.7)                      Z 1                      Z 1             Z 1           
+           Jfi fj (φ) = −κ     fi (x)fj (x)p(x) + κ      fi (x)p(x)        fj (x)p(x) ,
+                             0                             0                       0
+                  R1
+where p(x) = eφ / 0 eφ defines a probability measure on (0, 1). Thus by L∞ -bounds of the
+eigenfunctions and Jensen inequality we immediately obtain
+(4.8)           1 + Dµi − 2κ ⩽ Jfi fi (ϕ) ⩽ 1 + Dµi              and          |Jfi fj (ϕ)| ⩽ 4κ
+for all i, j ∈ N+ .
+   We recall two well established properties of the functional J defined in (4.1). These are
+included for completeness of the exposition.
+Lemma 4.4. The functional J : W 1,2 (T) → R is bounded from below and coercive.
+Proof. The proof follows directly. By setting C = min(D, 1)/2 and utilizing the embedding
+W 1,2 (T) ⊆ L∞ (T), we obtain
+                              D 1            1 1 2
+                                 Z            Z            Z 1 
+                       J(φ) =       (φx )2 +     φ − κ log      eφ
+                               2 0           2 0             0
+                                 ⩾ C∥φ∥2W 1,2 − κ∥φ∥L∞
+                                 ⩾ C∥φ∥W 1,2 (∥φ∥W 1,2 − κ/C)
+and J(φ) → ∞ as ∥φ∥W 1,2 → ∞.                                                                             □
+Lemma 4.5. The functional J : W 1,2 (T) → R is weakly lower semicontinuous.
+12                S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+Proof. Let φn ∈ W 1,2 (T) be a sequence converging φn ⇀ φ weakly in W 1,2 . Clearly
+                            Z 1                       Z 1
+                                       2
+                                 |∂x φ| dy ⩽ lim inf      |∂x φn |2 dy,
+                              0                n→∞     0
+                                Z 1                   Z 1
+                                    |φ|2 dy ⩽ lim inf     |φn |2 dy.
+                                    0               n→∞    0
+Moreover by compact embedding, the sequence φn → φ converges strongly in L2 and hence
+by Egorov theorem for each ε > 0 there exist U ⊆ T such that |T \ U | < ε and φn (x) → φ(x)
+uniformly on U . By Sobolev embedding the sequence φn is uniformly L∞ -bounded providing
+                            Z             Z      
+                                 φn               φ
+                        log    e      → log     e     as n → ∞
+
+and hence J (φ) ⩽ lim inf J (φn ).                                                            □
+4.2. Geometry of the functional. We examine the critical points of the energy functional
+J given by the formula (4.1). A constant solution U ≡ κ is a critical point of J with
+J (U ) = −κ2 /2. We demonstrate that, under certain conditions, such a constant solution is
+not a global minimizer of J .
+Lemma 4.6. For each κ > 0 there exist a constant Dmin (κ) such that for all D < Dmin (κ),
+the infimum of the functional J is strictly less than −κ2 /2.
+Proof. We proceed by considering two distinct cases. For an arbitrary κ > 0, we first construct
+a vector R̂N ∈ RN defined as
+                                  √                 √                   !
+                       N            2κ                2κ
+                    R̂ = κ,              , ... ,           , 0, 0, . . . .
+                                1 + Dµ1          1 + DµN
+This vector is a finite-dimensional approximation of the maximal possible values of Rj , as
+noted in Remark 4.3. Let us consider the corresponding function φN (x) expressed in terms
+of the eigenbasis {µk (x)}∞
+                          k=0 , where the cosine components are given by R̂
+                                                                            N and the sine
+
+components vanish:
+                          N
+                          X                                     √
+               φN (x) =         R̂kN fˆk (x)   with fˆk (x) =       2 cos(2πkx),   fˆ0 = 1.
+                          k=0
+We demonstrate that J (φN ) < −κ2 /2 for sufficiently large N . From equation (4.5), we have
+                                        N                  Z 1 P       √
+                                κ2
+                                                                                  
+                                     2
+                                       X      1                    N      2κ ˆ
+                                                                   k=1 1+Dµk fk
+(4.9)             J (φN ) = − + κ                  − κ log      e               dx .
+                                2          1 + Dµk            0
+                                       k=1
+                                                                   √
+Now we apply a rough estimate for the functions fˆk (x) = 2 cos(2πkx). For each k ∈
+{1, . . . , N } we have
+                          fˆk (x) ⩾ 1 for x ∈ [0, 1/(8k)] ∪ [1 − 1/(8k), 1].
+Consequently, fˆk (x) ⩾ 1 for x ∈ [0, 1/(8N )] ∪ [1 − 1/(8N ), 1]. This allows us to derive the
+lower bound
+             Z 1 PN √2κ                  Z 1/8N PN √2κ                      √
+                               ˆ
+                     k=1 1+Dµk fk
+                                                            ˆ
+                                                  k=1 1+Dµk fk
+                                                                     PN      2κ
+                                                                       k=1 1+Dµk
+                                                                                  1
+                 e                dx ⩾ 2        e              dx ⩾ e
+              0                           0                                      4N
+which yields
+                       Z 1 P        √               N      √
+                                N     2κ ˆ
+                                k=1 1+Dµk fk        2
+                                                      X         2
+(4.10)           κ log      e                dx ⩾ κ                 − κ log(4N ).
+                          0                              1 + Dµk
+                                                          k=1
+            STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                          13
+
+Applying inequality (4.10) to equation (4.9), we obtain
+                    N √
+           1 2    2
+                    X    2−1                  1         √          N
+J (φN ) ⩽ − κ − κ             + κ log(4N ) ⩽ − κ2 − κ2 ( 2 − 1)         + κ log(4N ).
+           2          1 + Dµk                 2                 1 + DµN
+                        k=1
+To proceed with our analysis, we examine the conditions ensuring that
+                      1         √          N                      1
+(4.11)              − κ2 − κ2 ( 2 − 1)           + κ log(4N ) < − κ2
+                      2                1 + DµN                    2
+holds true for some N ∈ N. Through algebraic manipulation, inequality (4.11) can be equiv-
+alently expressed as
+                                     √
+                                   κ( 2 − 1)N − log(4N )
+(4.12)                        D<
+                                        µN log(4N )
+We observe that the right-hand side of inequality (4.12) converges to zero as N → ∞ and is
+positive for sufficiently large N , thus ensuring the existence of a global maximum. Accordingly,
+we define
+                                                   √
+                                               κN ( 2 − 1) − log(4N )
+                               D1 (κ) := max                            .
+                                          N ∈N      µN log(4N )
+Consequently, for any D < D1 (κ), we obtain the strict inequality J (φN ) < −κ2 /2.
+   An alternative approach to establish that the infimum is smaller than J (U ) involves an-
+alyzing the convexity properties of the functional J at the constant solution. From formula
+(4.7), the second derivative at U ≡ κ is expressed as Jf1 f1 (U ) = 1 + Dµ1 − κ. When κ > 1
+and D < D2 (κ) := (κ − 1)/µ1 , the functional exhibits strict concavity in the direction of f1 ,
+leading again to inf J (φ) < −κ2 /2. We subsequently define
+                                   (
+                                     D1 (κ),                  κ ∈ (0, 1],
+                        Dmin (κ) =                      
+                                     max D1 (κ), D2 (κ) , κ > 1,
+which ensures that inf J < J (κ) whenever D < Dmin .                                               □
+Remark 4.7. In Lemma 4.6, we introduced two critical diffusion values, D1 and D2 , to char-
+acterize distinct behavioral regimes of the functional J . For D > D2 (or for any D when
+κ ⩽ 1), the constant function U (x) ≡ κ is a local minimum of J . However, in the regime
+where D1 > D2 (which occurs for sufficiently small values of κ), the functional may admit
+multiple local minima, corresponding to coexisting stable steady states (see Remark 5.11).
+  Next we deal with the case when the diffusion is large.
+Lemma 4.8. For each κ > 0 there exist a constant Dmax (κ) such that if D > Dmax (κ) then
+the functional J is globally convex.
+Proof. It is sufficient to prove that the second derivative D2 J (φ)(ψ, ψ) given by the formula
+(4.2) is nonnegative for all φ, ψ ∈ W 1,2 (T) (see e.g. [9, Corollary 3.8.6]). First, fix functions
+φ, ψ ∈ W 1,2 (T) and set
+                ∞
+                X                              n
+                                               X
+           ψ=         Rk fk (x)   and   ψn =         Rk fk (x)   with   R = (R0 , . . .) ∈ ωµ2 .
+                k=0                            k=0
+
+Since {fk }∞                               2
+           k=0 is an orthonormal basis of L (T) and an orthogonal basis of W
+                                                                             1,2 (T), we have
+             2           1,2                                  1,2        ∞
+ψn → ψ in L (T) and W (T). In particular, by embedding W (T) ⊆ L (T) there holds
+                        sup ∥ψn ∥L∞ ⩽ C sup ∥ψn ∥W 1,2 ⩽ C∥ψ∥W 1,2 < ∞
+                        n∈N0              n∈N0
+14                S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+which implies
+Z 1
+    eφ (ψn2 − ψ 2 )dx ⩽ e∥φ∥L∞ ∥ψn ∥2L2 − ∥ψ∥2L2 ⩽ C∥ψn − ψ∥L2 ∥ψn + ψ∥L2 ⩽ C∥ψn − ψ∥L2 .
+                                                
+     0
+
+Similarly using ∥ψ∥L1 ⩽ ∥ψ∥L2 we obtain
+       Z 1        2 Z 1         2
+              φ               φ
+                                       ⩽ e2∥φ∥L∞ ∥ψn ∥2L1 − ∥ψ∥2L1 ⩽ C∥ψn − ψ∥L2 .
+                                                                  
+            e ψn dx −        e ψdx
+          0                     0
+
+Now since ψn → ψ in W 1,2 (T) passing to the limit yields D2 J (φ)(ψn , ψn ) → D2 J (φ)(ψ, ψ)
+and hence it is enough to prove D2 J (φ)(ψn , ψn ) ≥ 0 for all n ∈ N0 .
+   For each n ∈ N, the derivative defines a symmetric quadratic form D2 J (ϕ)(ψn , ψn ) =
+⟨H n R, R⟩ for R ∈ Rn+1 . The coefficients of the associated matrix H n (φ) = (Jfi fj (φ))ni,j=0 ∈
+R(n+1)×(n+1) are given by formulas (4.6) and (4.7) and by inequalities (4.8) they satisfy hii ⩾
+1 + Dµi − 2κ and |hij | ⩽ 4κ for all i, j ∈ N. Since H n (φ) is symmetric, Sylvester’s criterion
+dictates that it suffices to show
+                                det (H n (φ)) > 0            for each      n ∈ N0
+in order to obtain that H n (φ) is positive definite for all n ∈ N0 . As an immediate consequence
+of (4.8) we have det(H 0 (φ)) = 1 and det(H n (φ)) = det(Jfi ,fj (φ))ni,j=1 . In the following we
+assume that diffusion is sufficiently large, namely 1 + Dµ1 − 2κ > 0, implying hii > 0 for all
+i ∈ N. Let us define a family of subsets Ak = {A ⊂ {1, . . . , n} : |A| = k}. Using the Leibniz
+formula for determinants and the estimates for the coefficients of H n (φ), we can write
+                                                                                             
+                                         n               n        n
+                                                  !
+                         X              Y              Y          X              X    Y
+(4.13) det (H n (φ)) =          sgn(σ)      hn       ⩾
+                                                    i,σ(i)  hii −     (4κ)k k!           hjj  .
+                        σ∈S n                 i=1               i=1          k=1        A∈An−k j∈A
+
+To obtain the estimate, we count with k the number of off-diagonal elements in ni=1 hni,σ(i)
+                                                                                    Q
+
+for some σ ∈ SQ n and group permutations with the same number of off-diagonals together.
+
+The first term ni=1 hii corresponds to σ = id and thus k = 0. The product of k off-diagonal
+elements is estimated by (4κ)k and multiplied by k! as there P
+                                                             are k! possibilities
+                                                                       Q          to choose the
+order of these k off-diagonal elements. The remaining term A∈An−k          hjj corresponds to
+                                                                                      j∈A
+the sum of all possible choices of building the product of n − k diagonal elements. Dividing
+equation (4.13) by the product of all diagonal elements we obtain that the determinants are
+positive if
+                                                    
+                          X n            X Y 1
+                      1>      (4κ)k k!               for all n ∈ N.
+                                                 hjj
+                              k=1               A∈Ak j∈A
+
+                                 diagonal elements are bounded from below, we obtain that for
+Since by inequalities (4.8), the P
+sufficiently large D, the series (hii )−1 is bounded
+                       n                ∞
+                       X 1              X           1                D→∞
+                                    ≤                        = C(D) −−−−→ 0.
+                              hii             (1 + Dµk − 2κ)
+                        i=1             k=1
+
+Hence, it holds
+                                                         n
+                                                                     !k
+                                X Y k!                   X 1
+                                                    ⩽                     ≤ C(D)k .
+                                              hjj              hii
+                               A∈Ak j∈A                  i=1
+           STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                                  15
+
+Choosing Dmax > (2κ − 1)/µ1 sufficiently large such that C(Dmax ) < (8κ)−1 , we obtain
+                                
+          n          X Y k!             n      k
+         X
+                k 
+                                       X     4κ
+            (4κ) ·               ⩽                <1      for all   D > Dmax .
+                             hjj             8κ
+           k=1            A∈Ak j∈A                    k=1
+
+Thus, for D > Dmax , the matrix H n (φ) is positive definite for all n ∈ N0 and for all φ ∈
+W 1,2 (T). It follows D2 J (φ)(ψ, ψ) ⩾ 0 for all φ, ψ ∈ W 1,2 (T) for D > Dmax and the functional
+J is globally convex.                                                                          □
+
+Remark 4.9. Assume D > aκ where a > 0 is a constant to be determined later on. Then we
+have
+                 ∞                                ∞                                 ∞
+                 X           1         X       1          1X     1
+                                     ⩽                  ⩽              .
+                        1 + Dµk − 2κ     1 + κ(aµk − 2)   κ  (aµk − 2)
+                  k=1                         k=1                                   k=1
+
+Here we assume a > 2/µ1 to ensure that all terms are positive and the series converges. By
+the direct computation we obtain that
+                                              √         √ 
+                         ∞                        2π cot  √2π
+                        X       1       1                  a
+                                      =     1−        √        
+                            (aµk − 2)   4               a
+                            k=1
+
+and the condition ∞               −1 ⩽ 1/8 is satisfied for a > 15/µ . This means, we could
+                  P
+                    k=1 (aµk − 2)                                   1
+choose Dmax (κ) = 15κ/µ1 in Lemma 4.8.
+
+4.3. Existence of spatial patterns. We finish this section by proving the existence of
+nonconstant solutions to problem (2.2) by incorporating the geometry of the functional J . It
+is clear that each critical point of the functional J corresponds to a weak solution of problem
+(2.2).
+
+Proof of Theorem 2.3. First we show the existence of nonconstant stationary solutions. Com-
+bining Lemma 4.4 and Lemma 4.5 with a classical extreme value theorem, [11, Thm 6.2.8],
+we conclude that there exists a minimizer U ∈ W 1,2 (T) satisfying inf J = J (U ) and the weak
+formulation of (2.2). By Lemma 4.6 we immediately obtain J (U ) < J (U ) for D < Dmin and
+since there exists only one constant critical point of J (only one constant solution to equation
+(2.2)) we immediately conclude that U (x) is nonconstant. As U is a local minimum of J , the
+steady state U is Lyapunov stable in L2 (T).
+   Next we show the uniqueness of the stationary solutions for D > Dmax . As by Lemma
+4.8 the functional J is globally convex, every local minimum is already a global minimum.
+Furthermore, the set of all minima forms a convex set and is, in particular, connected (see
+e.g. [9, Theorem 3.10.1]). Since U ≡ κ is a critical point of J , formula (4.2) together with
+                        R1
+Poincare inequality µ1 0 (ψ − ψ)2 ⩽ ψx2 yields
+                                R        R
+
+                                          Z 1               Z 1          Z 1        Z 1 2
+                  2
+                 D J (U )(ψ, ψ) = D               ψx2 +           2
+                                                                  ψ −κ          2
+                                                                               ψ +κ     ψ
+                                              0              0            0                   0
+                                                                 Z 1 Z 1 2
+                                  ⩾ (1 + Dµ1 − κ)   ψ 2 + (κ − Dµ1 )     ψ
+                                                  0                    0
+                                    Z     1             Z      Z  !                             2
+                                  ⩾           ψ 2 + (Dµ1 − κ)             ψ2 −            ψ           .
+                                      0
+16                S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+                  R                  2 
+                       ψ2 −        ⩽ ψ 2 we have
+                              R     R
+Hence since 0 ⩽                   ψ
+                                   (R
+                   2                  ψ2                        for (Dµ1 − κ) > 0,
+                  D J (U )(ψ, ψ) ⩾
+                                    (1 + Dµ1 − κ) ψ 2
+                                                 R
+                                                                for (Dµ1 − κ) < 0.
+Since we consider D > Dmax , it is clear that 1 + Dµ1 − κ > 0. We will later see in Proposition
+5.1 that the constant steady state U is stable exactly when 1 + Dµ1 − κ > 0 holds. Thus, this
+condition is really necessary to prove convexity of J . By the strict positivity of D2 J (U )(ψ, ψ),
+it follows that J is strictly convex in a small neighborhood of U and in this neighborhood, U
+is the unique minimum of J . Since in case of multiple minima, they would be connected, U
+is the unique critical point of J and hence a unique solution to equation (2.2). Moreover, as
+the unique critical point and global minimum of J , the constant steady state U is globally
+asymptotically stable in L2 (T).                                                                  □
+
+                                      5. Linear stability analysis
+   In this section, we examine the linear stability of stationary solutions to problem (2.1),
+which allows us to identify dynamically admissible patterns. Let U be a solution of equation
+(2.2). To determine the linear stability of U , we insert u(x, t) = U (x) + eνt φ(x) into (2.1) and
+linearize about U , which leads to the eigenvalue problem
+                                                !                    Z 1
+                                 eU                          eU
+(5.1)             Dφxx + κ R 1         −1−ν φ = κ R1                     eU φ dy
+                                  U                           U    2
+                               0 e dy                    ( 0 e dy) 0
+supplemented with the boundary conditions φ(0) = φ(1) and φx (0) = φx (1). Throughout our
+analysis, we employ the notation ν to denote the eigenvalues of this nonlocal problem. Later,
+we introduce λ to represent the eigenvalues of the corresponding local problem obtained by
+setting the right-hand side of (5.1) to zero.
+
+5.1. Constant steady state. First we consider stability of the constant steady state. Clearly,
+U ≡ κ is the unique constant steady state of problem (2.2) which exists for all parameters D,
+κ. To investigate its stability, we insert U ≡ κ in (5.1) and obtain the problem
+                                                          Z 1
+(5.2)                          Dφxx + (κ − 1 − ν) φ = κ       φ dy.
+                                                            0
+
+Proposition 5.1. The constant solution U ≡ κ is stable for κ < 1 + µ1 D and unstable for
+κ > 1 + µ1 D.
+Proof. The spectrum of (5.2) is fully characterized by the set of eigenfunctions of the Laplace
+                                                                                R1
+operator (see Proposition 4.1). Choosing φ ∈ {fk }∞ k=0 and using the fact that 0 fk (x)dx = 0
+for k ⩾ 1, we find that the eigenvalues of the linearized nonlocal operator (5.2) are
+                                     (
+                                       −1              for k = 0,
+                               νk =
+                                       κ − 1 − Dµk for k ⩾ 1.
+Notice, that since ν1 > νk for all k ≥ 2, the claim follows.                                      □
+
+5.2. Local and nonlocal Sturm-Liouville. We now turn our attention to nonconstant
+steady states U . By Proposition 2.1, we know that U ∈ W 2,2 (T). To analyze the spectrum,
+we compare the eigenvalues of the linearized operator with those arising from the associated
+local periodic Sturm–Liouville problem. Our approach builds upon the methods developed
+in [4, 7], which we adapt to the setting of periodic boundary conditions.
+            STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                          17
+
+  In equation (5.1), introducing the notation
+                             eU (x)                      κ
+(5.3)        A(x) = κ R 1                − 1,   M = R           2 > 0,    C(x) = eU (x)
+                         0   eU (y) dy                1 U (y)
+                                                       e      dy
+                                                     0
+
+transforms the equation into the eigenvalue problem
+                                                             Z 1
+(5.4)                   Dφxx + (A(x) − ν)φ = M C(x)                C(y)φ(y)dy,
+                                                              0
+supplemented with periodic boundary conditions φ(0) = φ(1) and φx (0) = φx (1). We consider
+the linearization L around U as operator on L2 (T), i.e.
+                                                                         Z 1
+                 2,2      2        2
+  L : D(L) = W (T) ⊂ L (T) → L (T), Lφ = Dφxx + A(x)φ − M C(x)               C(y)φ(y)dy.
+                                                                                  0
+Note that the functions A and C are bounded in x ∈ T as U                  ∈ W (T) ⊂ L∞ (Ω).
+                                                                              2,2                The
+stability of U is then determined by the sign of the real part of the eigenvalues by Lemma
+5.2: if Re(ν) < 0 for all eigenpairs (ν, ϕ) of (5.4), then U is linearly stable; conversely, if there
+exists an eigenvalue ν with Re(ν) > 0, then U is linearly unstable.
+Lemma 5.2. The spectrum of L is discrete, i.e. consists only of isolated eigenvalues of the
+eigenvalue problem (5.4) with finite multiplicities. The eigenvectors of L are an orthogonal
+basis of L2 (T). Moreover, the all eigenvalues are real and countable.
+Proof. The operator L is self-adjoint with respect to the L2 -scalar product which can be seen
+using the specific form of the right-hand-side. Thus, all eigenvalues are real. Moreover, L has
+a compact resolvent for λ ∈ ρ(L). This is proven by constructing the resolvent (λI − L)−1
+using the Lax-Milgram Theorem and proving compactness using the compact embedding
+W 1,2 (T) ,→ L2 (T). Hence, the spectrum of L consists entirely of isolated eigenvalues. As
+L2 (T) is a separable Hilbert space, the spectral theorem for compact self-adjoint operators
+states that a compact, self-adjoint operator has a basis of eigenvectors. Since L and the com-
+pact operator (λI − L)−1 share the same eigenvectors, the eigenvectors of L are a orthogonal
+basis of L2 (T).                                                                             □
+  Problem (5.4) is closely related to the periodic Sturm–Liouville problem, apart from the
+presence of the nonlocal term on the right-hand side. Indeed, the eigenvalues ν of (5.4) can
+be related to solutions of the associated Sturm–Liouville problem
+(5.5)                                    Dψxx + (A(x) − λ)ψ = 0,
+together with the boundary conditions ψ(0) = ψ(1) and ψx (0) = ψx (1). To distinguish the
+eigenpairs of both problems we use (ν, φ) for solutions of (5.4) and (λ, ψ) for solutions of (5.5).
+   The local periodic Sturm-Liouville problem was extensively studied in the past (see. e.g.
+[8, 22]). Here we recall the well-known result for completeness of the exposition.
+Proposition 5.3. The solutions of (5.5) are given by pairs {(λn , ψn )}n∈N0 , where the set
+{ψn }n∈N0 is an orthonormal basis of L2 (0, 1). The eigenvalues satisfy
+              λ0 > λ1 ⩾ λ2 > . . . > λ2j+1 ⩾ λ2j+2 > λ2(j+1)+1 ⩾ λ2(j+1)+2 > . . . .
+The corresponding eigenfunctions ψ2j+1 , ψ2j+2 have exactly 2j + 2 zeros in the interval [0, 1).
+In particular ψ0 does not vanish on [0, 1] and the eigenvalue λ0 is simple.
+                                                               R1
+   If an eigenfunction ψn of the local problem (5.5) satisfies 0 C(y)ψn (y)dy = 0, then the
+pair (λn , ψn ) also solves the nonlocal problem (5.4) and λn is a nonlocal eigenvalue. Since
+the ordering of the eigenvalues λn is well understood, we first focus on characterizing the
+eigenvalues of the nonlocal problem that do not coincide with those of the local problem.
+18               S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+                                                           / {λn }∞
+Lemma 5.4. If a nonlocal eigenvalue ν of (5.4) satisfies ν ∈      n=0 , then ν solves
+
+                                   1     X β2
+                                                 n
+(5.6)                                 =               ,
+                                  M           ν − λn
+                                            n∈N0
+            R1
+where βn = 0 C(y)ψn (y)dy. Conversely if ν ∈ R solves (5.6), then ν is an eigenvalue of the
+nonlocal problem (5.4).
+Proof. Let (ν, φ) be an eigenpair of the nonlocal problem (5.4). Assume that ν is not a
+solution of the local problem (5.5), i.e.
+                                          Z 1
+                                  J :=        C(x)φ(x)dx ̸= 0.
+                                        0
+We decompose nonlocal eigenfunction  φ in terms of the orthonormal eigenbasis {ψn }n∈N0 of
+                           an ψn with (an )n∈N0 ∈ ℓ2 (N0 ). Multiplying equation (5.4) by ψm
+                         P
+the local problem φ(x) =
+and integrating yields
+                  Z 1 X
+                                                           
+                         an ψn D(ψm )xx + (A(x) − ν)ψm dx = JM βm ,
+                   0 n∈N
+                         0
+              R1
+where βn = 0 C(x)ψn (x)dx and we have applied integration by parts twice. Next, adding
+and substracting λm ψm and using orthogonality of the basis ψn together with equation (5.5)
+for (λm , ψm ), we obtain am (λm − ν) = JM βm , which is equivalent to
+                                                M βm
+                                      am = J          .
+                                               λm − ν
+Therefore we can express J in the form
+                      Z 1              X            X                  βn2
+                  J=      C(x)φ(x)dx =   an βn = JM                         .
+                        0                                            λn − ν
+                                            n∈N0              n∈N0
+
+Since J ̸= 0 by assumption, ν solves (5.6). The series converges for each ν ̸= λn as λn ∼ n2
+[7, 22] and βn is uniformly bounded. This proves one direction of the claim.
+   Now, we fix ν ∈ R which solves (5.6). Notice that ν ̸= λn forP all n ∈ N0 and there exist
+βn ̸= 0. We set an = M βn /(λn − ν) and define the function φ = n∈N0 an ψn which is nonzero
+as βn ̸= 0 for at least one n ∈ N0 . Substituting φ into the equation (5.4) and again adding
+and substracting λn ψn and utilizing (5.5) we obtain
+                              ∞
+                              X                  X∞     Z 1
+                           M     βn ψn = M C(x)      an     C(x)ψn .
+                             n=0                   n=0    0
+
+Notice that by assumption (5.6) right hand side satisfies
+                       ∞     Z 1           ∞            ∞
+                      X                   X            X     β2
+                          an     C(x)ψn =     an βn =      M n =1
+                              0                             ν−λ
+                      n=0                 n=0          n=0
+          P
+and since    βn ψn = C(x) the proof is completed.                                          □
+
+5.3. Relation between eigenvalues. Next, we establish the location of eigenvalues ν of the
+nonlocal problem (5.6). First we decompose the set of local eigenvalues into two subsets
+                    {λn }∞
+                         n=0 = {λn : βn = 0} ∪ {λn : βn ̸= 0} := Λ0 ∪ Λβ
+
+We must account for the terms where βn = 0 as they vanish in the series (5.6). These sets
+are not necessarily disjoint, i.e. there can exists a double eigenvalue λn = λn+1 and λn ∈ Λ0
+            STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                        19
+
+while λn+1 ∈ Λβ . Without loss of generality we assume that the elements of Λ0 , Λβ are in
+monotonically decreasing order
+                         Λ0 = {λn1 , λn2 , . . .},      Λβ = {λm1 , λm2 , . . .}
+Notice that Λ0 , Λβ can be infinite, finite or empty and the eigenvalues can be double. Using
+the introduced notation, equation (5.6) transforms to
+                                                      2
+                                                     βm
+                                      1       X
+                                                        k
+(5.7)                                    =                 .
+                                     M             λ −ν  mk
+                                              λmk ∈Λβ
+
+  With this preparation, we can characterize all eigenvalues of the nonlocal problem (5.4).
+Theorem 5.5. The eigenvalues of the nonlocal problem (5.4) are given by
+                       {νn }∞
+                            n=1 = Λ0 ∪ {ν ∈ R : ν solves equation (5.7)}.
+For all distinct and subsequent local eigenvalues λmi , λmi+1 ∈ Λβ there exists exactly one
+solution ν of equation (5.7) with ν ∈ (λmi+1 , λmi ). In particular if Λβ is finite, there exists
+exactly one solution of equation (5.7) with ν ∈ (−∞, min Λβ ).
+Proof. It is clear Λ0 ⊆ {νn }∞
+                             n=1 and thus the first part follows from Lemma 5.4.
+For the second part first note that all solutions ν of (5.7) are real. They can be estimated as
+follows. Fix subsequent local eigenvalues λmi , λmi+1 ∈ Λβ . From now on we assume that λmi
+and λmi+1 are distinct. If they coincide, we merge the two summands in the series (5.7) by
+                q
+setting βmi = βm   2 + β2
+                    i    mi+1 .
+   Then, the right-hand-side of (5.7) is continuous and monotone increasing in ν ∈ (λmi+1 , λmi )
+and converging to −∞ as ν ↓ λmi+1 and to ∞ as ν ↑ λmi . Since M > 0 by (5.3), there exists a
+unique solution νmi of (5.7) in the interval (λmi+1 , λmi ). Note that the right-hand-side of (5.7)
+is negative for all ν > λm0 and, thus, there exists no solution ν > λm0 . In case of finite Λβ ,
+there exists a solution ν in the interval (−∞, min Λβ ) as the right-hand-side of (5.7) converges
+to 0 as ν ↓ −∞ and to ∞ as ν ↑ min Λβ .                                                          □
+Remark 5.6. Applying this characterization to the eigenvalue problem for the constant steady
+solution U ≡ κ, we see that Λβ = {κ−1} and Λ0 = {λk }∞k=1 and hence the nonlocal eigenvalues
+satisfy ν0 ∈ (−∞, κ − 1) and νj = λj for all j ⩾ 1. Indeed, this coincides with the results
+from Proposition 5.1.
+5.4. Stability of steady states. With this characterization, we can find a criterion under
+which the steady state solution U is (linearly) unstable.
+Theorem 5.7. If the derivative Ux of a stationary solution U has at least three zeros in [0, 1),
+then U is linearly unstable.
+Proof. Since U solves (2.2), we can differentiate (2.2) with respect to x and obtain that Ux
+solves
+                                            eU
+                  0 = D(Ux )xx − Ux + κ R 1       Ux = D(Ux )xx + A(x)Ux ,
+                                             U
+                                          0 e dy
+which is exactly the local problem (5.5) with λ = 0. Since U ∈ W 2,2 (T), all U , Ux and Uxx
+satisfy periodic boundary conditions. Hence, the local problem has a zero eigenvalue with
+corresponding eigenfunction with at least 3 zeros on the interval [0, 1). Proposition 5.3 implies
+that λ3 ⩾ 0 as the eigenfunctions ψ0 , ψ1 , ψ2 have at most two zeros on the interval [0, 1).
+Therefore there are at least three strictly positive local eigenvalues λ0 > λ1 ⩾ λ2 > λ3 ≥ 0.
+This is already sufficient to obtain a positive nonlocal eigenvalue ν. Indeed, if all three
+local eigenvalues are in Λβ then by Theorem 5.5 there exists a positive nonlocal eigenvalue
+20                S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+ν ∈ (λ0 , λ1 ). Otherwise at least one of those local eigenvalues is also a nonlocal eigenvalue
+(belongs to Λ0 ) and hence the proof is finished.                                            □
+Remark 5.8. If U is a steady state solution, with Ux having two zeros in the interval [0, 1),
+then either λ1 = 0 or λ2 = 0. Even though λ1 = 0 implies λ0 > 0, this is not enough to obtain
+instability of the nonlocal problem. Indeed, assuming λ0 ∈ Λβ and λ1 ∈ Λ0 implies Λ0 ⊆
+(−∞, 0]. Moreover, by Theorem 5.5 the nonlocal eigenvalues satisfy ν0 = 0 and ν1 ∈ (λm1 , λ0 )
+with λm1 ∈ Λβ . If λm1 < 0 it is possible that ν1 < 0 and hence all nonlocal eigenvalues are
+nonpositive.
+   To relate these results to the nonlinear dynamics, we exploit the fact that problem (2.1)
+can be viewed as a gradient flow in L2 (T) with respect to the Lyapunov functional J defined
+in (4.1). This allows us to connect linear instability with nonlinear instability in the L2 -norm
+for perturbations in W 1,2 (T).
+Lemma 5.9. Let U be a linear unstable steady state of (2.1). Then, the steady state is
+nonlinearly unstable with respect to the L2 -norm.
+Proof. The problem (2.1) is a gradient flow with respect to the L2 -norm, thus is follows
+from the general theory of gradient flows and dynamical systems [1] that nonlinearly stable
+solutions to problem (2.1) are local minima of the Lyapunov functional J given by formula
+(4.1). For the linearization L at U we have
+                     D2 J (U )(ψ, ψ) = (−Lψ, ψ)L2     for all ψ ∈ W 2,2 (T),
+compare to equation (4.2). Hence, the linearization corresponds to minus Hessian of J at U .
+By Lemma 5.2, the linear instability of U implies the existence of a positive real eigenvalue
+λ. So if L has an eigenvalue λ > 0 with eigenvector φ, then
+                                D2 J (U )(φ, φ) = −λ∥φ∥2L2 < 0.
+Hence, U is not a local minimum of J and thus nonlinearly unstable.                            □
+Remark 5.10. In general, linear stability of a steady state does not necessarily imply nonlinear
+stability in the L2 -norm; it often only guarantees nonlinear stability in the L∞ -norm [21], or
+may require restricting the class of admissible perturbations [3] as we also did in the above
+lemma.
+   With these results we can now prove our main result about the instability of m-modal
+solutions in Theorem 2.4.
+Proof of Theorem 2.4. Let U be an arbitrary stationary m-periodic solution to problem (2.1).
+Then, U has at least m peaks and hence, the derivative Ux has at least 2m − 1 zeros in the
+interval [0, 1). By Theorem 5.7, all m-modal solution U are linearly unstable for m ⩾ 2. By
+Lemma 5.9, nonlinear instability of all m-modal solutions follows.
+   The periodic solution to problem (2.2) of Theorem 2.3 constructed in Section 4 is a minimum
+of the Lyapunov functional given by formula (4.1). Therefore, the solution is nonlinearly stable
+and the solution is unimodal.                                                                 □
+Corollary 5.11 (Bistability). For κ < 1 and sufficiently small D > 0, the system exhibits
+bistability: both the constant state U ≡ κ (stable by Proposition 5.1) and the nonconstant
+unimodal solution (stable by Theorems 2.3 and 2.4) coexist.
+
+                                  6. Bifurcation analysis
+  In this section we study nonconstant steady states to problem (2.1), bifurcating from the
+branch of constant solutions Φ̄(κ) ≡ κ. Here, κ is also a bifurcation parameter. The linearized
+           STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                       21
+
+operator L(κ) at a constant steady state Φ̄(κ) is given by
+                                                          Z 1
+                        L (κ) (φ) = Dφxx + (κ − 1)φ − κ       φ(y)dy,
+                                                                 0
+
+and we emphasize its dependency on the bifurcation parameter κ. Spectral properties of the
+linearized operator were discussed in Section 5.1. We recall, the eigenvalues of L (κ) are
+                                ν0 = −1,    νk = κ − 1 − Dµk ,
+
+where µk = 4π 2 k 2 are the eigenvalues of −∆ with periodic boundary conditions. The eigen-
+value νn crosses zero for each critical value κn := 1 + Dµn . Thus, the linearized operator
+L(κ) has a zero eigenvalue for all κ = κn . We denote the corresponding constant solution by
+Φ̄n ≡ Φ̄(κn ).
+
+6.1. Existence of branches. To establish the existence of nonconstant solution branches
+bifurcating from (Φ̄n , κn ), we apply the Crandall–Rabinowitz theorem for bifurcation from
+simple eigenvalues [18, Theorem I.5.1]. We first define the relevant function spaces:
+         Y := φ ∈ L2 (T) | φ(x) = φ(1 − x) for a. e. x ∈ T : symmetry constraint ,
+               
+
+        X := {φ ∈ W 2,2 (T) | φ(x) = φ(1 − x) for a. e. x ∈ T}.
+Note that the periodic boundary conditions of the Laplace operator ∆ are naturally incor-
+porated in the space W 2,2 (T). The symmetry condition ensures, the kernel of L(κn ) is one-
+dimensional:
+                                                        √
+                    ker L(κn ) = span{φn }, where φn := 2 cos(2nπx).
+
+We consider solutions in a sufficiently small neighborhood of (Φ̄n , κn ) of the form
+                     φ = Φ̄(κ) + χ,    κ = κn + α,    with χ ∈ X, α ∈ R.
+Define the mapping G : X × R → Y by
+                                                                 eχ
+                                                                          
+                       G(χ, α) := Dχxx − χ + (κn + α)        R         − 1   .
+                                                                 eχ dy
+Then G(χ, α) = 0 if and only if φ = Φ̄(κn + α) + χ solves the stationary problem
+                                                                                  (2.2) for
+κ = κn + α. Note that, the trivial branch of constant steady states Φ̄(κ), κ transforms to
+(0, α) and has a zero eigenvalue at α = 0.
+   The map G is well-defined as X ⊂ L∞ (T) and thus G(X × R) ⊂ L2 (T). To confirm the
+symmetry constraint, use that χx (x) = −χx (1 − x) if χ(x) = χ(1 − x) and χ regular enough.
+Hence, we have χxx (x) = χxx (1 − x) and G(χ, α)(x) = G(χ, α)(1 − x) follows.
+   We are now in a position to apply the Crandall-Rabinowitz theorem to the equation
+G(χ, α) = 0 at the bifurcation point (0, 0).
+Theorem 6.1. For each n ∈ N there exist δ > 0 and smooth functions
+                              αn (−δ, δ) → R,    zn : (−δ, δ) → X
+with αn (0) = zn (0) = 0, such that curve
+                                                                        
+                      Γn (s) = Φ̄n + αn (s) + sφn + szn (s), κn + αn (s)
+                                                                      
+forms a branch of solutions to problem (2.2) bifurcating from Φ̄n , κn . For all s ∈ (−δ, δ)\{0},
+the solutions on Γn (s) are nonconstant.
+22                  S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+Proof. Let us verify the assumptions of [18, Theorem I.5.1]. The trivial branch condition
+holds as G(0, α) = 0 for all α ∈ R.
+   Next, we prove that Gχ (0, 0) is a Fredholm operator of index zero with one-dimensional
+kernel. The linearization Gχ (0, 0) : X → Y is given by
+                                                          Z 1
+(6.1)                                    ′′
+                       Gχ (0, 0)(h) = Dh + (κn − 1)h − κn     h(y) dy.
+                                                               0
+
+The kernel is one-dimensional as ker Gχ (0, 0) = ker L(κn ) = span{φn }. To establish that
+codim ran Gχ (0, 0) = 1, we prove that ran Gχ (0, 0) = span{φn }⊥ .
+   First, we show ran Gχ (0, 0) ⊆ span{φn }⊥ . For any h ∈ X, multiplying (6.1) by φn and
+integrating:
+               Z 1                        Z 1                      Z 1
+                   Gχ (0, 0)(h) · φn dy =     Dhφ′′n dy + (κn − 1)     hφn dy = 0,
+                0                          0                          0
+                                                                            R1
+where we used integration by parts, φ′′n = −µn φn , κn − 1 = Dµn , and 0 φn dy = 0.
+                                                  n ⟩ = 0. We seek h ∈ X such that Gχ (0, 0)(h) =
+   For the reverse inclusion, let g ∈ Y with ⟨g, φP
+g. Expanding in the eigenbasis of L(κn ): g = ∞      j=0 gj φj with gn = 0, we obtain
+                                            X           gj
+                                  h = −g0 +                      φj .
+                                                 κn − 1 − Dµj
+                                               j̸=n
+
+This is well-defined since κn − 1 − Dµj = D(µn − µj ) ̸= 0 for j ̸= n. Furthermore, we only use
+the terms of the eigenbasis which satisfy the symmetry condition φ(x) = φ(1−x) as g ∈ Y and
+thus by regularization of (∂xx − a)−1 we have h ∈ X. Therefore, ran Gχ (0, 0) = span{φn }⊥
+has codimension one. Since the kernel is one-dimensional and the range has codimension one,
+Gχ (0, 0) is a Fredholm operator of index zero.
+  For the transversality condition of the Crandall-Rabinowitz theorem, observe that
+                                            Z 1
+                     Gχα (0, 0)(φn ) = φn −     φn dy = φn ∈/ ran Gχ (0, 0),
+                                                 0
+     R1
+since 0 φn dy = 0 for n ≥ 1.
+   Having verified all conditions (trivial branch, Fredholm property with index zero, one-            
+dimensional kernel, and transversality condition), we obtain the existence of a branch χn (s), αn (s)
+of solutions satisfying G(χn (s), αn (s)) = 0 for all s ∈ (−δ, δ) with χn (0), αn (0) = (0, 0).
+More precisely, there exists an open neighborhood B1 ⊂ B of (0, 0) and smooth functions
+αn : (−δ, δ) → R, zn : (−δ, δ) → X with αn (0) = zn (0) = 0 such that
+        B1 ∩ G−1 (0) = {(sφn + szn (s), αn (s)) | −δ < s < δ} ∪ {(0, s) | −ε < s < ε}.
+                                                        
+Consequently, Φ̄n + αn (s) + sφn + szn (s), κn + αn (s) constitutes a branch of solutions
+to problem (2.2). Since φn is nonconstant and zn (s) → 0 as s → 0, these solutions are
+nonconstant for all s ̸= 0 with sufficiently small |s|.                                □
+
+6.2. Direction of branches (sub- and supercritical pitchfork). To determine the di-
+rection of bifurcation, we analyze the behavior of the bifurcation parameter αn (s) near s = 0.
+Define the function
+                               G(s) := G(sφn + szn (s), αn (s)) ≡ 0
+and differentiate it with respect to s to extract the behavior of αn (s) near the bifurcation
+point.
+             STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                           23
+                                                                                  
+Lemma 6.2. The branch of solutions Γn (s) = Φ̄n + αn (s) + sφn + szn (s), κn + α(s)
+constructed in Theorem 6.1 has the asymptotic expansion
+                                                                                
+                     Γn (s) ≈ κn + φn s + αn′′ (0) + zn′ (0) s2 , κn + αn′′ (0)s2 ,
+                                                            
+
+with
+                       κn                               1        1
+             zn′ (0) = 2  2
+                             cos(4πnx) and αn′′ (0) = −                + 2Dn2 π 2 .
+                   24π n D                              4 16Dn2 π 2
+Proof. We differentiate G(s) with respect to s up to third order. The derivatives of G with
+respect to χ and α are given in Appendix C.
+   First derivative: Differentiating G(s) with respect to s, we obtain
+       Gχ (sφn + szn (s), αn (s))(φn + zn (s) + szn′ (s)) + Gα (sφn + szn (s), αn (s))αn′ (s) = 0.
+Evaluating at s = 0 and using zn (0) = 0, αn (0) = 0, and Gα (0, 0) = 0, we obtain
+                                          Gχ (0, 0)(φn ) = 0,
+which holds since φn ∈ ker Gχ (0, 0). This does not determine αn′ (0), so we proceed to the
+second derivative.
+   Second Rderivative: Differentiating twice and evaluating at s = 0, using zn (0) = 0,
+αn (0) = 0, φn dy = 0, Gα (0, 0) = 0, and Gαα (χ, α) ≡ 0, we obtain
+    0 = Gχχ (0, 0)(φn , φn ) + 2Gχα (0, 0)(φn )αn′ (0) + 2Gχ (0, 0)(zn′ (0))
+                                               Z                          Z   
+               ′                  ′                  ′
+      = 2 Dzn (0)xx + (κn − 1)zn (0) − 2κn zn (0) dy + κn φn − φn dy + 2φn αn′ (0).
+                                                                       2     2
+                                       
+
+
+Since zn′ (0) is periodic, we obtain zn′ (0) dy = 0 and hence, the corresponding equation can
+                                      R
+be rewritten as
+                                                              Z         
+(6.2)                ′                   ′
+                 2(Dzn (0)xx + (κn − 1)zn (0)) = −κn φn − φn dy − 2φn αn′ (0).
+                                                          2         2
+
+
+Multiplying equation (6.2) by φn , integrating                                           ′′
+                                          R 3 overR the domain and using the identities φn =
+−µn φn and κn − 1 = Dµn together with φn = φn = 0 we conclude
+                                                  Z
+                                     0 = −2αn′ (0) φ2n dy
+
+which implies αn′ (0) = 0. To find an explicit expression for zn′ (0), we solve
+                                                          Z       
+                                              κn                       κn
+             Dzn′ (0)xx + (κn − 1)zn′ (0) = −         φ2n − φ2n dy = − cos(4nπx),
+                                               2                        2
+where we used φn (x)2 = 2 cos2 (2πnx) = 1 + cos(4πnx) and φ2n dy = 1. The solution has the
+                                                                   R
+explicit form
+                                                                                κn
+                  zn′ (0) = A cos(4nπx), with − DA(4nπ)2 + (κn − 1)A = − .
+                                                                                 2
+Solving for A and using κn − 1 = Dµn = D4π 2 n2 gives A = κn (24n2 π 2 D)−1 .
+R Third      derivative: Differentiating    G(s) three times and evaluating at s = 0, noting that
+  zn′′ (0)dy = 0, in analogy with zn′ (0)dy = 0 and using the properties derived from the
+                                      R
+second derivative, we obtain
+                                                                      Z       
+                               ′′                  ′′            3         2
+                      0 = 3(Dzn (0)xx + (κn − 1)zn (0)) + κn φn − 3φn φn dy
+(6.3)                                    Z               
+                                   ′             ′
+                        + 6κn φn zn (0) − φn zn (0)dy + 2αn′′ (0)φn .
+24                 S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+Analogously, we multiply equation (6.3) by φn , integrate, and use indentities
+                 Z 1             Z 1                Z 1
+                       2
+                     φn dy = 1        4
+                                     φn dy = 3/2        φ2n zn′ (0)dy = 1/2A
+                     0                 0                   0
+which by direct calculation yields
+                              0 = 3/2κn − 3κn + 3κn A + 2αn′′ (0).
+Substituting A = κn (24π 2 n2 D)−1 and κn = 1 + D4π 2 n2 , we obtain
+                                             1    1
+(6.4)                           αn′′ (0) =     −         + 2Dn2 π 2 .
+                                             4 16Dn2 π 2
+                                                                                                    □
+   Having derived an explicit formula for αn′′ (0), we can now classify the type of bifurcation.
+We emphasize that this classification applies only to the local behavior near the bifurcation
+point and is determined solely by the eigenvalue that crosses zero. Other eigenvalues in
+the spectrum, although not involved in the bifurcation mechanism, do not affect this local
+characterization. Importantly, the bifurcation type by itself does not determine the overall
+linear stability of the bifurcating branch; a full stability assessment requires examining the
+entire spectrum of the linearized operator along the bifurcating solutions.
+Theorem 6.3. Fix n ∈ N. If κn ̸= 1.5, then (Φ̄n , κn ) undergoes a pitchfork bifurcation. The
+type of bifurcation is determined by the sign of αn′′ (0):
+      • subcritical if αn′′ (0) < 0, i.e., κn < 1.5 (equivalently, 0 < D < (8n2 π 2 )−1 ),
+      • supercritical if αn′′ (0) > 0, i.e., κn > 1.5 (equivalently, D > (8n2 π 2 )−1 ).
+Proof. Observe that by formula (6.4) there holds αn′′ (0) = 0 if and only if D = 8n12 π2 , which
+corresponds to κn = 1.5. Thus, whenever αn′ (0) = 0 and αn′′ (0) ̸= 0, a pitchfork bifurcation
+occurs at Φ̄n for κ = κn .
+    To determine the type of bifurcation, we examine the behavior of the trivial branch. Since
+the critical eigenvalue responsible for bifurcation is κ − κn , the trivial branch loses stability
+as κ crosses κn . By the principle of exchange of stability, the bifurcation is subcritical if the
+nontrivial branch enters the region where the trivial solution is stable, i.e., if κn + αn (s) < κn
+for small s > 0. Conversely, it is supercritical if κn + αn (s) > κn . Using the expansion
+αn (s) = 21 αn′′ (0)s2 + O(s3 ), it follows that αn′′ (0) < 0 implies a subcritical bifurcation, while
+αn′′ (0) > 0 implies a supercritical one. The equivalence between the sign of αn′′ (0) and the
+conditions on D and κn follows from direct computation.                                             □
+To conclude about the stability of the branch, we consider the bifurcation point κ1 , namely a
+point at which the trivial branch changes stability.
+Theorem 6.4. Fix (Φ̄n , κn ) for some n ∈ N, and let Γn (s) = (Φn (s), κn (s)) denote the
+bifurcating branch. Then, for sufficiently small |s|, the following stability properties hold:
+      • For n ≥ 2, the branch Γn (s) consists of linearly unstable solutions;
+      • For n = 1 and κ1 < 1.5, the branch Γ1 (s) consists of linearly unstable solutions;
+      • For n = 1 and κ1 > 1.5, the branch Γ1 (s) consists of linearly stable solutions.
+Proof. At the bifurcation point (Φ̄n , κn ) with n ≥ 2, Proposition 5.1 shows that the linearized
+operator L(κn ) possesses exactly n−1 positive eigenvalues in addition to the simple zero eigen-
+value. By the continuation principle, these positive eigenvalues persist along the bifurcating
+branch Γn (s) for sufficiently small |s|. Consequently, regardless of the sign of the critical
+eigenvalue along the branch, the solutions Φn (s) remain linearly unstable in a neighborhood
+of the bifurcation point.
+           STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                       25
+
+   For the primary bifurcation at (Φ̄1 , κ1 ), the linearized operator L(κ1 ) has a simple zero
+eigenvalue and all other eigenvalues are negative. The stability of the bifurcating branch
+Γ1 (s) is therefore determined exclusively by the behavior of the critical eigenvalue along the
+nontrivial branch. The assertion follows from an analogous argument to that employed in
+Theorem 6.3.                                                                                 □
+
+6.3. Global continuation and turning points. Fix a bifurcation point (Φ̄n , κn ) for some
+n ∈ N. We now establish that the local branch Γn (s) obtained in Theorem 6.1 extends
+globally.
+   To apply the global bifurcation theory of Rabinowitz, we reformulate the steady-state
+equation (2.2) as a fixed-point problem. Specifically, (2.2) is equivalent to
+                                            eφ
+                                                 
+                                    −1
+                0 = φ + (D∂xx − I)      κR φ         =: φ + κf (φ) =: H(φ, κ).
+                                          T e dy
+  Let S denote the closure of nontrivial solutions to H(φ, κ) = 0 in W 1,2 (T) × R. Note that
+Γn (s) ⊂ S, and by elliptic regularity, S ⊂ W 2,2 (T) × R.
+Theorem 6.5 (Global bifurcation). Let C be the maximal connected component in S contain-
+ing (Φ̄n , κn ). Then C satisfies one of the following alternatives:
+     (i) C is unbounded in W 1,2 (T) × R;
+    (ii) C contains a point (Φ̄(κ), κ) on the trivial branch for some κ ̸= κn .
+Proof. We verify the assumptions of the Global Crandall-Rabinowitz Theorem [18, special
+case of Theorem II.3.3]. Since W 1,2 (T) ⊆ L∞ (T), we have eφ ∈ L∞ (T) for all φ ∈ W 1,2 (T).
+By elliptic regularity and the compact embedding W 2,2 (T) ⊆ W 1,2 (T), the operator
+                         (D∂xx − I)−1 : L2 (T) → W 2,2 (T) ⊆ W 1,2 (T)
+is compact. Therefore, f : W 1,2 (T) → W 1,2 (T) is well-defined and completely continuous.
+   To establish continuity of the linearization, we compute Dφ H(Φ̄n , κ) = I + κDφ f (Φ̄n ). At
+the constant state Φ̄n ≡ κn , the linearization yields
+                                                            Z      
+                                                    −1
+                         Dφ f (Φ̄n )ψ = (D∂xx − I)      ψ − ψ dy .
+                                                                T
+Standard elliptic estimates and Sobolev embedding give
+                                                Z
+                     |Dφ f (Φ̄n )ψ∥W 1,2 ≤ C ψ − ψ dy           ≤ C∥ψ∥W 1,2 ,
+                                                   T       L2
+which proves Dφ H(Φ̄n , ·) ∈ C(R, L(W 1,2 (T), W 1,2 (T))).
+√ Finally, the analysis in Theorem 6.1 shows that ker(Dφ H(Φ̄n , κn )) = span{φn } with φn =
+ 2 cos(2nπx), and φn ∈  / ran(Dφ H(Φ̄n , κn )). Indeed,
+                     Gχ (0, 0)φ = 0 ⇐⇒ Dφ H(Φ̄n , κn )φ = 0,
+                 φ ∈ ran(Gχ (0, 0)) ⇐⇒ (D∆ − I)−1 φ ∈ ran(Dφ H(Φ̄n , κn )),
+and thus zero is a simple eigenvalue of Dφ H(Φ̄n , κn ).
+  Having verified all assumptions, the conclusion follows.                                     □
+  We now analyze the global behavior of the bifurcating branch in the subcritical regime.
+Theorem 6.6 (Existence of turning point). Suppose κ1 = 1 + Dµ1 < 1.5, corresponding to
+a subcritical pitchfork bifurcation at (Φ̄1 , κ1 ). Then there exists ŝ ∈ R such that the branch
+Γ1 (s) exhibits a turning point at (Φ(ŝ), κf ), where κf = κ1 (ŝ) ∈ (0, κ1 ).
+26                  S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+                                 ǁ·ǁ
+
+                                                       A3
+                                  ĉ
+
+
+
+
+                                       A2
+                                                       A1
+                                  0      κ min   κf              κ1
+
+
+                                                 Figure 6.1.
+
+Proof. We analyze the possible behavior of Γ1 (s). By Theorem 6.5, the maximal connected
+component containing Γ1 (s) either extends to infinity in W 1,2 (T) × R or returns to the trivial
+branch at some κ ̸= κ1 . Multiplying equation (2.2) by U and integrating yields
+                                                 R U
+                                                    e U dx
+                     Z             Z
+                            2           2
+                   D |Ux | dx + U dx = κ RT U               ≤ κ∥U ∥L∞ (T) .
+                        T            T             T e dy
+
+Therefore, by Sobolev embedding ∥U ∥2W 1,2 ≤ Cκ∥U ∥W 1,2 , and hence all stationary solutions
+are uniformly bounded in W 1,2 for κ ∈ [0, K]. In particular, the branch Γ1 (s) can not cross
+the horizontal line A3 in Figure 6.1.
+   Since κ1 is the smallest bifurcation point, the branch cannot intersect the trivial branch for
+κ ∈ (0, κ1 ); this corresponds to the horizontal line A1 in Figure 6.1. Furthermore, Theorem 6.5
+guarantees the uniqueness of the constant solution for κ < κmin , which forms the boundary
+A2 .
+   Since the branch emerges from (Φ̄1 , κ1 ) with κ′1 (0) = 0 and κ′′1 (0) < 0 (subcritical bifur-
+cation), and remains confined within the bounded rectangle enclosed by A1 , A2 , and A3 ,
+Theorem 6.5 implies that the branch must exit this region. The only possible exit is through
+right boundary (gray dashed line).
+   By continuity there exists ŝ ∈ R which is a turning point of the branch Γ1 (s).             □
+Remark 6.7. We cannot analytically prove how the branch in [κmin , κ1 ] behaves in detail.
+Numerical simulations suggest that we always have the simplest case of one fold bifurcation
+at κf . At the fold bifurcation κf the unstable eigenvalue from the subcritical pitchfork
+bifurcation could get stable or one of the stable eigenvalues could loose stability. In the first
+case, the branch would be stable after the fold bifurcation and we would have the existence
+of stable nontrivial steady states for some κ ∈ (κf , κ0 ) and, thus, bistability as the constant
+steady state is also stable. This would not be necessarily true in the second case. However,
+in numerical analysis, we always observe a single fold bifurcation κf in (0, κ1 ) at which the
+branch Γ(s) gets stable. Hence, we have bistability in the whole interval (κf , κ1 ).
+
+                                                 References
+ [1] L. Ambrosio, N. Gigli, and G. Savaré. Gradient flows: in metric spaces and in the space of probability
+     measures. Springer, 2005.
+ [2] L. Berlyand, O. Krupchytskyi, and T. Laux. Change of bifurcation type in 2d free boundary model of a
+     moving cell with nonlinear diffusion, 2025.
+ [3] L. Berlyand, C. A. Safsten, and L. Truskinovsky. Nonlinear stability in a free boundary model of active
+     locomotion. Archive for Rational Mechanics and Analysis, 250(2), 2026.
+ [4] A. Bose and G. A. Kriegsmann. Stability of localized structures in non-local reaction-diffusion equations.
+     Methods and Applications of Analysis, 5(4):351–366, 1998.
+             STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                                   27
+
+ [5] E. Braun and K. Keren. Hydra regeneration: Closing the loop with mechanical processes in morphogenesis.
+     BioEssays, 40(7):1700204, 2018.
+ [6] F. Brinkmann, M. Mercker, T. Richter, and A. Marciniak-Czochra. Post-turing tissue pattern formation:
+     Advent of mechanochemistry. PLOS Computational Biology, 14(7):1–21, 07 2018.
+ [7] E. A. Coddington, N. Levinson, and T. Teichmann. Theory of ordinary differential equations, 1956.
+ [8] C. Constanda. Solution techniques for elementary partial differential equations. CRC Press, 2010.
+ [9] P. Constantin and P. Niculescu. Convex Functions and Their Applications: A Contemporary Approach.
+     Springer, 2018.
+[10] S. Cygan. Pattern formation in nonlocal kondo model. Mathematical Methods in the Applied Sciences,
+     44(13):10804–10822, 2021.
+[11] P. Drábek and J. Milota. Methods of nonlinear analysis: applications to differential equations. Springer
+     Science & Business Media, 2013.
+[12] S.-I. Ei, H. Ishii, S. Kondo, T. Miura, and Y. Tanaka. Effective nonlocal kernels on reaction–diffusion
+     networks. Journal of Theoretical Biology, 509:110496, 2021.
+[13] J. Ferenc, P. Papasaikas, J. Ferralli, Y. Nakamura, S. Smallwood, and C. D. Tsiairis. Mechanical oscil-
+     lations orchestrate axial patterning through wnt activation in hydra. Science Advances, 7(50):eabj6897,
+     2021.
+[14] A. Gierer and H. Meinhardt. A theory of biological pattern formation. Biological Cybernetics, 12:30–39,
+     01 1972.
+[15] J. Halatek, F. Brauns, and E. Frey. Self-organization principles of intracellular pattern formation. Philo-
+     sophical Transactions of the Royal Society B: Biological Sciences, 373(1747):20170107, 2018.
+[16] D. Henry. Geometric theory of semilinear parabolic equations, volume 840. Springer, 2006.
+[17] T. W. Hiscock and S. G. Megason. Mathematically guided approaches to distinguish models of periodic
+     patterning. Development, 142(3):409–419, 02 2015.
+[18] H. Kielhöfer. Bifurcation Theory: An Introduction with Applications to PDEs. Applied Mathematical
+     Sciences. Springer, 2004.
+[19] S. Kondo. An updated kernel-based turing model for studying the mechanisms of biological pattern for-
+     mation. Journal of Theoretical Biology, 414:120–127, 2017.
+[20] S. Kondo and T. Miura. Reaction-diffusion model as a framework for understanding biological pattern
+     formation. Science, 329(5999):1616–1620, 2010.
+[21] C. Kowall, A. Marciniak-Czochra, and F. Münnich. Nonlinear stability results for stationary solutions of
+     reaction-diffusion-ode systems. Journal of Differential Equations, 448:113704, 2025.
+[22] N. R. Lebovitz. Ordinary Differential Equations. Mathematics Series. Brooks/Cole, 1999.
+[23] L. Marcon and J. Sharpe. Turing patterns in development: what about the horse part? Current Opinion
+     in Genetics & Development, 22(6):578–584, 2012.
+[24] H. Meinhardt. Modeling pattern formation in hydra: a route to understanding essential steps in develop-
+     ment. International Journal of Developmental Biology, 56(6-8):447–462, 2012.
+[25] H. Meinhardt and A. Gierer. Pattern formation by local self-activation and lateral inhibition. BioEssays,
+     22(8):753–760, 2000.
+[26] M. Mercker, D. Hartmann, and A. Marciniak-Czochra. A mechanochemical model for embryonic pattern
+     formation: Coupling tissue mechanics and morphogen expression. PLOS ONE, 8(12):1–6, 12 2013.
+[27] M. Mercker, A. Kazarnikov, A. Tursch, T. Richter, S. Özbek, T. Holstein, and A. Marciniak-Czochra.
+     Mutual inhibition model of pattern formation: The role of wnt-dickkopf interactions in driving hydra
+     body axis formation. bioRxiv, 2025.
+[28] T. Miyasita. On the dynamical system of a parabolic equation with non-local term. In Asymptotic Analysis
+     and Singularities—Elliptic and parabolic PDEs and related problems, volume 47, pages 661–674. Mathe-
+     matical Society of Japan, 2007.
+[29] J. D. Murray. Mathematical Biology II: Spatial Models and Biomedical Applications. Interdisciplinary
+     Applied Mathematics. Springer New York, NY, 2003.
+[30] S. Narayanaswamy and U. Technau. Self-organization of an organizer: Whole-body regeneration from
+     reaggregated cells in cnidarians. Cells and Development, page 204024, 2025.
+[31] D. Nesenberend, A. Doelman, and F. Veerman. Curvature induced patterns: A geometric, analytical
+     approach to understanding a mechanochemical model. bioRxiv, 2025.
+[32] G. F. Oster and J. D. Murray. Pattern formation models and developmental constraints. Journal of
+     Experimental Zoology, 251(2):186–202, 1989.
+[33] J. Rauch. Partial differential equations, volume 128. Springer Science & Business Media, 2012.
+[34] P. Recho, A. Hallou, and E. Hannezo. Theory of mechanochemical patterning in biphasic biological tissues.
+     Proceedings of the National Academy of Sciences, 116(12):5344–5349, 2019.
+28                  S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+[35] J. Rombouts, J. Elliott, and A. Erzberger. Forceful patterning: theoretical principles of mechanochemical
+     pattern formation. EMBO reports, 24(12):e57739, 2023.
+[36] A. M. Turing. The chemical basis of morphogenesis. Bulletin of mathematical biology, 52(1):153–197, 1990.
+[37] A. Tursch, N. Bartsch, M. Mercker, J. Schlüter, M. Lommel, A. Marciniak-Czochra, S. Özbek, and T. W.
+     Holstein. Injury-induced MAPK activation triggers body axis formation in hydra by default Wnt signaling.
+     Proceedings of the National Academy of Sciences, 119(35):e2204122119, 2022.
+[38] F. Veerman, M. Mercker, and A. Marciniak-Czochra. Beyond turing: far-from-equilibrium patterns and
+     mechano-chemical feedback. Philosophical Transactions of the Royal Society A: Mathematical, Physical
+     and Engineering Sciences, 379(2213):20200278, 2021.
+[39] M. C. Vogg, B. Galliot, and C. D. Tsiairis. Model systems for regeneration: Hydra. Development,
+     146(21):dev177212, 11 2019.
+[40] R. Wang, A. L. Bialas, T. Goel, and E.-M. S. Collins. Mechano-chemical coupling in hydra regeneration
+     and patterning. Integrative and Comparative Biology, 63(6):1422–1441, 06 2023.
+[41] S. L. Weevers, A. D. Falconer, M. Mercker, H. Sadeghi, D. Rozema, J. Ferenc, J.-L. Maı̂tre, A. Ott, D. B.
+     Oelz, A. Marciniak-Czochra, and C. D. Tsiairis. Mechanochemical patterning localizes the organizer of a
+     luminal epithelium. Science Advances, 11(26):eadu2286, 2025.
+[42] C. Zhang, L. Hou, and Y. Lu. Dynamic behaviors of a receptor-based model. International Journal of
+     Biomathematics, 0(0):2450154, 0.
+            STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                      29
+
+                               Appendix A. Model derivation
+A.1. Hyper-elastic tissue model. We demonstrate the derivation of the mechanochemical
+patterning model for Hydra spheroids introduced in [41] in two spatial dimensions. It re-
+tains the essential coupling between mechanics and chemistry while simplifying the geometric
+structure. In this setting, the Hydra spheroid is represented as an elastic closed curve, pro-
+viding a minimal framework to analyze the core mechanochemical feedback mechanisms, see
+Figure A.1.
+   The initial, stress-free reference configuration, denoted by S0 , is assumed to be a circle of
+fixed circumference L > 0, parametrized by
+                                        L cos 2π
+                                                    
+                                                 L ξ
+                                g(ξ) =                 , ξ ∈ [0, L].
+                                        2π sin 2πLξ
+This reference curve is subjected to a spatial deformation h : S0 → S, resulting in a new
+closed curve S with circumference ℓ > 0. We prescribe a fixed enclosed area A0 > Area(S0 )
+and restrict attention to deformations that satisfy Area(S) = A0 . The deformed curve is
+parametrized by the composition
+                                      f : [0, L] → S,         f = h ◦ g.
+  The deformation gradient in surface coordinates is given by the matrix
+                    F = ∇X h(X) = f ′ (ξ) ⊗ ∇ g−1 (X) , X = g(ξ) .
+                                                       
+
+Taking a derivative of the identity g−1 (g(ξ)) = ξ and using |g′ (ξ)| ≡ 1 implies that ∇(g−1 (X)) =
+g′ (ξ)T , where g′ (ξ) (the covariant basis vector on S0 ) is a column vector and the contravariant
+basis vector g′ (ξ)T is a row vector. We therefore can write
+                                          F = f ′ (ξ) ⊗ g′ (ξ)T .
+The Right Cauchy-Green deformation tensor reads
+          C = FT F = g′ (ξ) ⊗ f ′ (ξ)T f ′ (ξ) ⊗ g′ (ξ)T = |f ′ (ξ)|2 g′ (ξ) ⊗ g′ (ξ)T ,
+                                                       
+
+and the Green-Lagrangian strain is
+                            1          1 ′
+                                         |f (ξ)|2 − 1 g′ (ξ) ⊗ g′ (ξ)T ,
+                                                     
+(A.1)                    ε = (C − I) =
+                            2          2
+where the identity in the tangent space of S0 is given by I = g′ (ξ) ⊗ g′ (ξ)T .
+
+
+                                              h(X)
+                                                                                𝒮
+                      𝒮₀
+                           X                                                x
+
+                                                f(ξ)                 ~
+                                                                     f(ζ)
+                               g(ξ)
+                                                       s(ξ)
+
+
+
+
+                           0          ξ        L
+                                                              0             ζ       ℓ
+
+
+        Figure A.1. Schematic representation of the elastic deformation framework
+        for the Hydra spheroid model. Left: Reference configuration S0 parametrized
+        by g : [0, L] → S0 . Right: Deformed configuration S showing the composition
+        of mappings f = h ◦ g and the arc-length reparametrization f̃ with f = f̃ ◦ s.
+30                  S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+  We model the tissue as a hyperelastic material governed by the Saint Venant-Kirchhoff
+constitutive law with strain energy density
+                                          λ 2        µ
+                                            tr (ε) + tr(ε2 ),
+                                       W (ε) =
+                                          2          2
+where the Lamé parameters satisfy λ = 0 and µ = E(u), with u := u(ξ) the morphogen
+concentration and E(u) the morphogen-dependent elastic modulus encoding the mechano-
+chemical coupling central to our model. The specific choice of parameters follows from the
+modelling considerations in [41]. The total elastic energy of a deformation is given by
+                                        1 L
+                        Z                 Z
+                                                                  2
+                  Eel =     W (ε) dS0 =        E(u) |f ′ (ξ)|2 − 1 |g′ (ξ)|dξ,
+                         S0             8 0
+where we used equation (A.1).
+  Assuming quasi-static mechanics due to fast tissue relaxation, the elastic energy is mini-
+mized under the area constraint
+                                  1 L                              1 L
+                     Z             Z                                Z
+                   1                                     ′
+     A0 = A(f ) =      x · n dS =     f (ξ) · n(f (ξ)) |f | dξ = −     f (ξ) · f ′ (ξ)⊥ dξ ,
+                   2 S            2 0                              2 0
+where n(x) = −f ′ (x)⊥ /|f ′ (x)| is the outer unit normal vector on S at x ∈ S and ⊥ represents
+the rotation of a 2-dimensional vector by π/2: (a, b)⊥ = (−b, a).
+   To find minimizers of Eel we introduce Lagrange multipliers. The Gateaux derivative with
+respect to variations δf (ξ) with periodic boundary conditions yields
+               0 = DEel (f )(δf ) + pDA(f )(δf )
+                   1 L
+                                                                Z L
+(A.2)
+                    Z
+                                    ′
+                                             ′      ′
+                 =                     2
+                          E(u) |f (ξ)| − 1 f (ξ) · δf (ξ)dξ − p     δf (ξ) · f ′ (ξ)⊥ dξ ,
+                   2 0                                           0
+where p ∈ R, the inner pressure, acts as a Lagrange multiplier for the area constraint. In-
+tegrating by parts, we obtain that equation (A.2) is satisfied if and only if the minimizer f
+satisfies
+                                      f ′ (ξ) ′
+                                            
+                                σ(ξ) ′          + p f ′ (ξ)⊥ = 0 ,
+                                     |f (ξ)|
+where the stress is given by
+                                                  1 ′
+                                                    |f (ξ)|2 − 1 |f ′ (ξ)|.
+                                                                
+                                    σ(ξ) = E(u)
+                                                  2
+Evaluating the derivative we find that
+                                                                  ′
+                                 f ′ (ξ)               f ′ (ξ)
+                                                  
+                                ′
+(A.3)                      σ (ξ) ′       + σ(ξ)                        + p f ′ (ξ)⊥ = 0 .
+                                |f (ξ)|               |f ′ (ξ)|
+                                                                                   ′           ′
+                                                                                     f (ξ)
+     Taking the scalar product of this with f ′ (ξ) and using that                  |f ′ (ξ)|        · f ′ (ξ) = 0 as well as
+the impenetrability assumption |f ′ (ξ)| > 0 we obtain that σ ′ ≡
+                                                                 0, i.e. the stress is constant.
+                                                                                                ′
+                                                                                    f ′ (ξ)
+Taking the scalar product of (A.3) with f ′ (ξ)⊥ we obtain that σ                  |f ′ (ξ)|        ·f ′ (ξ)⊥ +p |f ′ (ξ)|2 = 0,
+                           ′′(ξ)
+i.e. the curvature κ = |ff′ (ξ)|      ′
+                                 3 · f (ξ)
+                                           ⊥ = −p/σ (Laplace’s Law) is constant along S. Hence, the
+
+minimizer S must be circular with circumference ℓ > L.
+   To separate geometric shape from tangential stretching, we introduce an arc-length parametriza-
+tion:
+                                            f (ξ) = f̃ (s(ξ)),
+            STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                            31
+
+
+where f̃ : [0, ℓ] → S satisfies |f̃ ′ | = 1, and s : [0, L] → [0, ℓ] with s′ > 0 encodes the tangential
+deformation. Since s′ (ξ) = |f ′ (ξ)| represents the local stretch ratio (ratio of deformed to
+reference arc length |g ′ (ξ)| ≡ 1), the quantity
+                                             1
+(A.4)                                  ε̃ = ((s′ )2 − 1)
+                                             2
+is the finite Green-Lagrangian strain in one dimension.
+   Conservation of total length imposes
+                                  Z L
+                                      (s′ (ξ) − 1) dξ = ℓ − L.
+                                      0
+The morphogen concentration u(t, ξ) evolves according to
+                                      ∂t u = κε̃ − αu + D∂ξξ u,
+with production proportional to local strain, linear degradation rate α > 0, and diffusion
+coefficient D > 0. Taking together, the full mechanochemical system reads
+                         ∂ u = κε̃ − αu + D∂ξξ u,
+                       
+                        t
+                        0 = ∂ E(u)(s′2 − 1)s′ , ξ ∈ [0, L], t ≥ 0,
+                       
+                       
+                                ξ
+                                 Z L
+                                      (s′ − 1) dξ,
+                       
+                       ℓ − L =
+                                                    t ≥ 0,
+                                      0
+with periodic boundary conditions and appropriate initial data. The 1D finite strain is defined
+by (A.4), completing the mechanochemical coupling.
+
+A.2. Inifinitesimal strain. To facilitate analytical treatment of the mechanochemical model,
+we invoke the infinitesimal strain approximation. This is justified biologically, as Hydra cells
+experience only small-amplitude distortion during mechanochemical signalling, so that the
+local deformation gradients remain close to the identity [41]. Under the assumption that
+|s′ − 1| ≪ 1, the finite strain ε̃ = 12 (s′2 − 1) can be replaced by its linearized counterpart
+                                   ε̂(t, ξ) := s′ (t, ξ) − 1 ≈ ε̃(t, ξ),
+reducing the nonlinear system to a tractable linear framework while retaining the essential
+mechanochemical coupling.
+  Following the minimization procedure, the mechanical equilibrium condition reduces under
+the infinitesimal strain approximation to
+             1                   1                                
+        0 = ∂ξ E(u) (s′2 − 1)s′ = ∂ξ E(u) 2(s′ − 1) + (s′ − 1)2 s′ ≈ ∂ξ E(u) ε̂ ,
+                                                                                    
+             2                        2
+               ′
+where ε̂ := s − 1 is the linearized strain. Consequently, the full mechanochemical system in
+the infinitesimal strain approximation, with ε := ε̂(ξ, t), reads
+                          ∂ u = κ ε − αu + D ∂ξξ u,
+                        
+                         t
+                        
+                                                     ξ ∈ [0, L], t ≥ 0,
+                         0 = ∂ E(u) ε,
+                        
+                                  ξ
+                                  Z L
+                        l − L =                     t ≥ 0.
+                        
+                                      ε dξ,
+                                      0
+
+                       Appendix B. Well-posedness of the model
+   We provide here a proof of existence and uniqueness of a global-in-time solution to problem
+(2.1). A similar approach can be found in [28]; we include the details here for the sake of
+completeness.
+32                 S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+Proof of proposition 2.1. We begin by establishing the existence of a local-in-time solution.
+Let u0 ∈ W 1,2 (T) and consider the mild formulation of problem (2.1):
+                                     Z t                                     !
+                                                        e u(s,·)
+                 u(t, ·) = eD∆t u0 +     eD∆(t−s) κ R 1             − u(s, ·) ds .
+                                                          u(s,y) dy
+                                      0              0 e
+
+Here, eD∆t is a semigroup generated on L2 (T)   by the second derivative D∆ with domain
+D(D∆) = W 2,2 (T). Let X = C [0, τ ]; W 1,2 (T) be the Banach space with the norm ∥v∥X =
+sup ∥v(·, t)∥W 1,2 where τ is a positive constant to be determined further below. We define
+0⩽t⩽τ
+the map F : X → X by
+                                       Z t                                          !
+                                                               ev(s,·)
+                  F (v) := eD∆t u0 +         eD∆(t−s)   κR 1                 − v(s, ·) ds.
+                                                                v(s,y) dy
+                                        0                 0 e
+
+We further introduce the ball
+                       V = {v ∈ X : ∥v∥X ⩽ 3δ}          where       δ = ∥u0 ∥W 1,2 .
+Notice that by Sobolev embedding, any v ∈ V satisfies ∥v(t, ·)∥L∞ ⩽ Cδ for a constant C > 0.
+It is well known that the semigroup eD∆t satisfies the estimates
+                                                                         1
+           ∥eD∆t v∥L2 ⩽ C∥v∥L2       and     ∥∇eD∆t v∥L2 ⩽ Ct− 2 ∥v∥L2            for v ∈ L2 (T).
+
+These estimates follow from the explicit representation of eD∆t as the kernel is given by Z-
+periodization of the heat kernel satisfying the contractivity estimates [33]. Consequently, for
+0 ⩽ t ⩽ τ , we derive the estimate
+                                        Z t                                          !
+                      D∆t                     D∆(t−s)          ev(s,·)
+    ∥F (v)∥W 1,2 ⩽ ∥e     u0 ∥W 1,2 + C     e            κR 1               − v(s, ·)          ds
+                                         0                     ev(s,y) dy
+                                                             0                          W  1,2
+                                        Z t                                                     !
+                                                                  ∥e  v(s,·) ∥L2
+                      D∆t                               − 21
+                 ⩽ ∥e     u0 ∥W 1,2 + C      1 + (t − s)         κ v(s,·)         + ∥v(s, ·)∥L2 ds.
+                                         0                         ∥e         ∥L1
+
+Since v is uniformly bounded, we have ∥ev ∥L2 ⩽ e∥v∥L∞ and ∥ev ∥L1 ⩾ e−∥v∥L∞ . Thus, we
+obtain
+                                                                                         !
+                                                                 e∥v(s,·)∥L∞
+                                       Z t                 
+                     D∆t                               − 21
+    ∥F (v)∥W 1,2 ⩽ ∥e    u0 ∥W 1,2 + C      1 + (t − s)        κ −∥v(s,·)∥ ∞ + ∥v(s, ·)∥2 ds
+                                        0                       e          L
+
+                                                          √  
+                 ⩽ ∥eD∆t u0 ∥W 1,2 + C(κe2Cδ + 3δ) t + t
+
+using v ∈ V and that the semigroup eD∆t is bounded on W 1,2 (T). By choosing τ > 0
+sufficiently small, we obtain the estimate ∥F (v)∥X ⩽ 3δ.
+   Next we show that F is a contraction mapping on the ball V . We have
+                             Z t
+                                               1
+                                                           ev             ew
+      ∥F (v) − F (w)∥W 1,2 ⩽      1 + (t − s)− 2 κ R 1              − κR 1        −v+w         ds.
+                              0                             e v dy         e w dy
+                                                          0             0                  L2
+
+                  v
+                     R v    w
+                               R w       v    w
+                                                   R v          w
+                                                                  R w R v R vR w
+             √ e / e − e / e = (e − e )/ e + e ( e − e )/( e e ) and letting
+Observing that
+C(t) = t + t, we obtain
+                                                                                R1 w      R1 v
+                                                             ev − ew         w 0 e dy − 0 e dy
+∥F (v) − F (w)∥W 1,2 ⩽ C(t)∥v − w∥X + C(t)κ sup κ R 1                  + κe R 1         R1            .
+                                                                   v                 v       w
+                                                 t∈[0,τ ]      0 e dy             0 e dy 0 e dy    L2
+               STABILITY AND BIFURCATION ANALYSIS IN A MECHANOCHEMICAL MODEL                                                         33
+
+Using L∞ -estimates for v and w we derive
+                 Z 1                Z 1       Z 1             Z 1
+              ew     (ew − ev )dy        ev dy     ew dy ⩽ e3Cδ     |ev − ew |dy
+                                  
+                       0                            0             0                                 0
+
+and
+                                                    Z 1
+                                          v     w
+                                        |e − e |/            ev dy ⩽ eCδ |ev − ew | .
+                                                        0
+
+Thus, we obtain
+
+∥F (v) − F (w)∥W 1,2 ⩽ C(t)∥v − w∥X + C(t)κeCδ sup ∥ev − ew ∥L2 + C(t)κe3Cδ sup ∥ev − ew ∥L∞ .
+                                                                      t∈[0,τ ]                                            t∈[0,τ ]
+
+By the Sobolev embedding and mean value argument, we conclude
+          ∥F (v) − F (w)∥W 1,2 ⩽ C(t)∥v − w∥X + C(t) sup ∥v − w∥W 1,2 ⩽ C(τ )∥v − w∥X .
+                                                                        t∈[0,τ ]
+
+By choosing τ sufficiently small, the proof is completed by the Banach fixed point argument
+as C(τ ) ↓ 0 as τ ↓ 0.
+   Next, we demonstrate that the solution can be extended globally in time. The Lyapunov
+function defined in (4.1) satisfies
+                    d
+                       J u(·, t) = DJ u(·, t) ut (·, t) = −∥ut (·, t)∥2L2 ⩽ 0 ,
+                                            
+                    dt
+                                    
+which implies that J u(·, t) ⩽ J u0 . Using Sobolev embedding, we obtain
+
+        D 1                      1 1
+           Z                      Z                                       Z 1              
+                         2                  2                                    u(x,t)
+                ux (x, t) dx +       u(x, t) dx ⩽ J u(·, t) + κ log             e        dx
+         2 0                     2 0                                        0
+                                                          
+                                                 ⩽ J u0 + κC∥u(·, t)∥W 1,2 .
+
+This yields the inequality ∥u(·, t)∥2W 1,2 ⩽ C + ∥u(·, t)∥W 1,2 which implies ∥u(·, t)∥W 1,2 < C u0
+                                                                                                                                     
+for all t ⩾ τ . Similarly, we derive
+    Z t
+         ∥ut (·, t)∥2L2 = J(u0 ) − J u(·, t) ⩽ J(u0 ) + C∥u(·, t)∥W 1,2 + κC∥u(·, t)∥L∞ ⩽ C ,
+                                            
+      0
+
+where the bound is uniform with respect to t. Furthermore, we have
+      Z t                      Z t                                                       2
+                                                                       eu(·,t)
+            ∥∆u(·, t)∥2L2 =           ut (·, t) + u(·, t) + κ R 1
+                                                                         u(y,t) dy
+       0                        0                                 0 e                    L2
+                               Z t                      Z t                        Z t                              2
+                                                                                                    eu(·,t)
+                           ⩽         ∥ut (·, t)∥2L2 +         ∥u(·, t)∥2L2 +                 κR 1                        ⩽ C + Ct.
+                                                                                                        u(y,t) dy
+                                0                        0                          0          0 e                  L2
+
+These estimates ensures that the solution exists for all time t ⩾ 0 and satisfies
+      u ∈ C [0, ∞), W 1,2 (T) ,   u ∈ L2 [0, ∞), L2 (T) ,       u ∈ L2 (0, T ), W 2,2 (T) ,
+                                                                                       
+
+for each T > 0. To establish uniqueness, we employ the theory of dynamical systems. Since
+the solutions are bounded, it follows from [16, Thm 3.4.1] that the dependence of solutions
+of initial conditions is continuous, thereby defining dynamical system. Consequently the
+solutions are unique.                                                                    □
+34                S. CYGAN, A. MARCINIAK-CZOCHRA, F. MÜNNICH, AND D. OELZ
+
+                     Appendix C. Computations of the derivatives
+     Define the mapping G : X × R → Y by
+                                                                 eχ
+                                                                        
+                        G(χ, α) := Dχxx − χ + (κn + α)         R       −1 ,
+                                                                 eχ dy
+where we use the notation of Section 6. The derivatives of G with respect to χ ∈ X and
+α ∈ R are:
+
+                                                    eχ              eχ
+                                                                         Z        
+                                                                               χ
+       Gχ (χ, α)(h) = Dhxx − h + (κn + α)         R        h−   R             e hdy ,
+                                                    eχ dy      ( eχ dy)2
+                                      eχ                   eχ
+                                                                 Z          Z
+ Gχχ (χ, α)(h1 , h2 ) = (κn + α) R χ h1 h2 + 2 R χ 3 eχ h1 dy eχ h2 dy
+                                      e dy            ( e dy)
+                                χ
+                                      Z                     Z            Z           
+                              e               χ                 χ              χ
+                        − R χ 2 h1 e h2 dy + h2 e h1 dy + e h1 h2 dy ,
+                          ( e dy)
+                                      eχ              eχ
+                                                                   Z             Z          Z          
+                                            3                      2    χ             χ   2       χ  3
+Gχχχ (χ, α)(h, h, h) = (κn + α) R χ h − R χ 2 3h                       e hdy + 3h e h dy + e h dy
+                                      e dy        ( e dy)
+                                                                                 2                       !
+                               eχ
+                                          Z         Z                  Z               Z       Z
+                                             χ           χ  2               χ               χ       χ  2
+                        + R χ 3 8 e hdy e h dy + 6h                       e hdy + 2 e hdy e h dy
+                          ( e dy)
+                              eχ
+                                    Z           
+                                        χ     3
+                        −6 R χ ( e hdy) ,
+                              e dy
+                             eχ
+                                     
+          Gα (χ, α) =     R       −1 ,
+                            eχ dy
+                           eχ            eχ
+                                                Z
+      Gχα (χ, α)(h) = R χ h − R χ 2 eχ hdy
+                          e dy       ( e dy)
+for h, h1 , h2 ∈ X and β ∈ R.
+
