@@ -346,17 +346,18 @@
   gradient forms. Too large: spatial information is erased.
 
   \vspace{0.6cm}
-  \postersub{3.4}{Static vs dynamic source density - metastability of patterns}
+  \postersub{3.4}{Static vs dynamic source density - metastability of patterns} 
+  \smallfont Three tissue pieces generate a piecewise-linear initial source-density profile. Wounds are induced at the two graft interfaces.
+
   \includegraphics[width=\linewidth]{generated/rho_static.pdf}\par
   \vspace{0.2cm}
-  {\smallfont TEXT BETWEEN THE FIGURES (to be written).\par}
+  \smallfont Static source density $ \rho(x) $: activator peaks form near the wound sites and remain there. These positions are not Turing-selected, but the two-peak state is stable and may mark sites of new-axis formation.
+  
   \vspace{0.2cm}
   \includegraphics[width=\linewidth]{generated/rho_dynamic.pdf}\par
   \vspace{0.2cm}
   \smallfont
-  A fixed $\rho(x)$ keeps both heads at the grafted positions. A dynamic $\rho$
-  holds them there only for a while; as $\rho$ relaxes, the peaks move to the
-  Turing pattern selected by the activator--inhibitor subsystem.
+  The source density is initialised as $ \rho(x,0)=\rho_0(x) $, with large $ \tau $ chosen so that its dynamics is slow relative to $ u $ and $ v $. On the fast activator-inhibitor timescale, peaks form near the graft interfaces as in the static case. This graft-pinned configuration is metastable and, as $ \rho $ relaxes, eventually destabilises towards the Turing-selected two-head pattern.
 \end{rightcol}
 
 % \claim{Source density can hold positional memory for a long time --- without making the graft-selected peak truly stationary.}
