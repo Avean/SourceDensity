@@ -1,0 +1,154 @@
+Pattern Formation and Positional Memory in Hydra Regeneration Models
+Szymon Cygan                                   ·       Anna Marciniak-Czochra                        ·      Finn Münnich                         ·     Moritz Mercker
+Heidelberg University, Heidelberg, Germany
+
+
+
+
+     1 Motivation
+
+1.1 Hydra as a patterning problem                                                                                                                                                                       1.2 Head grafting
+
+                                                        A Hydra regenerates a single head after amputation and keeps its oral–aboral axis.
+                                                        Head formation is organised by a localised Wnt/β -catenin signal.                                                                                                                                                  HEAD-GRAFT SCHEMATIC
+                                                        In activator–inhibitor models, the head is represented by a localised peak of the activator u, controlled                                                                                                head tissue transplanted into the body column
+                                                        by a long-range inhibitor v.                                                                                                                                                                          → secondary axis, outcome depends on graft position
+
+
+
+                                                                                                                                                                                                        A grafted head can induce a second axis. Whether it does depends on where in the host body column it is placed.
+
+
+
+
+     2 What the activator–inhibitor model already does
+
+2.1 Production terms change the phase portrait                                                                                                                                                          2.3 Pattern selection depends on history
+                                                                                                                                                                                                                    small domain                                         large domain                                                                                                                    several peaks
+                                                                                                                                                                                                                4                  4                                 4                                                                                   4
+                                                                      au2 + qu
+                                                        ∂tu = Du∆u +            − µu u + p u ,                                                                                                                              t→∞                                                                                                                    t→∞
+                                                                          v                                                                x ∈ Ω, t ⩾ 0.                                                    u
+
+                                                        ∂tv = Dv ∆v + bu2 − µv v + pv ,                                                                                                                         0
+                                                                                                                                                                                                                    0    0.5
+                                                                                                                                                                                                                                   0
+                                                                                                                                                                                                                                       0    0.5
+                                                                                                                                                                                                                                                                     0
+                                                                                                                                                                                                                                                                         0                           1                   2                     3
+                                                                                                                                                                                                                                                                                                                                                         0
+                                                                                                                                                                                                                                                                                                                                                             0              1                        2                     3
+ • u: activator, short-range and self-enhancing,                                                     • pv : basal inhibitor production,                                                                           small domain, then growth                                                                                                                                                                    one peak
+ • v : inhibitor, long-range, produced by u.                                                         • pu: external activator input,                                                                            4             4                       4                                          4                                                       4
+                                                                                                     • qu: activator input under inhibitor regulation.                                                                      t→∞               growth                                 growth                                                    growth
+                                                                                                                                                                                                            u
+Nullclines
+     u-nullcline                        v -nullcline      stable rest           unstable threshold       active state (Turing candidate)                                                                        0                  0                  0                                          0                                                       0
+                                                                                                                                                                                                                    0    0.5           0    0.5           0          0.5             1               0                   1                     2             0              1                        2                     3
+
+                                 6                                                                                                     6
+                                                                                                                                                                                                        Starting near the diffusion-unstable state E+, a small domain forms one peak and a large domain several. Growing the small domain
+                                                                                                                                                                                                        to the same large size keeps a single peak.
+                                 4                                                                                                     4
+                   inhibitor v
+
+
+
+
+                                                                                                                         inhibitor v
+
+
+
+
+                                                                                                                                                                                                        2.4 Regeneration needs a wound
+                                 2                                                                                                     2
+                                                                                                                                                                                                        Removing the head by cutting triggers regeneration. Removing it by ligation, without a wound, does not.
+                                                                                                                                                                                                                                                                                                         wound signal near the cut
+                                 0
+                                  0.0          0.5          1.0         1.5          2.0
+                                                                                                                                       0
+                                                                                                                                        0.0      0.5         1.0         1.5      2.0                                                                                                                4                               cut + 4 removed                                   4   removed               head
+                                                        activator u                                                                                      activator u                                                                                                                                                                wound                                    t→∞                           regenerates
+                                                                                                                                                                                                                                                                                                 u
+
+                 1 steady state (pv = pu = qu = 0)                                                                            3 steady states (pv > 0)                                                                                                                                               0                                         0                                       0
+                                                                                                                                                                                                                                                                                                     0.0           0.5             1.0         0.0               0.5       1.0         0.0               0.5          1.0
+   no resting state: an arbitrary perturbation leads to a pattern.                                             small perturbations vanish back to the rest state u = 0.
+                                                                                                                                                                                                                                                                                                         no wound signal
+                                                                                                                                                                                                                                                                                                     4                                         4   removed                             4   removed              returns
+                                                                                                                                                                                                                                                                                                                                         cut                                 t→∞                                 to rest
+2.2 Inhibitor production is essential                                                                                                                                                                                                                                                            u
+
+                                                                                                                                                                                                                                                                                                     0                                         0                                       0
+                                                                                                                                                                                                                        Tursch et al., PNAS 119 (2022), Fig. 1A.                                     0.0           0.5             1.0         0.0               0.5       1.0         0.0               0.5          1.0
+pv = 0: Only one steady state, which can be Turing unstable.                                              pv > 0: A stable rest state, an activation threshold and a
+                                                                                                                                                                                                        Bistability is essential. With a single steady state regeneration always occurs. With three steady states the system is bistable, the
+Any perturbation forms a pattern.                                                                         pattern-forming state.
+                                                                                                                                                                                                        cut tissue returns to rest and only a large perturbation from the wound brings back a pattern. Biologically, this perturbation is the
+  For everything that follows it is essential to have more than one steady state.                                                                                                                       wound response. Injury triggers Ca2+ and ROS signalling, which activates MAPKs and up-regulates Wnt3 at every cut, independent
+                                                                                                                                                                                                        of its position (Tursch et al., 2022).
+
+
+2.5 Grafts: the model chooses the position
+                                                                                                                                                                                                                                                                                                                                                                                                           peak at 2/3
+                                                                                                                                                                                                                4                                                                        4                                                                        4                          drift
+                                                                                                                                                                                                                                                              head
+
+                                                                                                                                                                                                                                                                             graft                                                                     t→∞
+                                                                                                                                                                                                            u
+
+
+                                                                                                                                                                                                                0                                                                        0                                                                        0
+                                                                                                                                                                                                                    0           1/3            2/3                   1                       0               1/3             2/3                   1                   0         1/3                 2/3                   1
+
+                                                                                                                                                                       A graft creates a second peak, but the peak does not stay at the graft. It drifts to 2L/3, a position selected by the model, while the head at the left end stays in place.
+
+                                                                                           Source density is not needed to make a head — but the model, not the wound, decides where the head ends up.
+
+
+     3 Positional memory and source density
+
+3.1 Grafting exposes missing information                                                                                                                                                                3.3 Dynamic source-density model
+
+                                                                                                                                                                                                                                                                                                       au2
+                                                                                                                                                                                                                                                                                       ∂tu = Du∆u + ρ      − µuu,
+                                                                                                                                                                                                                                                                                                        v
+                                                                                                                                                                                                                                                                                       ∂tv = Dv ∆v + bρ u2 − µv v + pv ,
+                                                                                                                                                                                                                                                                                     τ ∂tρ = Dρ∆ρ + u − ρ.
+                                                                                                                                                                                                          • ρ(0, x) stores the grafted configuration,
+                                                                                                                                                                                                          • τ sets the lifetime of memory,
+                                                                                                                                                                                                          • Dρ communicates positional information in space.
+
+                                                                                                                                                                                                        3.4 Dynamic ρ gives metastable memory
+
+
+
+                                                                                                                                                                                                                                                                        JULIA SIMULATION PLACEHOLDER
+                                                                                                                                                                                                                                                               long-lived peak near the graft + peak position xmax(t)
+
+
+Head-to-foot grafts, oriented vs. anti-oriented. Livshits et al. (2022), K. Keren group.
+Reversing the orientation of comparable tissue pieces changes the distribution of outcomes. Near the resting state, u and v alone
+do not distinguish an upper-body fragment from a lower-body one.                                                                                                                                        The inherited ρ profile anchors a peak near the graft on the fast u–v time scale. As ρ relaxes, the peak drifts toward a position
+                                                                                                                                                                                                        preferred by the activator–inhibitor subsystem.
+  Which state variable records the original position and orientation of the grafted tissue?
+                                                                                                                                                                                                        3.5 Diffusion sets the spatial reach of memory
+3.2 Prescribed ρ(x) as tissue competence
+                                                                                                                                                                                                                                                                               PARAMETER-SWEEP PLACEHOLDER
+                                                                                     PROFILE PLACEHOLDER                                                                                                                                                                          memory time versus Dρ and τ
+                                                                              oriented and anti-oriented piecewise ρ(x)
+
+                                                                                                                                                                                                        Dρ too small: memory stays sharply localised. Intermediate: a usable gradient forms. Too large: spatial information is erased.
+A fixed source-density profile encodes tissue origin before the activator is present and biases where a wound-triggered peak forms
+(source-gradient idea, Suzuki & Takagi 2011).
+
+                                                                                   Source density can hold positional memory for a long time — without making the graft-selected peak truly stationary.
+
+
+      Take-home message                                                                                                                                                                                                        Source density is not needed to make a head.
+       1. pv is enough for a rest state, an activation threshold, and patterning.                                                                                                                                              It may be needed to remember where a head should form.
+       2. The model selects head positions; wounds elsewhere give transient peaks.                                                                                                                                             Outlook. A non-diffusing head-identity variable h with hysteresis could separate transient activator peaks from
+       3. ρ adds inherited positional information for grafted tissue.                                                                                                                                                          stable morphological commitment.
+
+       4. Dynamic ρ gives metastability: long-lived anchoring, then slow reorganisation.
+
