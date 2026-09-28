@@ -1,0 +1,17 @@
+# LaTeX build files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.synctex.gz.sum.synctex
+*.xdv
+*.toc
+*.bbl
+*.blg
+
+# temporary / local files
+tmp/
+**/tmp/
+__pycache__/

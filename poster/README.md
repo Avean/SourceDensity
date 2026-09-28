@@ -1,9 +1,9 @@
-# SFB retreat poster
+# Poster 2 — A0 portrait
 
-First A0 landscape draft for the Hydra source-density project.
-
-- `poster.tex` is the poster source.
-- `scripts/generate_figures.jl` creates the scientific panels.
-- `assets/` contains external and user-provided visual material.
-- the final PDF is written to `../output/pdf/`.
-
+- `poster.tex` — portrait poster (petrol + copper, 3 sections with subsections).
+  Build: `latexmk -xelatex poster.tex` (Arial if installed, otherwise Liberation Sans).
+- `poster.pdf` — current build.
+- `assets/` — original images plus processed versions:
+  - `livshits_h2f_experiment_transparent.png` — white background removed, cropped.
+  - `heidelberg_logo_white.png` — logo text/line recoloured to white for the dark header.
+- `scripts/process_assets.py` — regenerates the processed assets.

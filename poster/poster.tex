@@ -1,374 +1,388 @@
+% !TEX program = xelatex
+% A0 portrait poster -- petrol + copper palette, sections with subsections.
+% Compile with XeLaTeX or LuaLaTeX:  latexmk -xelatex poster_portrait.tex
 \documentclass{article}
-\usepackage[paperwidth=118.9cm,paperheight=84.1cm,margin=0cm]{geometry}
+\usepackage[paperwidth=84.1cm,paperheight=118.9cm,
+            left=2.2cm,right=2.2cm,top=10.5cm,bottom=2.7cm]{geometry}
 \usepackage{fontspec}
 \usepackage{amsmath,amssymb}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{calc,positioning}
+\usetikzlibrary{calc}
 \usepackage[most]{tcolorbox}
-\usepackage{ragged2e}
 \usepackage{enumitem}
 \usepackage{microtype}
 \usepackage{graphicx}
 
-\setmainfont{Arial}
+\IfFontExistsTF{Arial}{\setmainfont{Arial}}{\setmainfont{Liberation Sans}}
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.34em}
-\setlist[itemize]{leftmargin=1.15em,itemsep=0.20em,topsep=0.22em,parsep=0pt}
+\setlength{\parskip}{0.38em}
+\setlist[itemize]{leftmargin=1.1em,itemsep=0.18em,topsep=0.25em,parsep=0pt}
 
-\definecolor{HDred}{HTML}{C61826}
-\definecolor{HDdark}{HTML}{590D08}
-\definecolor{Sand}{HTML}{F4F1EA}
-\definecolor{Paper}{HTML}{FBFAF7}
-\definecolor{Ink}{HTML}{202124}
-\definecolor{Mid}{HTML}{676B70}
-\definecolor{LightLine}{HTML}{D8D4CC}
-\definecolor{Blue}{HTML}{0072B2}
-\definecolor{Teal}{HTML}{009E73}
-\definecolor{Orange}{HTML}{E69F00}
-\definecolor{PaleRed}{HTML}{F9E8EA}
-\definecolor{PaleBlue}{HTML}{E7F1F7}
-\definecolor{PaleTeal}{HTML}{E6F3EF}
-\definecolor{Placeholder}{HTML}{F0EEE8}
+% ---------------------------------------------------------------- palette
+\definecolor{Petrol}{HTML}{123B4A}      % header, section bars
+\definecolor{PetrolDeep}{HTML}{0C2A35}  % take-home band
+\definecolor{Copper}{HTML}{D0703C}      % single accent
+\definecolor{CopperPale}{HTML}{FBEDE4}  % claim background
+\definecolor{PetrolPale}{HTML}{E4EDEF}  % secondary highlight
+\definecolor{Paper}{HTML}{F4F6F5}
+\definecolor{Ink}{HTML}{1E2A30}
+\definecolor{Mid}{HTML}{66747A}
+\definecolor{Rule}{HTML}{CFD8DA}
+\definecolor{Placeholder}{HTML}{E9EDEC}
+% variable colours (kept distinct from the frame colours)
+\definecolor{Ucol}{HTML}{C61826}  % activator
+\definecolor{Vcol}{HTML}{0072B2}  % inhibitor
+\definecolor{Rcol}{HTML}{7B4FA0}  % source density
+
+\newcommand{\U}{\textcolor{Ucol}{u}}
+\newcommand{\V}{\textcolor{Vcol}{v}}
+\newcommand{\R}{\textcolor{Rcol}{\rho}}
 
 \color{Ink}
-\newcommand{\bodyfont}{\fontsize{22}{27}\selectfont}
-\newcommand{\smallfont}{\fontsize{17}{21}\selectfont}
-\newcommand{\tinyfont}{\fontsize{13.5}{17}\selectfont}
-\newcommand{\boxheadfont}{\fontsize{29}{33}\selectfont\bfseries}
-\newcommand{\tagfont}{\fontsize{14}{17}\selectfont\bfseries\color{HDred}}
-\newcommand{\placeholderfont}{\fontsize{18}{22}\selectfont\bfseries\color{Mid}}
-\newcommand{\eqnfont}{\fontsize{20}{25}\selectfont}
+\newcommand{\bodyfont}{\fontsize{22}{27.5}\selectfont}
+\newcommand{\smallfont}{\fontsize{19}{23.5}\selectfont}
+\newcommand{\tinyfont}{\fontsize{14}{17}\selectfont}
+\newcommand{\eqnfont}{\fontsize{22}{28}\selectfont}
+\newcommand{\placeholderfont}{\fontsize{19}{23}\selectfont\bfseries\color{Mid}}
 
-\newtcolorbox{posterbox}[3][]{
-    enhanced,
-    height=#3,
-    colback=white,
-    colframe=LightLine,
-    boxrule=1.2pt,
-    arc=4mm,
-    left=7mm,right=7mm,top=5mm,bottom=5mm,
-    before skip=0mm,after skip=9mm,
-    title={\boxheadfont #2},
-    coltitle=white,
-    colbacktitle=HDdark,
-    fontupper=\bodyfont,
-    titlerule=0pt,
-    boxed title style={arc=3mm},
-    #1
+% ---------------------------------------------------------------- layout
+\newlength{\colw}\setlength{\colw}{38.6cm}
+\newlength{\secgap}\setlength{\secgap}{0.8cm}
+
+% full-width section bar
+\newcommand{\postersection}[2]{%
+  \par\noindent
+  \begin{tikzpicture}
+    \fill[Petrol,rounded corners=3mm] (0,0) rectangle (\linewidth,2.4cm);
+    \node[anchor=west,text=white,font=\fontsize{36}{40}\selectfont\bfseries]
+      at (1.0cm,1.2cm) {\textcolor{Copper}{#1}\hspace{0.7em}#2};
+  \end{tikzpicture}\par\vspace{0.5cm}%
+}
+
+% subsection heading inside a column
+\newcommand{\postersub}[2]{%
+  \par\vspace{0.4cm}\noindent
+  {\fontsize{27}{31}\selectfont\bfseries\color{Copper}#1\hspace{0.45em}\color{Petrol}#2}\par
+  \vspace{-0.2cm}\noindent{\color{Copper}\rule{\linewidth}{1.6pt}}\par\vspace{0.1cm}%
 }
 
 \newcommand{\placeholder}[2]{%
-\begin{center}
-\begin{tikzpicture}
-\node[
-    draw=Mid,
-    dashed,
-    line width=1.4pt,
-    rounded corners=3mm,
-    fill=Placeholder,
-    minimum width=0.955\linewidth,
-    minimum height=#1,
-    text width=0.82\linewidth,
-    align=center,
-    inner sep=5mm
-] {\placeholderfont #2};
-\end{tikzpicture}
-\end{center}%
+  \par\noindent
+  \begin{tikzpicture}
+    \node[draw=Mid,dashed,line width=1.4pt,rounded corners=3mm,fill=Placeholder,
+          minimum width=\linewidth,minimum height=#1,text width=0.85\linewidth,
+          align=center,inner sep=0pt] {\placeholderfont #2};
+  \end{tikzpicture}\par
 }
 
 \newcommand{\claim}[1]{%
-\begin{tcolorbox}[colback=PaleRed,colframe=HDred,boxrule=1.2pt,arc=3mm,
-                  left=5mm,right=5mm,top=3mm,bottom=3mm]
-\fontsize{23}{28}\selectfont\bfseries\color{HDdark}#1
-\end{tcolorbox}%
+  \begin{tcolorbox}[enhanced,colback=CopperPale,colframe=Copper,boxrule=1.4pt,arc=3mm,
+                    left=7mm,right=7mm,top=4mm,bottom=4mm,before skip=0.3cm,after skip=0.1cm]
+  \centering\fontsize{26}{32}\selectfont\bfseries\color{Petrol}#1\par
+  \end{tcolorbox}%
 }
 
-\newcommand{\minitag}[1]{\tikz[baseline=(X.base)]\node[fill=Sand,rounded corners=2mm,
-    inner xsep=3mm,inner ysep=1.5mm,text=HDdark,font=\fontsize{15}{17}\selectfont\bfseries] (X) {#1};}
+\newcommand{\note}[1]{%
+  \begin{tcolorbox}[colback=PetrolPale,colframe=PetrolPale,boxrule=0pt,arc=2mm,
+                    left=5mm,right=5mm,top=3mm,bottom=3mm,before skip=0.4cm,after skip=0.2cm]
+  \fontsize{20}{25}\selectfont\bfseries\color{Petrol}#1
+  \end{tcolorbox}%
+}
 
+\newcommand{\minitag}[1]{\tikz[baseline=(X.base)]\node[fill=PetrolPale,rounded corners=2mm,
+    inner xsep=3mm,inner ysep=1.5mm,text=Petrol,font=\fontsize{17}{19}\selectfont\bfseries] (X) {#1};}
+
+\newsavebox{\colboxL}\newsavebox{\colboxR}\newlength{\colH}
+% balanced columns: both columns get the height of the taller one; \vfill stretches
+\newcommand{\balcols}[2]{%
+  \sbox{\colboxL}{\begin{minipage}[t]{\colw}\bodyfont #1\end{minipage}}%
+  \sbox{\colboxR}{\begin{minipage}[t]{\colw}\bodyfont #2\end{minipage}}%
+  \colH=\dimexpr\ht\colboxL+\dp\colboxL\relax
+  \ifdim\dimexpr\ht\colboxR+\dp\colboxR\relax>\colH \colH=\dimexpr\ht\colboxR+\dp\colboxR\relax\fi
+  \begin{minipage}[t][\colH][s]{\colw}\bodyfont #1\par\vspace{0pt}\end{minipage}\hfill
+  \begin{minipage}[t][\colH][s]{\colw}\bodyfont #2\par\vspace{0pt}\end{minipage}\par}
+\newenvironment{leftcol}{\begin{minipage}[t]{\colw}\bodyfont}{\end{minipage}\hfill}
+\newenvironment{rightcol}{\begin{minipage}[t]{\colw}\bodyfont}{\end{minipage}}
+
+% ================================================================ document
 \begin{document}
+\pagecolor{Paper}
 \begin{tikzpicture}[remember picture,overlay]
-    \fill[Paper] (current page.south west) rectangle (current page.north east);
+  \fill[Paper] (current page.south west) rectangle (current page.north east);
+  % header
+  \fill[Petrol] (current page.north west) rectangle ([yshift=-9.0cm]current page.north east);
+  \fill[Copper] ([yshift=-9.0cm]current page.north west) rectangle ([yshift=-9.4cm]current page.north east);
+  \node[anchor=north west,inner sep=0pt,text width=66cm,text=white,
+        align=left,font=\fontsize{50}{58}\selectfont\bfseries] (title)
+    at ([xshift=2.2cm,yshift=-2.3cm]current page.north west)
+    {Rethinking Source Density in Hydra Through Mathematical Modeling};
+  \node[anchor=north west,inner sep=0pt,text width=57cm,text=white,
+        font=\fontsize{25}{31}\selectfont] (authors)
+    at ([yshift=-0.9cm]title.south west)
+    {Szymon~Cygan \quad\textperiodcentered\quad Anna~Marciniak-Czochra
+     \quad\textperiodcentered\quad Finn~Münnich \quad\textperiodcentered\quad Moritz~Mercker};
+  \node[anchor=north west,inner sep=0pt,text width=57cm,text=white!75!Petrol,
+        font=\fontsize{20}{25}\selectfont]
+    at ([yshift=-0.35cm]authors.south west)
+    {Heidelberg University, Heidelberg, Germany};
+  % logo: white-text version straight on the petrol header
+  % (alternative: original logo on a white plate ->
+  %  \node[...,fill=white,rounded corners=4mm,inner sep=6mm]{\includegraphics[height=5cm]{assets/heidelberg_logo.png}};)
+  \node[anchor=north east,inner sep=0pt]
+    at ([xshift=-2.2cm,yshift=-1.5cm]current page.north east)
+    {\includegraphics[height=6.0cm]{assets/heidelberg_logo_white.png}};
+  % footer: funding (SFB 1324, project B5; DFG)
+  \node[anchor=south west,inner sep=0pt,font=\fontsize{20}{24}\selectfont,text=Petrol] (fund)
+    at ([xshift=2.2cm,yshift=0.8cm]current page.south west)
+    {\bfseries SFB\,1324: Mechanisms and functions of Wnt signaling\enspace\textperiodcentered\enspace
+     Project B5: Mathematical modeling of Wnt signaling during pattern formation and
+     neurogenesis: axis and head formation in \emph{Hydra}};
+  \node[anchor=south east,inner sep=0pt]
+    at ([xshift=-12.7cm,yshift=0.45cm]current page.south east)
+    {\includegraphics[height=1.9cm]{assets/sfb1324_wnt_logo_paper.png}};
+  \draw[Rule,line width=1.5pt]
+    ([xshift=-11.6cm,yshift=0.5cm]current page.south east) --
+    ([xshift=-11.6cm,yshift=2.25cm]current page.south east);
+  \node[anchor=south east,inner sep=0pt]
+    at ([xshift=-2.2cm,yshift=0.45cm]current page.south east)
+    {\includegraphics[height=1.75cm]{assets/dfg_gefoerdert_paper.png}};
+\end{tikzpicture}%
+\noindent
+% ================================================================ 1
+\postersection{1}{Motivation}
+\begin{leftcol}
+  \postersub{1.1}{Hydra as a patterning problem}
+  \begin{minipage}[t]{25.0cm}\vspace{0pt}
+    \centering
+    \includegraphics[height=7.2cm]{assets/steichele2024_control_regeneration_paper.png}\par
+    \vspace{0.08cm}
+    {\tinyfont\color{Mid}Control: a headless fragment regenerates a complete head.\\
+    Steichele, M. \emph{et al.} (2024). \emph{Life Sci. Alliance} 7, e202403054.\par}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{11.0cm}\vspace{0pt}
+    \centering
+    \includegraphics[height=7.2cm]{assets/nuninger2026_wnt3_regeneration.jpg}\par
+    \vspace{0.10cm}
+    {\tinyfont\color{Mid}Wnt3 focuses at the future head organiser.\\
+    Nuninger, J. \emph{et al.} (2026). \emph{Nat. Commun.}\par}
+  \end{minipage}
+\end{leftcol}
+\begin{rightcol}
+  % introduction (no subsection header), aligned with the images of 1.1
+  \vspace{2.3cm}
+  {\raggedright \emph{Hydra} regenerates a head after amputation, forms a single head,
+  and remembers the original polarity of its tissue. Each head is built around a head
+  organiser marked by Wnt/$\beta$-catenin signalling: during regeneration, Wnt3 becomes
+  localised at the tip of the future head. Behind this behaviour lie three different
+  phenomena:\par}
+  \begin{itemize}[itemsep=0.2em,topsep=0.4em]
+    \item regeneration,
+    \item pattern selection,
+    \item positional memory.
+  \end{itemize}
+  {\raggedright Activator--inhibitor models already explain regeneration and pattern selection,
+  but positional memory requires an additional variable: source density.\par}
+\end{rightcol}
 
-    % Header
-    \fill[HDdark] (current page.north west) rectangle
-        ([yshift=-11.7cm]current page.north east);
-    \fill[HDred] ([yshift=-11.7cm]current page.north west) rectangle
-        ([yshift=-12.2cm]current page.north east);
 
-    \node[anchor=north west,inner sep=0pt,text width=91cm]
-        at ([xshift=2.2cm,yshift=-1.4cm]current page.north west) {%
-        \color{white}\fontsize{56}{62}\selectfont\bfseries
-        What\hspace{0.20em}Does\hspace{0.20em}Source\hspace{0.20em}Density\hspace{0.20em}Add\hspace{0.20em}to\hspace{0.20em}Models\hspace{0.20em}of\\[-1mm]
-        Hydra\hspace{0.20em}Patterning\hspace{0.20em}and\hspace{0.20em}Regeneration?\\[5mm]
-        \fontsize{25}{31}\selectfont\mdseries
-        Szymon~Cygan \quad\textperiodcentered\quad Anna~Marciniak-Czochra
-        \quad\textperiodcentered\quad Finn~Münnich \quad\textperiodcentered\quad Moritz~Mercker\\[1mm]
-        \fontsize{20}{24}\selectfont
-        Heidelberg University, Heidelberg, Germany
-    };
+\vspace{\secgap}
+% ================================================================ 2
+\postersection{2}{What the activator--inhibitor model already captures}
+\balcols{%
+  \postersub{2.1}{Production terms change the phase portrait}
+  {\fontsize{28}{36}\selectfont
+  \[
+  \begin{aligned}
+  \partial_t \U &= D_u\Delta \U + \frac{a \U^2+q_u}{\V}-\mu_u \U+p_u,\\
+  \partial_t \V &= D_v\Delta \V + b \U^2-\mu_v \V+p_v,
+  \end{aligned}
+  \qquad x\in[0,L],\ \ \ t\geqslant 0
+  \]\par}
+  \vspace{0.5cm}
+  \begin{minipage}[t]{17.6cm}\vspace{0pt}\smallfont\raggedright
+  \begin{itemize}[topsep=0pt]
+    \item \U: activator, short-range and self-enhancing,
+    \item \V: inhibitor, long-range, produced by \U.
+  \end{itemize}
+  \end{minipage}\hfill
+  {\color{Rule}\vrule width 1.5pt}\hfill
+  \begin{minipage}[t]{19.6cm}\vspace{0pt}\smallfont
+  \begin{itemize}[topsep=0pt]
+    \item $p_v$: basal inhibitor production,
+    \item $p_u$: external activator input,
+    \item $q_u$: activator input under inhibitor regulation.
+  \end{itemize}
+  \end{minipage}
+  \par\vspace{0.35cm}
+  {\smallfont\textbf{\color{Petrol}Nullclines}\par}
+  \vspace{0.1cm}
+  {\fontsize{17}{21}\selectfont
+  \tikz[baseline=-0.6ex]\draw[Ucol,line width=2.5pt](0,0)--(0.9,0); $u$-nullcline\quad
+  \tikz[baseline=-0.6ex]\draw[Vcol,line width=2.5pt](0,0)--(0.9,0); $v$-nullcline\quad
+  \tikz[baseline=-0.6ex]\fill[Petrol](0,0) circle (0.22); stable rest\quad
+  \tikz[baseline=-0.6ex]\draw[Copper,line width=2.5pt,fill=Paper](0,0) circle (0.2); unstable threshold\quad
+  \tikz[baseline=-0.6ex]\fill[Copper](0,0) circle (0.22); active state (Turing candidate)\par}
+  \vspace{0.3cm}
+  \begin{minipage}[t]{18.8cm}\vspace{0pt}
+    {\centering\includegraphics[width=12cm]{generated/phase_one_state.pdf}\par}
+    \smallfont\centering
+    \textbf{1 steady state} ($p_v=p_u=q_u=0$)\\
+    no resting state: an arbitrary perturbation leads to a pattern.
+  \end{minipage}\hfill
+  \begin{minipage}[t]{18.8cm}\vspace{0pt}
+    {\centering\includegraphics[width=12cm]{generated/phase_three_states.pdf}\par}
+    \smallfont\centering
+    \textbf{3 steady states} ($p_v>0$)\\
+    small perturbations vanish back to the rest state $u=0$.
+  \end{minipage}
 
-    \node[anchor=north east,inner sep=0pt]
-        at ([xshift=-2.0cm,yshift=-1.55cm]current page.north east) {%
-        \begin{minipage}[c][8.5cm][c]{21.5cm}
-        \centering
-        \begin{tikzpicture}
-        \node[draw=white,dashed,line width=1.4pt,rounded corners=3mm,
-              minimum width=20.5cm,minimum height=7.8cm,text width=17cm,
-              align=center,text=white,font=\fontsize{17}{21}\selectfont\bfseries]
-              {HEIDELBERG UNIVERSITY\\LOGO PLACEHOLDER};
-        \end{tikzpicture}
-        \end{minipage}
-    };
+  \vspace{0.8cm}\vfill
+  \postersub{2.2}{Inhibitor production is essential}
+  \begin{minipage}[t]{18.6cm}\vspace{0pt}\smallfont\raggedright
+  \textbf{\color{Petrol}$p_v=0$:}\   Only one steady state, which can be Turing unstable.
+  Any perturbation forms a pattern.
+  \end{minipage}\hfill
+  {\color{Rule}\vrule width 1.5pt}\hfill
+  \begin{minipage}[t]{18.6cm}\vspace{0pt}\smallfont\raggedright
+  \textbf{\color{Petrol}$p_v>0$:}\   A stable rest state, an activation threshold
+  and a pattern-forming state.
+  \end{minipage}\par
+  \note{For everything that follows it is essential to have more than one
+  steady state.}
+}{%
+  \postersub{2.3}{Pattern selection depends on history}
+  \includegraphics[width=\linewidth]{generated/pattern_history.pdf}\par
+  \vspace{0.2cm}
+  \smallfont
+  Starting near the diffusion-unstable state $E_+$, a small domain forms one peak
+  and a large domain several. Growing the small domain to the same large size
+  keeps a single peak.
 
-    % Column 1
-    \node[anchor=north west,inner sep=0pt]
-        at ([xshift=2.0cm,yshift=-13.2cm]current page.north west) {%
-        \begin{minipage}[t]{27.7cm}
+  \vspace{0.8cm}\vfill
+  \postersub{2.4}{Regeneration needs a wound}
+  \smallfont
+  Removing the head by cutting triggers regeneration.
+  Removing it by ligation, without a wound, does not.\par
+  \vspace{0.3cm}
+  \begin{minipage}[c]{15.0cm}
+    \includegraphics[width=\linewidth]{assets/tursch_cut_tied_paper.png}\par
+    {\centering\tinyfont\color{Mid} Tursch et al., \textit{PNAS} 119 (2022), Fig.~1A.\par}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{23.0cm}
+    \includegraphics[width=\linewidth]{generated/regeneration_sims.pdf}
+  \end{minipage}\par
+  \vspace{0.3cm}
+  \smallfont
+  Bistability is essential. With a single steady state regeneration always
+  occurs. With three steady states the system is bistable, the cut tissue returns
+  to rest and only a large perturbation from the wound brings back a pattern.
+  Biologically, this perturbation is the wound response. Injury triggers
+  Ca$^{2+}$ and ROS signalling, which activates MAPKs and up-regulates Wnt3
+  at every cut, independent of its position (Tursch et al., 2022).\par
 
-        \begin{posterbox}{01  |  Biological motivation}{23.8cm}
-        {\tagfont HYDRA AS A PATTERNING PROBLEM\par}
-        \bodyfont
-        A Hydra must regenerate a single head, preserve its oral--aboral axis,
-        and respond differently to tissue fragments with different origins.
+}
 
-        \placeholder{8.2cm}{HYDRA / WNT MOTIVATION\\head regeneration and body-axis organization}
+\vspace{0.8cm}
+\postersub{2.5}{Grafts -- the model chooses the position}
+\vspace{0.4cm}
+\begin{minipage}[c]{\colw}
+  \centering
+  \includegraphics[width=26.5cm]{assets/kadu2012_grafting_paper.png}\par
+  \vspace{0.1cm}
+  {\tinyfont\color{Mid}Kadu, V., Ghaskadbi, S.~S. \& Ghaskadbi, S. (2012).
+  Int. J. Mol. Cell. Med. 1(1), 11--20. CC BY 3.0.\par}
+\end{minipage}\hfill
+\begin{minipage}[c]{\colw}
+  \centering
+  \includegraphics[width=38.0cm]{generated/graft_drift.pdf}
+\end{minipage}\par
 
-        \claim{One model must separate three phenomena: regeneration, pattern selection, and positional memory.}
+% \claim{Source density is not needed to make a head --- but the model, not the wound, decides where the head ends up.}
 
-        \smallfont
-        We ask which behaviours already follow from an activator--inhibitor
-        system and which genuinely require an additional state variable.
-        \end{posterbox}
+\vspace{\secgap}
+% ================================================================ 3
+\postersection{3}{Positional memory and source density}
+\begin{leftcol}
+  \postersub{3.1}{Grafting exposes missing information}
+  {\centering\includegraphics[width=0.78\linewidth]{assets/livshits_h2f_experiment_transparent.png}\par}
+  {\tinyfont\color{Mid} Head-to-foot grafts, oriented vs.\ anti-oriented. Livshits et al.\ (2022), K.~Keren group.\par}
+  \smallfont
+  Reversing the orientation of comparable tissue pieces changes the
+  distribution of outcomes. Near the resting state, \U\ and \V\ alone do not
+  distinguish an upper-body fragment from a lower-body one.
 
-        \begin{posterbox}{02  |  Start from the general model}{41.3cm}
-        {\tagfont PRODUCTION TERMS CHANGE THE PHASE PORTRAIT\par}
-        \eqnfont
-        \[
-        \begin{aligned}
-        \partial_t u &= D_u\Delta u + \frac{a u^2+q_u}{v}-\mu_u u+p_u,\\
-        \partial_t v &= D_v\Delta v + b u^2-\mu_v v+p_v.
-        \end{aligned}
-        \]
-        \bodyfont
-        Here, \textcolor{HDred}{$u$} is the head-forming activator and
-        \textcolor{Blue}{$v$} is the inhibitor. The three production terms
-        are not interchangeable:
+  \vspace{0.6cm}
+  \postersub{3.2}{Prescribed $\rho(x)$ as tissue competence}
+  \begin{minipage}[c]{20.8cm}
+    \includegraphics[width=20.77cm]{generated/hydra_rho.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{17.3cm}\fontsize{28}{36}\selectfont
+  \[
+  \begin{aligned}
+  \partial_t \U &= D_u\Delta \U + \R(x)\,\frac{a \U^2}{\V} - \mu_u \U,\\
+  \partial_t \V &= D_v\Delta \V + \R(x)\, b \U^2 - \mu_v \V + p_v.
+  \end{aligned}
+  \]
+  \end{minipage}\par
+  \vspace{0.3cm}
+  {\centering\includegraphics[width=\linewidth]{generated/rho_profiles.pdf}\par}
+  \vspace{0.2cm}
+  \smallfont
+  A fixed source-density profile encodes tissue origin before the activator
+  is present and biases where a wound-triggered peak forms (source-gradient
+  idea, Suzuki \& Takagi 2011).
+\end{leftcol}
+\begin{rightcol}
+  \postersub{3.3}{Dynamic source density model}
+  \begin{minipage}[c]{20.5cm}\fontsize{28}{36}\selectfont
+  \[
+  \begin{aligned}
+  \partial_t \U &=D_u\Delta \U+\R\,\frac{a \U^2}{\V}-\mu_u \U,\\
+  \partial_t \V &=D_v\Delta \V+b\R\,\U^2-\mu_v \V+p_v,\\
+  \tau\,\partial_t\R&=D_\rho\Delta\R+\U-\R.
+  \end{aligned}
+  \]
+  \end{minipage}\hfill
+  {\color{Rule}\vrule width 1.5pt}\hfill
+  \begin{minipage}[c]{16.8cm}\smallfont\raggedright
+  \begin{itemize}[topsep=0pt]
+    \item $\rho(0,x)$ stores the grafted configuration,
+    \item $\tau$ sets the lifetime of memory,
+    \item $D_\rho$ communicates positional information in space.
+  \end{itemize}
+  \end{minipage}\par
+  \vspace{0.0cm}
+  \includegraphics[width=\linewidth]{generated/rho_diffusion.pdf}\par
+  \vspace{0.2cm}
+  \smallfont
+  $D_\rho$ too small: memory stays sharply localised. Intermediate: a usable
+  gradient forms. Too large: spatial information is erased.
 
-        \begin{itemize}
-            \item $p_v$: basal inhibitor production; regularizes the resting state,
-            \item $p_u$: external activator input,
-            \item $q_u$: activator input inside inhibitor regulation.
-        \end{itemize}
+  \vspace{0.6cm}
+  \postersub{3.4}{Static vs dynamic source density -- metastability of patterns} 
+  \smallfont Three tissue pieces generate a piecewise-linear initial source-density profile. Wounds are induced at the two graft interfaces.
 
-        Homogeneous equilibria satisfy the cubic
-        \[
-        \begin{aligned}
-        P(u)={}&\mu_u b u^3-(a\mu_v+b p_u)u^2\\
-              &+\mu_u p_v u-(\mu_v q_u+p_u p_v)=0.
-        \end{aligned}
-        \]
+  \includegraphics[width=\linewidth]{generated/rho_static.pdf}\par
+  \vspace{0.2cm}
+  \smallfont Static source density $ \rho(x) $: activator peaks form near the wound sites and remain there. These positions are not Turing-selected, but the two-peak state is stable and may mark sites of new-axis formation.
+  
+  \vspace{0.2cm}
+  \includegraphics[width=\linewidth]{generated/rho_dynamic.pdf}\par
+  \vspace{0.2cm}
+  \smallfont
+  The source density is initialised as $ \rho(x,0)=\rho_0(x) $, with large $ \tau $ chosen so that its dynamics is slow relative to $ u $ and $ v $. On the fast activator-inhibitor timescale, peaks form near the graft interfaces as in the static case. This graft-pinned configuration is metastable and, as $ \rho $ relaxes, eventually destabilises towards the Turing-selected two-head pattern.
+\end{rightcol}
 
-        \placeholder{10.0cm}{PHASE-PORTRAIT PLACEHOLDER\\one versus three homogeneous states\\nullclines + vector field + stability markers}
+% \claim{Source density can hold positional memory for a long time --- without making the graft-selected peak truly stationary.}
 
-        \smallfont
-        \minitag{1 state} high activator production can remove the threshold.\par
-        \minitag{3 states} lower rest + unstable threshold + upper active state.\par
-        \minitag{DII} an outer stable kinetic state can become diffusion unstable.
-
-        \begin{tcolorbox}[colback=Sand,colframe=Sand,arc=2mm,boxrule=0pt,
-                          left=4mm,right=4mm,top=2.5mm,bottom=2.5mm]
-        \fontsize{19}{23}\selectfont\bfseries
-        From the next section onward: $p_u=q_u=0$; only inhibitor production $p_v$ is retained.
-        \end{tcolorbox}
-        \end{posterbox}
-        \end{minipage}
-    };
-
-    % Column 2
-    \node[anchor=north west,inner sep=0pt]
-        at ([xshift=30.9cm,yshift=-13.2cm]current page.north west) {%
-        \begin{minipage}[t]{27.7cm}
-
-        \begin{posterbox}{03  |  Inhibitor production creates a threshold}{20.0cm}
-        {\tagfont MINIMAL REGENERATION MODEL\par}
-        \eqnfont
-        \[
-        \begin{aligned}
-        \partial_t u &=D_u\Delta u+\frac{a u^2}{v}-\mu_u u,\\
-        \partial_t v &=D_v\Delta v+b u^2-\mu_v v+p_v.
-        \end{aligned}
-        \]
-        \smallfont
-        The resting state is
-        $E_0=(0,p_v/\mu_v)$. Positive states exist when
-        \[
-        \Delta_h=a^2\mu_v^2-4\mu_u^2 b p_v>0,
-        \]
-        with
-        \[
-        u_{\pm}=\frac{a\mu_v\pm\sqrt{\Delta_h}}{2\mu_u b},
-        \qquad v_{\pm}=\frac{a}{\mu_u}u_{\pm}.
-        \]
-        $E_-$ is the activation threshold; $E_+$ is the candidate
-        pattern-forming state.
-
-        \begin{tcolorbox}[colback=PaleBlue,colframe=Blue,boxrule=1.1pt,arc=3mm]
-        \fontsize{19}{23}\selectfont\bfseries
-        Basal inhibitor production already gives a stable rest state,
-        bistability, and a finite-amplitude trigger.
-        \end{tcolorbox}
-        \end{posterbox}
-
-        \begin{posterbox}{04  |  Regeneration needs a finite wound}{20.6cm}
-        \placeholder{10.6cm}{JULIA SIMULATION PLACEHOLDER\\weak versus strong localized perturbation}
-        \smallfont
-        A weak perturbation returns to rest. A sufficiently strong localized
-        perturbation crosses $E_-$ and produces a persistent activator peak.
-        This threshold response does \textbf{not} require source density.
-        \end{posterbox}
-
-        \begin{posterbox}{05  |  Pattern selection depends on history}{24.4cm}
-        \placeholder{13.4cm}{JULIA SIMULATION PLACEHOLDER\\same final domain, two preparation histories\\direct DII: many peaks  |  growth continuation: one peak}
-        \smallfont
-        Starting near the diffusion-unstable state on a large domain can select
-        several peaks. Starting on a small domain and increasing its size can
-        preserve one established peak in the same final parameter regime.
-
-        \claim{Domain growth selects among coexisting patterns---but it does not remember where a tissue fragment came from.}
-        \end{posterbox}
-        \end{minipage}
-    };
-
-    % Column 3
-    \node[anchor=north west,inner sep=0pt]
-        at ([xshift=59.8cm,yshift=-13.2cm]current page.north west) {%
-        \begin{minipage}[t]{27.7cm}
-
-        \begin{posterbox}{06  |  Grafting exposes missing information}{27.2cm}
-        {\tagfont ORIENTATION MATTERS\par}
-        \placeholder{12.5cm}{EXPERIMENTAL FIGURE PLACEHOLDER\\Livshits et al. (K. Keren group)\\oriented versus anti-oriented H2F grafts}
-        \smallfont
-        Reversing the orientation of otherwise comparable tissue pieces changes
-        the distribution of regeneration outcomes. Near the resting state,
-        $u$ and $v$ alone need not distinguish an upper-body fragment from a
-        lower-body fragment.
-
-        \claim{Which state variable records the original position and orientation of the grafted tissue?}
-        \end{posterbox}
-
-        \begin{posterbox}{07  |  Prescribed $\rho(x)$ as tissue competence}{18.4cm}
-        \eqnfont
-        \[
-        \rho(x):\quad\text{inherited positional information}
-        \]
-        \placeholder{7.0cm}{PROFILE PLACEHOLDER\\oriented and anti-oriented piecewise $\rho(x)$}
-        \smallfont
-        A fixed source-density profile can encode tissue origin before the
-        activator is present. It biases where a wound-triggered peak forms,
-        following the source-gradient idea used in Hydra models
-        (Suzuki \& Takagi, 2011).
-        \end{posterbox}
-
-        \begin{posterbox}{08  |  Source-density model}{19.4cm}
-        {\tagfont AFTER THE AUDIT, KEEP ONLY $p_v$\par}
-        \eqnfont
-        \[
-        \begin{aligned}
-        \partial_t u &=D_u\Delta u+\rho\frac{a u^2}{v}-\mu_u u,\\
-        \partial_t v &=D_v\Delta v+b\rho u^2-\mu_v v+p_v,\\
-        \tau\,\partial_t\rho&=D_\rho\Delta\rho+u-\rho.
-        \end{aligned}
-        \]
-        \bodyfont
-        The new variable has a narrow job description:
-        \begin{itemize}
-            \item $\rho(0,x)$ stores the grafted configuration,
-            \item $\tau$ sets the lifetime of memory,
-            \item $D_\rho$ communicates positional information in space.
-        \end{itemize}
-        \begin{tcolorbox}[colback=PaleTeal,colframe=Teal,boxrule=1.1pt,arc=3mm]
-        \fontsize{19}{23}\selectfont\bfseries
-        Source density is tested as a memory variable---not as the origin of basic pattern formation.
-        \end{tcolorbox}
-        \end{posterbox}
-        \end{minipage}
-    };
-
-    % Column 4
-    \node[anchor=north west,inner sep=0pt]
-        at ([xshift=88.7cm,yshift=-13.2cm]current page.north west) {%
-        \begin{minipage}[t]{27.7cm}
-
-        \begin{posterbox}{09  |  Dynamic $\rho$ gives metastable memory}{28.5cm}
-        {\tagfont FAST PATTERNING, SLOW REORGANIZATION\par}
-        \placeholder{13.7cm}{JULIA SIMULATION PLACEHOLDER\\long-lived peak near the graft + peak position $x_{\max}(t)$}
-        \smallfont
-        On the fast $u$--$v$ time scale, the inherited $\rho$ profile anchors
-        a peak near the graft. As $\rho$ relaxes, the peak can drift toward a
-        position preferred by the activator--inhibitor subsystem.
-
-        \claim{The model can display positional memory for a long time without making the graft-selected peak truly stationary.}
-
-        \tinyfont
-        Working interpretation: metastability rather than a new asymptotically
-        stable head position.
-        \end{posterbox}
-
-        \begin{posterbox}{10  |  Diffusion sets the spatial reach of memory}{16.0cm}
-        \placeholder{5.8cm}{PARAMETER-SWEEP PLACEHOLDER\\peak lifetime versus $D_\rho$ and $\tau$}
-        \smallfont
-        \begin{itemize}
-            \item \textbf{$D_\rho$ too small:} memory remains sharply localized.
-            \item \textbf{$D_\rho$ intermediate:} a usable positional gradient forms.
-            \item \textbf{$D_\rho$ too large:} spatial information is rapidly erased.
-        \end{itemize}
-        The relevant observable is a memory time, for example the first time
-        $x_{\max}(t)$ leaves a prescribed neighbourhood of the graft.
-        \end{posterbox}
-
-        \begin{posterbox}{Take-home message}{20.5cm}
-        \begin{enumerate}[leftmargin=1.25em,itemsep=0.48em,topsep=0.1em]
-            \item \textbf{$p_v$ is enough} for a stable resting state, an activation threshold, and diffusion-driven patterning.
-            \item \textbf{Domain growth changes pattern selection} and can preserve one peak where several are also possible.
-            \item \textbf{$\rho$ adds a distinct capability:} inherited positional information for grafted tissue.
-            \item \textbf{Dynamic $\rho$ naturally suggests metastability:} long-lived anchoring followed by slow reorganization.
-        \end{enumerate}
-
-        \begin{tcolorbox}[colback=HDdark,colframe=HDdark,arc=3mm,
-                          left=5mm,right=5mm,top=4mm,bottom=4mm]
-        \fontsize{24}{29}\selectfont\bfseries\color{white}
-        Source density is not needed to make a head. It may be needed to remember where a head should form.
-        \end{tcolorbox}
-
-        \smallfont
-        \textbf{Outlook.} A separate head-identity variable $h$ is reserved for
-        future work if stable organizer identity cannot be obtained from the
-        $(u,v,\rho)$ dynamics alone.
-        \end{posterbox}
-        \end{minipage}
-    };
-
-    % Footer
-    \fill[Sand] (current page.south west) rectangle
-        ([yshift=3.8cm]current page.south east);
-    \draw[HDred,line width=2.2pt] ([yshift=3.8cm]current page.south west) --
-        ([yshift=3.8cm]current page.south east);
-    \node[anchor=west,inner sep=0pt,text width=91cm]
-        at ([xshift=2.0cm,yshift=1.92cm]current page.south west) {%
-        \tinyfont
-        \textbf{Selected references:} Gierer \& Meinhardt, \textit{Kybernetik} 12 (1972), 30--39.
-        Suzuki \& Takagi, \textit{Funkcialaj Ekvacioj} 54 (2011), 237--274.
-        Livshits et al., \textit{Scientific Reports} 12 (2022), 13368.
-    };
-    \node[anchor=east,inner sep=0pt,text width=22cm,align=right]
-        at ([xshift=-2.0cm,yshift=1.92cm]current page.south east) {%
-        \fontsize{16}{19}\selectfont\bfseries\color{HDdark}
-        SFB RETREAT  ·  FIRST LAYOUT ITERATION\\
-        figure and simulation placeholders
-    };
-\end{tikzpicture}
-\null
+\vfill
+% ================================================================ 4
+\begin{tcolorbox}[enhanced,colback=PetrolDeep,colframe=PetrolDeep,arc=3mm,
+                  left=1.0cm,right=1.0cm,top=0.7cm,bottom=0.7cm,before skip=0pt,
+                  fontupper=\fontsize{30}{36}\selectfont\bfseries\color{white}]
+\centering Source density is not needed to make a head.
+\textcolor{Copper}{It may be needed to remember where a head should form.}
+\end{tcolorbox}
 \end{document}

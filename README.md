@@ -45,28 +45,30 @@ morphological commitment.
 
 ```text
 .
-|-- main.tex
-|-- packages.tex
-|-- sections/
-|   |-- 00_abstract.tex
-|   |-- 01_introduction.tex
-|   |-- 02_gm_model_audit.tex
-|   |-- 03_regeneration_and_pattern_formation.tex
-|   |-- 04_source_density_and_positional_memory.tex
-|   |-- 05_head_identity_extension.tex
-|   `-- 06_discussion.tex
-|-- bib/
-|   `-- references.bib
-`-- figures/
+|-- Manuscript/              LaTeX manuscript
+|   |-- main.tex
+|   |-- packages.tex
+|   |-- sections/            00_abstract.tex ... 06_discussion.tex
+|   |-- bib/references.bib
+|   `-- figures/
+|-- Poster/                  A0 poster (SFB 1324 retreat), see Poster/README.md
+|   |-- poster.tex           compile with XeLaTeX/LuaLaTeX (latexmk uses .latexmkrc)
+|   |-- assets/              external images and logos
+|   |-- generated/           figures produced by scripts/
+|   `-- scripts/             Python/Julia scripts for the poster figures
+|-- Papers/                  literature (PDFs)
+`-- Archive/                 first poster draft (landscape)
 ```
 
-The current compiled manuscript is available as [`main.pdf`](main.pdf).
+The current compiled manuscript is available as
+[`Manuscript/main.pdf`](Manuscript/main.pdf).
 
 ## Building the manuscript
 
 A standard LaTeX installation with `latexmk` is sufficient:
 
 ```bash
+cd Manuscript
 latexmk -pdf -synctex=1 main.tex
 ```
 
